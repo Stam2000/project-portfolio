@@ -12,6 +12,11 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'poiret-one': ['var(--font-poiret-one)'],
+        'roboto': ['var(--font-roboto)'],
+        'sans': ['var(--font-roboto)', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],

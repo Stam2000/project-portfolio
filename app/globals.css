@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .font-outline-2 {
+    -webkit-text-stroke: 2px black;
+  }
+  .font-outline-4 {
+    -webkit-text-stroke: 4px black;
+  }
+  .font-outline-1 {
+    -webkit-text-stroke: 1px white;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
