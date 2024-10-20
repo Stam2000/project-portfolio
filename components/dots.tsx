@@ -1,25 +1,67 @@
 import  dotGeneratorGrid from "@/utilities/dotGenerator"
+import { useMemo } from "react";
 
 interface Props {
     numberOfDotEachLine : number;
     numberOfLine : number;
-    absolute:boolean
+    absolute?:boolean;
+    gapBlock?:number;
+    gapLine?:number;
+    colors:React.CSSProperties[];
+    width?:number;
+    height?:number;
+    className?:string;
 }
 
-const Dots = ({numberOfDotEachLine,numberOfLine,absolute=true}:Props)=>{
+const Dots = ({numberOfDotEachLine,
+        numberOfLine,
+        absolute=true,
+        gapBlock=1,
+        gapLine=1,
+        width,
+        height,
+        className,
+        colors}:Props)=>{
 
-    const randomDist1 = dotGeneratorGrid(numberOfDotEachLine,numberOfLine)
-    const randomDist2 = dotGeneratorGrid(numberOfDotEachLine,numberOfLine)
+    console.log(colors)
+    
+    const randomDist1 = useMemo(() => {
+        return dotGeneratorGrid(numberOfDotEachLine, numberOfLine, colors);
+      }, [numberOfDotEachLine, numberOfLine, colors]);
+   
+      const randomDist2 = useMemo(() => {
+        return dotGeneratorGrid(numberOfDotEachLine, numberOfLine, colors);
+      }, [numberOfDotEachLine, numberOfLine, colors]);
+      
 
+    const sizeClasses = ['w-0', 'w-1', 'w-2', 'w-3',"w-4","w-5", 'h-0', 'h-1', 'h-2', 'h-3',"h-4","shadow-2xl"];
+    const AllClasses = () => (
+        <>
+            <div className="hidden">
+            {sizeClasses.map((sizeClass) => (
+                <div key={sizeClass} className={sizeClass} />
+            ))}
+            </div>
+            
+        </>
+        
+      );
 
     return (
-        <div className={` ${absolute ? "absolute" : "null"} flex gap-1`}>
+        <>
+        <AllClasses />
+        <div className={` ${absolute ? "absolute" : "null"} ${className} flex gap-${gapBlock}`}>
             <div className="flex flex-col gap-1">
             {
                 randomDist1.map((line,index) =>{
                     return(
-                            <div key={index} className="flex items-center justify-evenly gap-2 ">
-                                {line.map(display => <div key={Math.random()*index} className={`${display} w-2 ${Math.floor(Math.random()*3)} h-2 ${Math.floor(Math.random()*3)} rounded-full`}></div> )}
+                        
+                            <div key={index} className={` flex items-center justify-evenly gap-${gapLine} `}>
+                                {line.map(color => <div key={Math.random()*index} className={` 
+                                ${ width ? `w-${width}` : `w-${Math.floor(Math.random()*3)}`} 
+                                ${ height ? `h-${height}` : `h-${Math.floor(Math.random()*3)}`} rounded-full`}
+                                style={color}
+                                ></div> )}
                             </div>
                         )
                     })
@@ -32,9 +74,13 @@ const Dots = ({numberOfDotEachLine,numberOfLine,absolute=true}:Props)=>{
             {
                 randomDist2.map((line,index) =>{
                     return(
-                            <div key={Math.random()*index} className="flex items-center justify-evenly gap-2 ">
-                                {line.map(display => <div className={`${display} w-2 ${Math.floor(Math.random()*3)} h-2 ${Math.floor(Math.random()*3)} rounded-full`}></div> )}
-                            </div>
+                        <div key={index} className={`flex items-center justify-evenly gap-${gapLine} `}>
+                            {line.map(color => <div key={Math.random()*index} className={` 
+                            ${ width ? `w-${width}` : `w-${Math.floor(Math.random()*3)}`} 
+                            ${ height ? `h-${height}` : `h-${Math.floor(Math.random()*3)}`} rounded-full`}
+                            style={color}
+                            ></div> )}
+                        </div>
                         )
                     })
                 }
@@ -42,93 +88,8 @@ const Dots = ({numberOfDotEachLine,numberOfLine,absolute=true}:Props)=>{
 
        
         </div>
+    </>
     )
 }
 
 export default Dots
-
-
-/*  <div className="flex flex-col gap-1">
-        <div className="flex items-center justify-evenly gap-1 " >
-            <div className="bg-[#98CE00] w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00] w-1 h-1 rounded-full"></div>
-          </div>
-          <div className="flex items-center justify-evenly gap-1 " >
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-          </div>
-          <div className="flex items-center justify-evenly gap-1 " >
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-          </div>
-          <div className="flex items-center justify-evenly gap-1 " >
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            <div className="w-1 h-1 border-[1px] border-[#98CE00]/60 rounded-full"></div>
-            <div className="w-1 h-1 border-[1px] border-[#98CE00] rounded-full"></div>
-            <div className="w-1 h-1 border-[1px] border-[#98CE00]/60 rounded-full"></div>
-            <div className="w-1 h-1 border-[1px] border-[#98CE00]/60 rounded-full"></div>
-            <div className="w-1 h-1 border-[1px] border-[#98CE00] rounded-full"></div>
-            <div className="w-1 h-1 border-[1px] border-[#98CE00]/60 rounded-full"></div>
-          </div>
-        </div> */
-
-        
-        /* <div className="flex items-center justify-evenly gap-1 " >
-                <div className="bg-[#98CE00] w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            </div>
-            <div className="flex items-center justify-evenly gap-1 " >
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/90 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-            </div>
-            <div className="flex items-center justify-evenly gap-1 " >
-                <div className="bg-[#98CE00]/60  w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60  w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/10  w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60  w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/10  w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00] w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60  w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/10  w-1 h-1 rounded-full"></div>
-            </div>
-            <div className="flex items-center justify-evenly gap-1 " >
-                <div className="bg-[#98CE00]/10 w-1 h-1 rounded-full"></div>
-                <div className="bg-[#98CE00]/60 w-1 h-1 rounded-full"></div>
-                <div className="w-1 h-1 border-[1px] border-[#98CE00]/10 rounded-full"></div>
-                <div className="w-1 h-1 border-[1px] border-[#98CE00] rounded-full"></div>
-                <div className="w-1 h-1 border-[1px] border-[#98CE00]/10 rounded-full"></div>
-                <div className="w-1 h-1 border-[1px] border-[#98CE00]/60 rounded-full"></div>
-                <div className="w-1 h-1 border-[1px] border-[#98CE00]/10 rounded-full"></div>
-                <div className="w-1 h-1 border-[1px] border-[#98CE00]/10 rounded-full"></div>
-            </div> */

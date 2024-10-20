@@ -6,13 +6,13 @@ export async function POST(request: Request) {
   try {
     // Parse the request body
     const body = await request.json();
-    const { newChat, question } = body;
+    const { langHistory } = body;
 
     // Log the received data for debugging
     console.log('Received body:', body);
 
     // Call your utility function
-    const response = await GenNewLg();
+    const response = await GenNewLg(langHistory);
 
     // Log the response from GenNewLg
     console.log('Response from GenNewLg:', response);

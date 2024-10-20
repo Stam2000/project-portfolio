@@ -8,30 +8,13 @@ import { ChatMessageHistory } from "langchain/memory"
 import { StringOutputParser ,StructuredOutputParser } from "@langchain/core/output_parsers"
 import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
 import { AgentExecutor, createToolCallingAgent } from "langchain/agents"
+import {zodSchemaGen,zodSchemaChat} from "@/lib/utils"
 
 
 
+const parserGenNew = StructuredOutputParser.fromZodSchema(zodSchemaGen)
 
-
-interface Props {
-    langageHistory?:BaseMessage[]
-}
-
-const zodSchema = z.object({
-    nameOfLanguage: z.string().describe("Name of the language"),
-    description: z.string().describe("Informative details about the language, including its origin, date of creation, and extinction if applicable"),
-    translatedText: z.string().describe("The translation of the given hero section text into the language"),
-    funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
-    colors: z.array(z.string()).describe("An array of colors representing the language’s culture, flag, or fictional setting"),
-    languageHistory: z.object({
-      spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
-      region: z.string().describe("The region or regions where the language is or was spoken"),
-      numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
-      isExtinct: z.boolean().describe("Whether the language is extinct or still in use"),
-    }).describe("A detailed field containing historical and speaker information about the language"),
-  });
-
-const parser = StructuredOutputParser.fromZodSchema(zodSchema)
+const parserChatManager = StructuredOutputParser.fromZodSchema(zodSchemaChat)
 
 const model = new ChatOpenAI({
     model:"gpt-4o-mini",
@@ -48,22 +31,33 @@ export const GenNewLg = async (langageHistory?:BaseMessage[])=>{
     const formatInstructions = `Respond only in valid JSON. The JSON object you return should match the following schema:
 
 const zodSchema = z.object({
-    nameOfLanguage: z.string().describe("Name of the language"),
-    description: z.string().describe("Informative details about the language, including its origin, date of creation, and extinction if applicable"),
-    translatedText: z.string().describe("The translation of the given hero section text into the language"),
-    funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
-    colors: z.array(z.string()).describe("An array of colors representing the language’s culture, flag, or fictional setting"),
-    languageHistory: z.object({
-      spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
-      region: z.string().describe("The region or regions where the language is or was spoken"),
-      numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
-      isExtinct: z.boolean().describe("Whether the language is extinct or still in use"),
-    }).describe("A detailed field containing historical and speaker information about the language"),
-  });`
+  nameOfLanguage: z.string().describe("Name of the language"),
+  description: z.string().describe("Informative details about the language, including its origin, date of creation, and extinction if applicable"),
+  translatedText: z.object({
+      name:z.string().describe("text to be translated : Hello i'm Manuel"),
+      fullStack:z.string().describe("text to translate : Full Stack"),
+      AiDev:z.string().describe("text to translate: AI Developer"),
+      description:z.string().describe("text to translate : I love exploring and creating 🚀 I'm a lifelong learner 🎓 and I might have a thing for traditional Neapolitan Pizza 🍕 ")
+  }).describe("The translation of the given hero section text into the language"),
+  funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
+  colors: z.array(z.string()).describe("An array of colors in code (example #98CE00) representing the language’s culture, flag, or fictional setting"),
+  languageHistory: z.object({
+    spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
+    region: z.string().describe("The region or regions where the language is or was spoken"),
+    numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
+    isExtinct: z.boolean().describe("Whether the language is extinct or still in use"),
+  }).describe("A detailed field containing historical and speaker information about the language"),
+});;`
 
     const MEMORY_KEY = "chat_history"
     const SystemPrompt=
-    `You are an AI assistant tasked with generating translations and cultural or fictional information (when fictional languages) for a hero section text. 
+    `You are an AI assistant tasked with generating translation for each key of this object ----- 
+      name:"text to be translate : Hello i'm Manuel",
+      fullStack:"text to translate : Full Stack",
+      AiDev:"text to translate: AI Developer",
+      description:"text to translate : I love exploring and creating 🚀 I'm a lifelong learner 🎓 and I might have a thing for traditional Neapolitan Pizza 🍕 "----
+      
+     and cultural or fictional information (when fictional languages) for a hero section text. 
     The goal is to immerse users in different languages, sparking curiosity about the language and its background. 
     You will output responses in JSON format, adhering to the schema provided. 
     Some languages will be real and currently spoken, others may be extinct, and some will be inspired by science fiction or fantasy universes.
@@ -104,7 +98,7 @@ tags\n{format_instructions}
         },
         memoryPrompt,
         model,
-        parser
+        parserGenNew
     ])
 
     const response = await genLchain.invoke({
@@ -118,26 +112,51 @@ tags\n{format_instructions}
 } 
 
 /* ----------------------------------------------------------------- */
-export const ChatManager = async () => {
+export const ChatManager = async ( {input,chatHistory,langHistory}: {input:string,chatHistory:BaseMessage[],langHistory:BaseMessage[]}) => {
 
+  console.log(input)
     const MEMORY_KEY = "chat_history"
     const SystemPrompt=`
-You are an assistant that helps users with questions about programming languages.
-When a user asks for a new programming language, you should call the 'generate_new_language' function to generate a new language.
-Return the result of the function call directly to the user in JSON format, without any additional text.
+    You are an AI language assistant designed to help users explore and learn about new languages. Your primary function is to answer any follow-up questions the user might have about a language they are discovering. 
+    You also have the ability to call a tool called "generate_language" to generate a new language for the user to explore.
+    -**Immersion and Engagement:** Aim to immerse the user in the language experience. 
+    Provide translations and cultural or fictional context to spark curiosity and deepen their connection with the language.
+    - **Generating New Languages:** If the user requests a new language or if it becomes appropriate to introduce one, use the "generate_language" tool to generate and present a new language.
+    - **Types of Languages:** Be prepared to discuss a variety of languages, including:
+    - Real and currently spoken languages.
+    - Extinct languages.
+    - Fictional languages inspired by science fiction or fantasy universes.
+    -**Note:** Ensure all information is accurate and enriches the user's exploration of the language.
+    -**Response Format:** Always present your responses in JSON format, adhering strictly to the following format instructions:
+      The format of the JSON should be:
+      tags\n{format_instructions}
 
-The format of the JSON should be:
-tags\n{format_instructions}
-`
+      
+    `
 
-const formatInstructions = `Respond only in valid JSON. The JSON object you return should match the following schema:
-description: 
-     "A new programming language called LangScript...",
-    nameOfLanguage: "LangScript",
-    translatedText: "LangScript in another language",
-    funFact: "It's designed for AI applications!",
-    colors: ["blue", "silver", "white"
-`
+const formatInstructions =`
+
+Respond only in valid JSON following this JSON object schema: 
+
+{
+  outputFunctionCall:  z.object({
+  nameOfLanguage: z.string().describe("Name of the language"),
+  description: z.string().describe("Informative details about the language, including its origin, date of creation, and extinction if applicable"),
+  translatedText: z.string().describe("The translation of the given hero section text into the language"),
+  funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
+  colors: z.array(z.string()).describe("An array of colors representing the language’s culture, flag, or fictional setting"),
+  languageHistory: z.object({
+    spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
+    region: z.string().describe("The region or regions where the language is or was spoken"),
+    numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
+    isExtinct: z.boolean().describe("Whether the language is extinct or still in use"),
+  }).describe("A detailed field containing historical and speaker information about the language"),
+}).nullable().describe("result of the call of the function generating the languages | null if no call occured"),
+
+
+  output:output:z.string().describe("your response here")
+}
+    `
 
 
     const memoryPrompt = await  ChatPromptTemplate.fromMessages([
@@ -145,19 +164,18 @@ description:
         new MessagesPlaceholder(MEMORY_KEY),
         ["human","{input}"],
         new MessagesPlaceholder("agent_scratchpad")
-    ]).partial({
+      ]).partial({
         format_instructions: formatInstructions,
-      })
+    })
 
     const tools = [
         new DynamicStructuredTool({
-            name: "generate_new_language",
+            name: "generate_language",
             description: "Generates a new programming language with the given name and returns its details in JSON format.",
-            schema: zodSchema,
-            func: async () =>{ const result = await GenNewLg()
+            schema: zodSchemaGen,
+            func: async () =>{ const result = await GenNewLg(langHistory)
             return JSON.stringify(result);}
-               // Outputs still must be strings
-}),
+      }),
     ]
 
     const agent = await createToolCallingAgent({llm:model,tools,prompt:memoryPrompt})
@@ -174,19 +192,16 @@ description:
           const resp = await agentExecutor.invoke({ chat_history, input });
           return resp.output;
         }
-      });
+    });
       
     const chain = RunnableSequence.from([
         agentRunnable,
-        parser
+        parserChatManager
     ])
     
    const res = await chain.invoke({
-        chat_history: [
-          new HumanMessage("hi! my name is bob"),
-          new AIMessage("Hello Bob! How can I assist you today?"),
-        ],
-        input: "generate a new Language"}
+        chat_history: chatHistory,
+        input}
       );
 
       console.log(res)

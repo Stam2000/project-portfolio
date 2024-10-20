@@ -1,36 +1,31 @@
 interface Props {
     numberOfDotEachLine : number;
     numberOfLine : number;
+    colors:React.CSSProperties[]
 }
 
-function gotGeneratorLine(numberOfDotEachLine:number){
+function gotGeneratorLine(numberOfDotEachLine:number,colors:React.CSSProperties[]){
     const constrain = Math.floor(numberOfDotEachLine/3)
-    const possibilities = 
-        ["bg-[#98CE00]",
-            "bg-white",
-            "bg-[#98CE00]/60",
-            "bg-[#98CE00]/10",
-            "border-[1px] border-[#F9A620]",
-            "border-[1px] border-[#F9A620]/60",
-            "border-[1px] border-[#98CE00]/10",
-        ]
-    let finalArray:string[] = []
+    
+    const possibilities = [...colors]
+    console.log(possibilities)
+    let finalArray:React.CSSProperties[] = []
     let updatedPossibilitiesList = possibilities
-    let Counter:{[key:string]:number} = {}
+    let Counter = new Map<React.CSSProperties,number>()
     possibilities.forEach(
-        possibility => Counter[possibility] = 0
+        possibility => Counter.set(possibility,0)
     )
 
     for(let i = 0; i < numberOfDotEachLine ; i++){
      if(updatedPossibilitiesList.length){
         const randomPossibility = updatedPossibilitiesList[Math.floor(Math.random() * updatedPossibilitiesList.length)]
 
-        if(Counter[randomPossibility] < constrain ){
+        if(Counter.get(randomPossibility)! < constrain ){
 
             finalArray.push(randomPossibility)
-            Counter[randomPossibility]++
+            Counter.set(randomPossibility,Counter.get(randomPossibility)! + 1 )
 
-            if (Counter[randomPossibility] == constrain ) {
+            if (Counter.get(randomPossibility) == constrain ) {
 
                 let index = updatedPossibilitiesList.indexOf(randomPossibility)
 
@@ -47,10 +42,10 @@ function gotGeneratorLine(numberOfDotEachLine:number){
     return finalArray
 }
 
-function dotGeneratorGrid(numberOfDotEachLine:number,numberOfLine:number){
+function dotGeneratorGrid(numberOfDotEachLine:number,numberOfLine:number,colors:React.CSSProperties[]){
     let finalResult = []
      for (let i = 0;i < numberOfLine;i++){
-        const result =  gotGeneratorLine(numberOfDotEachLine)
+        const result =  gotGeneratorLine(numberOfDotEachLine,colors)
         finalResult.push(result)
      }
 
