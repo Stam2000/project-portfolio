@@ -1,13 +1,13 @@
 "use media"
 import Dots from "./dots-2"
 import LogoDisplay from "./logoDisplay"
-import { useRef,useEffect } from "react"
-import {motion,useInView } from "framer-motion"
+import { useRef } from "react"
+import {motion } from "framer-motion"
 import { useMediaQuery } from "react-responsive"
 
 
 
-const defaultColors=[
+/* const defaultColors=[
     { backgroundColor: "#D1D5DB" },
     { backgroundColor: "#000000" },
     { backgroundColor: "rgba(152, 206, 0, 0.8)" },
@@ -28,12 +28,11 @@ const defaultColors=[
     { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
     { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.2)" }
   ]
-
+ */
   
 
 const ToolKit =({colors}:{colors:React.CSSProperties[]})=>{
     const ref = useRef(null);
-    const isInView = useInView(ref, { amount: 0.5 });
     const isMobile = useMediaQuery({ maxWidth:500 })
 
     const mainStack = [

@@ -1,11 +1,8 @@
 "use client"
+
 import React,{ useState,useEffect} from "react"
-import {z} from "zod"
-import { translatedText } from "@/lib/utils"
 
- 
 
-type TranslatedText = z.infer<typeof translatedText>
 interface Props {
     text:string,
     delay?:number,

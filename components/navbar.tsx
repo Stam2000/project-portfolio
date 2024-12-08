@@ -7,7 +7,6 @@ const Navbar = ({memoizedColors,shadowBox,borderColor}:{shadowBox:string[],borde
 
 const isMobile = useMediaQuery({ maxWidth:500 })
 const isTablet = useMediaQuery({ maxWidth:768 })
-const isLaptop = useMediaQuery({maxWidth:1280})
 
 if(isMobile){
   return(

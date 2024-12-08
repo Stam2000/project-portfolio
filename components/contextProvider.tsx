@@ -1,6 +1,6 @@
 "use client"
 import { create } from "lodash"
-import React,{createContext,useState} from "react"
+import React,{createContext,useState,ReactNode, FC} from "react"
 
 const MyContext = createContext({
     isLoading:false,
@@ -9,7 +9,7 @@ const MyContext = createContext({
     setIsTypingCompleted:(prev:boolean)=>{}
 })
 
-const MyProvider = ({children}) => {
+const MyProvider : FC<{children:ReactNode}> = ({children}) => {
 
     const [isLoading,setIsLoading] = useState(false)
     const [isTypingCompleted,setIsTypingCompleted] = useState(false)

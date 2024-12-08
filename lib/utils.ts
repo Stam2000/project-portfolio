@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import axios from "axios";
 import { z } from "zod"
 import {ChatOpenAI} from "@langchain/openai"
 import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
@@ -10,16 +9,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-interface StyleObject {
-  backgroundColor?: string;
-  [key: string]: any; // Allows for other properties like border, etc.
-}
-
 interface TailwindClassConfig {
-  backgroundOpacityLevels?: number[]; // Par exemple, [20, 50, 80]
-  borderOpacityLevels?: number[];     // Par exemple, [10, 90]
-  includeBorder?: boolean;            // Par défaut : true
-  includeCircle?: boolean;            // Par défaut : false
+  backgroundOpacityLevels?: number[]; 
+  borderOpacityLevels?: number[];   
+  includeBorder?: boolean;
+  includeCircle?: boolean;            
 }
 
 export const translatedText =  z.object({

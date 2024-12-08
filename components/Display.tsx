@@ -2,7 +2,6 @@
 import { TypeWritter } from "./typeWritter"
 import {z} from "zod"
 import { translatedText } from "@/lib/utils" 
-import { ScrollArea } from "./ui/scroll-area"
 import { MyContext } from "./contextProvider"
 import { useContext,useEffect} from "react"
 
@@ -14,7 +13,7 @@ type Props = {
     colors:string[] | undefined
 }
 
-export const Display = ({isInitialContent, translatedText,colors}:Props) => {
+export const Display = ({ translatedText,colors}:Props) => {
 
     const {isTypingCompleted,setIsTypingCompleted} = useContext(MyContext)
     useEffect(() => {

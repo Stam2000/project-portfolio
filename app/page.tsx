@@ -7,14 +7,14 @@ import Navbar from "@/components/navbar";
 import { Chat } from "@/components/chat";
 import {useState,useEffect,useMemo, useContext} from "react"
 import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
-import {zodSchemaGen,zodSchemaChat, generateTailwindClasses} from "@/lib/utils"
+import {zodSchemaGen, generateTailwindClasses} from "@/lib/utils"
 import { MySvg,MySvg2,MySvg3,MySvg4,MySvg5,MySvg6,MySvg7 } from "@/components/SVG";
 import {z} from "zod"
 import React from "react";
 
 import { Display } from "@/components/display";
 import {useMediaQuery} from "react-responsive"
-import DiagonalLines from "@/components/lineComponent";
+
 import ToolKit from "@/components/toolKit";
 import { motion,useInView } from "framer-motion"
 import { extractBackgroundColors } from "@/lib/utils";
@@ -45,7 +45,6 @@ interface TailwindClassConfig {
   includeCircle?: boolean;            // Par défaut : false
 }
 
-type ResChat = z.infer<typeof zodSchemaChat>
 type ResGen = z.infer<typeof zodSchemaGen>
 
 const MagicWand04Icon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -144,7 +143,7 @@ export default function Home() {
   }, [ca]);
 
   const [shadowBox, setShadowBox] = useState([ '0px 0px 0px rgba(152,206,0,1)']);
-  const [shadowBoxAd, setShadowBoxAd] = useState([ '0px 0px 0px rgba(152,206,0,1)']);
+
 
 const isMobile = useMediaQuery({ maxWidth:500 })
 const isTablet = useMediaQuery({ maxWidth:768 })
@@ -182,10 +181,6 @@ useEffect(() => {
     `10px 15px 45px ${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
   ]);
 
-  setShadowBoxAd([
-    lastColor!,
-    `5px 5px 5px ${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
-  ]);
 
 
 }, [ca]);
@@ -403,70 +398,32 @@ return (
       <div className="relative overflow-hidden bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00]   from-white from-10%  to-[#efefef]   flex rounded-2xl h-3/5 justify-end pl-4" >
           <div className="absolute h-full overflow-hidden w-full " >
             <MySvg7 className=" absolute  h-72" />
-            {/* Right */}
+            
               <MySvg className="absolute h-8 top-[10%] left-1/2 " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg4 className="absolute h-16 top-[29%] opacity-75 right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              {/* <MySvg className="absolute h-8 top-[10%] left-1/2 " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg4 className="absolute h-16 top-[29%] opacity-75 right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
-              {/* Group 1*/}
               <MySvg5 className="absolute h-16 top-[7%]  -right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg6 className="absolute h-5 top-[30%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg className="absolute h-3 top-[38%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg2 className="absolute h-2 top-[28%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg5 className="absolute h-3 top-[30%]  right-[10%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              {/* <MySvg5 className="absolute h-16 top-[7%]  -right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg6 className="absolute h-5 top-[30%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg className="absolute h-3 top-[38%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg2 className="absolute h-2 top-[28%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg5 className="absolute h-3 top-[30%]  right-[10%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
-              {/*Group 1 end*/}
               <MySvg className="absolute h-8  bottom-[40%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg3 className="absolute h-20  bottom-[7%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              {/* <MySvg className="absolute h-8  bottom-[40%]  right-[5%] " primaryColor="white" secondaryColor="yellow" tertiaryColor="#bcbcbc" />
-              <MySvg3 className="absolute h-20  bottom-[7%]  right-[5%] " primaryColor="white" secondaryColor="red" tertiaryColor="#bcbcbc" /> */}
-              {/*Group 2 */}
               <MySvg5 className="absolute h-12  bottom-[30%] opacity-80  right-[25%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="white" />
               <MySvg6 className="absolute h-8  bottom-[18%] opacity-80  right-[35%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg6 className="absolute h-8  bottom-[18%] opacity-80  right-[35%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg2 className="absolute h-3  bottom-[38%] opacity-80  right-[35%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg3 className="absolute h-5  bottom-[28%] opacity-80  right-[40%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              {/* <MySvg5 className="absolute h-12  bottom-[30%] opacity-80  right-[25%] " primaryColor="white" secondaryColor="green" tertiaryColor="white" />
-              <MySvg6 className="absolute h-8  bottom-[18%] opacity-80  right-[35%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg6 className="absolute h-8  bottom-[18%] opacity-80  right-[35%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg2 className="absolute h-3  bottom-[38%] opacity-80  right-[35%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-              <MySvg3 className="absolute h-5  bottom-[28%] opacity-80  right-[40%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
-              {/*Group 3 */}
               <MySvg2 className="absolute h-8  top-[1%]  right-[20%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg className="absolute h-4  top-[20%]  right-[16%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <MySvg4 className="absolute h-6  bottom-[1%]  right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
               <div className="absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " />
-              {/* <MySvg2 className="absolute h-8  top-[1%]  right-[20%] " primaryColor="white" secondaryColor="brown" tertiaryColor="#bcbcbc" />
-              <MySvg className="absolute h-4  top-[20%]  right-[16%] " primaryColor="white" secondaryColor="brown" tertiaryColor="#bcbcbc" />
-              <MySvg4 className="absolute h-6  bottom-[1%]  right-[30%] " primaryColor="white" secondaryColor="brown" tertiaryColor="#bcbcbc" />
-              <div className="absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " /> */}
-            {/* Right end */}  
-
-              {/*CARREE gris tout en haut du cercle Input */}
-              
               <div className="absolute top-[14%] left-[36%] rounded-2xl rotate-[35deg] border-[10px] border-[#bcbcbc] h-[60px] w-[60px] " />
-              {/*Cercle*/}
-              {/* TODO modify z-index */}
               <div className="absolute bottom-[50%] left-[50%] rounded-full bg-white h-[40px] w-[40px] " />
-              {/*Cercle*/}
-
-              <div className="absolute top-[8%] left-[54%] rounded-full bg-white h-[20px] w-[20px] " />
-              {/*CARREE */}
-
+              <div className="absolute top-[8%] left-[54%] rounded-full bg-white h-[20px] w-[20px] " />     
               <div className="absolute bottom-[44%] left-[24%] rounded-lg -rotate-[15deg] border-[7px] border-[#ffffff] h-[35px] w-[35px] " />
-              {/*Cercle*/}
-              
               <div className="absolute bottom-[51%] left-[42%] rounded-full bg-white h-[10px] w-[10px] " />
-              {/*Cercle*/}
-              
               <div className="absolute bottom-[25%] left-[56%] rounded-full bg-white h-[7px] w-[7px] " />
-              {/*Cercle  */}
               <div className="absolute bottom-[29%] left-[40%] rounded-full bg-white h-[28px] w-[28px] " />
-              {/*Cercle bottom input*/}
               <div className="absolute -bottom-[35%] left-[20%] border-[60px]  border-[#e5e5e5]  rounded-full  h-[200px] w-[200px] " />
           </div>
             <div className=" py-8 flex flex-col mix-blend-multiply flex-1 gap-2 items-center text-center justify-center">

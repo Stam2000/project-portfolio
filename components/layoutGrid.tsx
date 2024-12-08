@@ -1,8 +1,6 @@
 "use state"
-import { motion,AnimatePresence } from "framer-motion";
-import { useState,useEffect, Dispatch } from "react";
-import { shuffle,take } from "lodash";
-import { Minimize2 } from "lucide-react";
+import { motion} from "framer-motion";
+
 
 const LayoutImages = ({setId}:{setId:React.Dispatch<React.SetStateAction<string|null>>})=>{
 

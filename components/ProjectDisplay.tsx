@@ -1,11 +1,9 @@
 import Dots from "./dots-2";
-import { MySvg4 } from "./SVG";
 import {useMediaQuery} from "react-responsive"
 
 export const ProjectDisplay = ()=>{
 
     const isMobile = useMediaQuery({ maxWidth:500 })
-const isTablet = useMediaQuery({ maxWidth:768 })
 
 
     const defaultColors=[
@@ -29,17 +27,7 @@ const isTablet = useMediaQuery({ maxWidth:768 })
         { name: "langchain", displayName: "Langchain" },
         { name: "logo-javascript", displayName: "Javascript" },
         { name: "mongodb-icon", displayName: "Mongodb" },
-        /* { name: "next-js", displayName: "Next Js" },
-        { name: "nodejs", displayName: "Nodejs" },
-        { name: "openai", displayName: "Openai" },
-        { name: "postgresql", displayName: "Postgresql" },
-        { name: "prisma", displayName: "Prisma" },
-        { name: "python", displayName: "Python" },
-        { name: "react", displayName: "React" },
-        { name: "sass", displayName: "Sass" },
-        { name: "tailwind-css", displayName: "Tailwind Css" },
-        { name: "typescript", displayName: "Typescript" },
-        { name: "vue", displayName: "Vue" } */]
+        ]
 
     return(
         <>

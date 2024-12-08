@@ -18,28 +18,6 @@ const OverviewProjects = ()=>{
         { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.2)" }
       ]
 
-      const logoObjects = [
-        { name: "blender", displayName: "Blender" },
-        { name: "css", displayName: "Css" },
-        { name: "git-icon", displayName: "Git" },
-        { name: "github-icon", displayName: "Github" },
-        { name: "huggingface", displayName: "Huggingface" },
-        { name: "javascript", displayName: "Javascript" },
-        { name: "langchain", displayName: "Langchain" },
-        { name: "logo-javascript", displayName: "Javascript" },
-        { name: "mongodb-icon", displayName: "Mongodb" },
-        /* { name: "next-js", displayName: "Next Js" },
-        { name: "nodejs", displayName: "Nodejs" },
-        { name: "openai", displayName: "Openai" },
-        { name: "postgresql", displayName: "Postgresql" },
-        { name: "prisma", displayName: "Prisma" },
-        { name: "python", displayName: "Python" },
-        { name: "react", displayName: "React" },
-        { name: "sass", displayName: "Sass" },
-        { name: "tailwind-css", displayName: "Tailwind Css" },
-        { name: "typescript", displayName: "Typescript" },
-        { name: "vue", displayName: "Vue" } */]
-
     return(
         <section ref={useRe} className="flex  flex-col lg:px-14 desk:px-40  pt-16 pb-10 md:pb-20  " >
             <motion.h2

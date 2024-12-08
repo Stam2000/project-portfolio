@@ -15,8 +15,10 @@
     "plugins": [
       {
         "name": "next"
-      }
+      },
+      
     ],
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./*"]
     }

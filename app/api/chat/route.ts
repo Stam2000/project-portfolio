@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-import { GenNewLg } from '@/utilities/aiFunctions';
 import { ChatManager } from "@/utilities/aiFunctions";
 import { followUpQuestion } from '@/utilities/aiFunctions';
-import { MyContext } from '@/components/contextProvider';
+
 
 export async function POST(request: Request) {
   try {

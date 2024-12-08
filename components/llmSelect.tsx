@@ -1,15 +1,12 @@
 import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
 import 'primereact/resources/themes/saga-blue/theme.css';
-import { motion } from 'framer-motion';
-import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Wrench,Sparkles } from 'lucide-react';
-import { SparkleSVG } from './SVG';
+
 
 
 type Props = {

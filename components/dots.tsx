@@ -1,8 +1,8 @@
 import  dotGeneratorGrid from "@/utilities/dotGenerator"
 import { useMemo } from "react";
-import { motion,AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import React,{ useEffect,useState } from "react";
-import isEqual from "lodash/isEqual"
+
 
 interface Props {
     numberOfDotEachLine : number;
@@ -14,13 +14,12 @@ interface Props {
     width?:number;
     height?:number;
     className?:string;
-}  /* whileInView={color.color.border || color.color.borderColor ? defaultwithB[Math.floor(Math.random()*defaultwithB.length)] : defautOnlyB[Math.floor(Math.random()*defaultwithB.length)] }
-viewport={{amount:0.5}} */
-const dotVariants = {
+}  
+/* const dotVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     hover: { scale: 0.8, transition: { duration: 0.2 } }
-  };
+  }; */
 const Dots = ({numberOfDotEachLine,
         numberOfLine,
         absolute=true,

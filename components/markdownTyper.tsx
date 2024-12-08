@@ -6,11 +6,7 @@ interface MarkdownTypewriterProps {
     onComplete?: () => void;
     className?: string;
   }
-  
-  interface ProcessedContentSegment {
-    type: 'text' | 'tag';
-    content: string;
-  }
+
   
   interface TypewriterState {
     processedContent: string;

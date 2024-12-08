@@ -1,20 +1,13 @@
 import { NextResponse } from 'next/server';
-import { GenNewLg } from '@/utilities/aiFunctions';
 import { GenTemplate} from "@/utilities/formular";
 import { DataGenerator } from '@/utilities/formular';
-import { followUpQuestion } from '@/utilities/aiFunctions';
-import { MyContext } from '@/components/contextProvider';
+
 
 export async function GET(request: Request) {
   try {
     
-    
-  
     // Call your utility function
     const response = await GenTemplate();
-
-  
-
   
     // Log the response from GenNewLg
     console.log('Response from GenNewLg:', response);

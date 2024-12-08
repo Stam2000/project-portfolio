@@ -1,7 +1,7 @@
 import  dotGeneratorGrid from "@/utilities/dotGenerator"
 import { useMemo } from "react";
 import { motion,AnimatePresence } from "framer-motion";
-import { useEffect,useState,forwardRef,useRef,useImperativeHandle} from "react";
+import { useEffect,useState} from "react";
 
 
 interface Props {
@@ -50,7 +50,7 @@ const Dots = ({numberOfDotEachLine,
         { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.8)" }
       ]
 
-      const defColors=[
+/*       const defColors=[
         { backgroundColor: "#D1D5DB" },
         { backgroundColor: "rgba(152, 206, 0, 0.8)" },
         { borderWidth: "2px", borderColor: "#FFFFFF" },
@@ -58,7 +58,7 @@ const Dots = ({numberOfDotEachLine,
         { borderWidth: "2px", borderColor: "#98CE00" },
         { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
         { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.2)" }
-      ]
+      ] */
 
 
     const defaultwithB = defaultColors.filter(CssProp => CssProp.borderColor)

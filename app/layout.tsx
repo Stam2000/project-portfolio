@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'
 import { MyProvider } from "@/components/contextProvider";
 import Particles from "@/components/ui/particles";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 
 const poiretOne = Poiret_One({

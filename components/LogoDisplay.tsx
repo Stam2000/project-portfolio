@@ -1,7 +1,7 @@
-import Image from "next/image"
+
 
 const LogoDisplay = ({logoObjects}:{ logoObjects: { name: string; displayName: string }[] }) =>{
-    const size = "10"
+
     
         const logos = logoObjects.map(lg=>({
             component : <img className={`h-5 md:h-6`} src={`/TechLogo/${lg.name}.svg`}  alt={lg.displayName}/>,
