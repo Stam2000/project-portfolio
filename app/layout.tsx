@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'
+import { MyProvider } from "@/components/contextProvider";
+import Particles from "@/components/ui/particles";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -63,10 +65,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      
       <body
-        className={`${poiretOne.variable} ${roboto.variable} ${nunito.variable} ${teko.variable} ${oxygen.variable} ${yesevaOne.variable} font-sans`}
+        className={`${poiretOne.variable} ${roboto.variable} ${nunito.variable} ${teko.variable} ${oxygen.variable} ${yesevaOne.variable} bg-gradient-to-br from-black from-10% via-[#101010] via-50% to-black to-100% font-sans`}
       >
-        {children}
+        <MyProvider>
+          <Particles quantity={200} className="fixed right-0 left-0 top-0 bottom-0"/>
+          {children}
+        </MyProvider>
       </body>
     </html>
   );

@@ -1,27 +1,27 @@
 import { NextResponse } from 'next/server';
 import { GenNewLg } from '@/utilities/aiFunctions';
 import { ChatManager } from "@/utilities/aiFunctions";
+import { followUpQuestion } from '@/utilities/aiFunctions';
+import { MyContext } from '@/components/contextProvider';
 
 export async function POST(request: Request) {
   try {
     
     // Parse the request body
     const body = await request.json();
-    const {input,chatHistory,langHistory} = body;
-    console.log(chatHistory)
-    console.log(input)
-
-    // Log the received data for debugging
+    const {input,chatHistory,langHistory,modelChat,modelGen} = body;
   
-
     // Call your utility function
-    const response = await ChatManager({input,chatHistory,langHistory});
+    const response = await ChatManager({input,chatHistory,langHistory,modelChat,modelGen});
 
+    const followQts = await followUpQuestion({input,modelFollow:"gpt-4o-mini",chatHistory,AIMsg:JSON.stringify(response.output+(response.outputFunctionCall ? response.outputFunctionCall.description : ''))})
+
+    console.log(followQts)
     // Log the response from GenNewLg
     console.log('Response from GenNewLg:', response);
 
     // Return the JSON response
-    return NextResponse.json({  response }, { status: 200 });
+    return NextResponse.json({  response,followQts }, { status: 200 });
   } catch (error) {
     // Log the error for debugging
     console.error('Error in POST /api/ai:', error);

@@ -1,16 +1,21 @@
-import Dots from "./Dots";
-import { ProjectDisplay } from "./ProjectDisplay";
+import Dots from "./dots-2";
+import { ProjectDisplay } from "./projectDisplay";
+import {motion, useInView} from "framer-motion"
+import { useRef } from "react";
+
 
 const OverviewProjects = ()=>{
+    const useRe = useRef(null)
+    const isInView = useInView(useRe)
     const defaultColors=[
         { backgroundColor: "#D1D5DB" },
         { backgroundColor: "#FFFFFF" },
         { backgroundColor: "rgba(152, 206, 0, 0.8)" },
-        { borderWidth: "2px", borderColor: "#FFFFFF" },
+        { borderWidth: "3px", borderColor: "#FFFFFF" },
         { backgroundColor: "rgba(152, 206, 0, 0.2)" },
-        { borderWidth: "2px", borderColor: "#98CE00" },
-        { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
-        { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.2)" }
+        { borderWidth: "3px", borderColor: "#98CE00" },
+        { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.9)" },
+        { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.2)" }
       ]
 
       const logoObjects = [
@@ -36,14 +41,18 @@ const OverviewProjects = ()=>{
         { name: "vue", displayName: "Vue" } */]
 
     return(
-        <section className="flex flex-col bg-gradient-to-b px-40 from-black from-10% to-[#0b0b0b] pt-16 pb-20 to-90% " >
-            <h2 className="text-white relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-medium p-2 gap-1" >
+        <section ref={useRe} className="flex  flex-col lg:px-14 desk:px-40  pt-16 pb-10 md:pb-20  " >
+            <motion.h2
+            initial={{opacity:0}}
+            whileInView={{opacity:1}}
+            viewport={{root:useRe,amount:0.5}}
+            className="text-white relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-medium p-2 gap-1" >
             <span className="z-20" >
                 Projects
             </span>
             <Dots numberOfDotEachLine={7} 
-                width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={defaultColors} numberOfLine={2} />
-        </h2>
+                width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={isInView ? [...defaultColors]:defaultColors} numberOfLine={2} />
+        </motion.h2>
         <ProjectDisplay />
         </section>
     )

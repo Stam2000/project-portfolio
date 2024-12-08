@@ -1,25 +1,39 @@
 "use client"
-import { LayoutGrid } from "@/components/ui/layout-grid";
-import OverviewProjects from "../components/OverviewProject";
-import Dots from "@/components/Dots"
+import OverviewProjects from "../components/overviewProject";
+import Dots from "@/components/dots"
+import Dots2  from "@/components/dots-2"
 import axios from "axios";
-import { Chat } from "@/components/Chat";
-import {useState} from "react"
+import Navbar from "@/components/navbar";
+import { Chat } from "@/components/chat";
+import {useState,useEffect,useMemo, useContext} from "react"
 import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
 import {zodSchemaGen,zodSchemaChat, generateTailwindClasses} from "@/lib/utils"
 import { MySvg,MySvg2,MySvg3,MySvg4,MySvg5,MySvg6,MySvg7 } from "@/components/SVG";
 import {z} from "zod"
 import React from "react";
-import { Display } from "@/components/Display";
-import DiagonalLines from "@/components/LineComponent";
-import ToolKit from "@/components/ToolKit";
 
-
+import { Display } from "@/components/display";
+import {useMediaQuery} from "react-responsive"
+import DiagonalLines from "@/components/lineComponent";
+import ToolKit from "@/components/toolKit";
+import { motion,useInView } from "framer-motion"
+import { extractBackgroundColors } from "@/lib/utils";
+import { shiftColors } from "@/lib/utils";
+import { SelectModels } from "@/components/llmSelect";
+import { v4 as uuidv4 } from 'uuid';
+import { MyContext } from "@/components/contextProvider";
+import {Loader2,Minimize2} from "lucide-react"
+import { AnimatePresence } from "framer-motion";
+import LayoutImages from "@/components/layoutGrid";
+import DesignHeader from "@/components/designHeader";
+import { useRef } from "react";
+import {format} from 'date-fns'
 
 
 
   type Role = "ai"|"user"
 interface Message {
+  id:string,
   role:Role,
   content:string,
   funfact?:string
@@ -44,23 +58,28 @@ const MagicWand04Icon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 
-
-export default function Home() { 
-
-
-
-const config: TailwindClassConfig = {
-  backgroundOpacityLevels: [20, 50, 80],
-  borderOpacityLevels: [20, 90],
+const defaultConfig: TailwindClassConfig = {
+  backgroundOpacityLevels: [30,50,100],
+  borderOpacityLevels: [20, 100],
   includeBorder: true,
-  includeCircle: true,
+  includeCircle:true,
 };
 
-  const [langHistory,setLangHistory] = useState<BaseMessage[]>([])
-  const [isInitialContent,setIsInitialContent] = useState(true)
-  const [currentLanguage,setCurrentLanguage]  = useState<ResGen>()
-  const [chatMessage,setChatMessage] = useState<Message[]>([])
-  const defaultColors=[
+
+const defC=[
+  { backgroundColor: "#D1D5DB" },
+  { backgroundColor: "#000000" },
+  { backgroundColor: "rgba(152, 206, 0, 0.8)" },
+  { borderWidth: "2px", borderColor: "#181818" },
+  { backgroundColor: "rgba(152, 206, 0, 0.8)" },
+  { borderWidth: "2px", borderColor: "#98CE00" },
+  { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
+  { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.8)" }
+]
+
+
+
+const defaultColors=[
   { backgroundColor: "#D1D5DB" },
   { backgroundColor: "#FFFFFF" },
   { backgroundColor: "rgba(152, 206, 0, 0.8)" },
@@ -73,99 +92,315 @@ const config: TailwindClassConfig = {
 
 const defColors=[
   { backgroundColor: "#D1D5DB" },
-  { backgroundColor: "#000000" },
+  { backgroundColor: "#FFFFFF" },
   { backgroundColor: "rgba(152, 206, 0, 0.8)" },
-  { borderWidth: "2px", borderColor: "#181818" },
-  { backgroundColor: "rgba(152, 206, 0, 0.8)" },
+  { borderWidth: "2px", borderColor: "#FFFFFF" },
+  { backgroundColor: "rgba(152, 206, 0, 0.2)" },
   { borderWidth: "2px", borderColor: "#98CE00" },
   { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
-  { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.8)" }
+  { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.2)" }
 ]
-  console.log(currentLanguage) 
 
-  const ca =  generateTailwindClasses(
-    currentLanguage ? [...currentLanguage.colors] : ["#98CE00"],
-    config
-  );
+export default function Home() { 
+
+  
+  const [modelGen,setModelGen] = useState<string>("gpt-4o-mini")
+  const [modelFollow,setModelFollow] = useState<string>("gpt-4o-mini")
+  const [modelChat,setModelChat] = useState<string>("gpt-4o-mini")
+  const [idImg,setIdImg]=useState<string|null>(null)
+  const [langHistory,setLangHistory] = useState<BaseMessage[]>([])
+  const [isInitialContent,setIsInitialContent] = useState(true)
+  const [currentLanguage,setCurrentLanguage]  = useState<ResGen>()
+  const [chatMessage,setChatMessage] = useState<Message[]>([])
+  const [borderColor,setBorderColor] = useState(["rgba(152,206,0,1)"])
+  const [btnColor,setBtnColor] = useState([`rgba(152,206,0,1)`])
+  const [btnShadow,setBtnShadow] = useState([`rgba(152,206,0,1)`])
+  const [chatHistory,setChatHistory] = useState<BaseMessage[]>([])
+  const [followQts,setFollowQts] = useState<{questions:string[]}>({questions:[]})
+  const {isLoading,setIsLoading} = useContext(MyContext)
+
+  const useRe = useRef(null)
+  const isInView = useInView(useRe)
+
+  const ca = useMemo(() => {
+    return generateTailwindClasses(
+      currentLanguage ? [...currentLanguage.colors] : ["#98CE00"],
+      defaultConfig
+    );
+  }, [currentLanguage?.colors]);
+
+
+  const handleReset = () =>{
+    setChatHistory([])
+    setChatMessage([])
+    setLangHistory([])
+    setFollowQts({questions:[]})
+    setCurrentLanguage(undefined)
+    setIsInitialContent(false)
+  }
+
+  const memoizedColors = useMemo(() => {
+    return currentLanguage ? [...ca] : [...defColors];
+  }, [ca]);
+
+  const [shadowBox, setShadowBox] = useState([ '0px 0px 0px rgba(152,206,0,1)']);
+  const [shadowBoxAd, setShadowBoxAd] = useState([ '0px 0px 0px rgba(152,206,0,1)']);
+
+const isMobile = useMediaQuery({ maxWidth:500 })
+const isTablet = useMediaQuery({ maxWidth:768 })
+const isSmallLaptop = useMediaQuery({ maxWidth:1024 })
+const isLaptop = useMediaQuery({maxWidth:1280})
+
+useEffect(() => {
+  const newBgColors = extractBackgroundColors(ca);
+  const lastColor = shiftColors(shadowBox);
+  const lastBg = shiftColors(borderColor);
+  const lastBtColor = shiftColors(btnColor)
+
+
+
+  setBorderColor([
+    lastBg!,
+    `${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+  ])
+
+  setBtnColor(
+    [
+      lastBtColor!,
+      `${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+    ]
+  )
+  setBtnShadow(
+    [
+      lastColor!,
+      `0px 5px 10px ${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+    ]
+  ) 
+
+  setShadowBox([
+    lastColor!,
+    `10px 15px 45px ${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+  ]);
+
+  setShadowBoxAd([
+    lastColor!,
+    `5px 5px 5px ${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+  ]);
+
+
+}, [ca]);
 
 
   async function handleSubmit() {
-
+    setIsLoading(true)
     try {
 
-        const {data:{message}} = await axios.post('http://localhost:3000/api/ai',
+        const {data:{message,followQts}} = await axios.post('/api/ai',
           {
-            langHistory
+            langHistory,
+            chatHistory,
+            modelGen,
+            modelFollow
           }
         );
         setLangHistory(prev => [...prev,new HumanMessage("new"),new AIMessage(JSON.stringify(message))])
         setIsInitialContent(false)
         setCurrentLanguage(message)
+        setFollowQts(followQts)
+        
         setChatMessage(prev => {
           const newMessage: Message = {
+            id: uuidv4(),
             role:"ai",
             content: message.description,
-            funfact:message.funfact
+            funfact:message.funFact
           }
+          
           return [...prev,newMessage]
         })
-        console.log(message)
 
+        setIsLoading(false)
     } catch (error) {
-
+      
         console.error('Error making POST request:', error);
 
     }
+    setIsLoading(false)
 }
  
+/*pt-24 md:pt-28 desk:pt-20 deskB:pt-24 */
 
 return (
-  <main> 
-    <div className="relative overflow-x-clip bg-gradient-to-b  from-black from-10% pt-16 to-[#0f0f0f] to-90% flex  flex-col h-lvh">
-    <div className="absolute -bottom-[225px] -right-[225px] border-[80px]  border-[#2b2b2b]  rounded-full  size-[400px] " />
-    <div className="absolute -top-[250px] -right-[240px] border-[20px]  border-[#131313]  rounded-full  size-[400px] " />
-    <DiagonalLines 
-  width={150} 
-  height={400} 
-  lineSpacing={25}
-  className=" rounded-lg opacity-5 shadow-md" 
-/>
-<div className="absolute top-[0%] left-[1%] rounded-[200px] rotate-[35deg] border-[100px] border-[#0d0d0d] size-[700px] " />
-<div className="absolute top-[34%] left-[40%] shadow-lg shadow-slate-black rounded-[150px] rotate-[35deg] border-[100px] border-[#1c1c1c]/20 size-[700px] " />
-      {/* <div className="flex h-8" >
-            <MySvg primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
-            <MySvg2 primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="white" opacity={0.5} />
-            <MySvg3 primaryColor="#ffcc00" secondaryColor="#00ffcc" tertiaryColor="#ffffff" opacity={0.5} />
-            <MySvg4 primaryColor="#ffcc00" secondaryColor="#00ffcc" tertiaryColor="#ffffff" opacity={0.5} />
-            <MySvg5 primaryColor="#ffcc00" secondaryColor="#00ffcc" tertiaryColor="#ffffff" opacity={0.5} />
-            <MySvg6 primaryColor="#ffcc00" secondaryColor="#00ffcc" tertiaryColor="#ffffff" opacity={0.5} />
-      </div> */}
+  <main>
+      <AnimatePresence>
+        {idImg && <motion.div         
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2, delay: 0.1 }}
+        style={{ pointerEvents: "auto" }}
+        onClick={()=>{setIdImg(null)}} className="top-10 bottom-10 left-10 bg-black overflow-hidden  right-10 z-[100] rounded-2xl fixed flex items-center justify-center" >
+            <motion.div layoutId={idImg} >
+                <span className="absolute right-4 top-4 hover:cursor-pointer text-white"><Minimize2/></span>
+            </motion.div>
+        </motion.div>}
+      </AnimatePresence> 
+    <div className="relative md:h-lvh desk:flex desk:flex-col desk:jusify-center ">
+      <div className="py-8" > 
+        <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col md:flex-row items-center justify-center md:w-fit" >
+              <div className="text-white" >
+                logo
+              </div>
+            <motion.button animate={{ 
+                          borderColor:  borderColor ,
+                          }}
+                          whileHover={{scale:1.05}}
+                          transition={{
+                          boxShadow: {
+                              duration: 5,
+                              ease: "easeInOut",
+                          },
+                          borderColor: {
+                              duration: 5, // Set your desired duration for borderColor
+                              ease: "easeInOut",
+                          },
+                          }} className="relative flex items-center border bg-none rounded-full px-2 p-1 justify-center gap-1">
+                      <a  className="z-50 font-nunito text-slate-100 bg-none text-[10px] md:text-sm font-light font-out left-1 text-nowrap" href="">
+                          Advaible for work  | <span className="font-bold" >{format(new Date(),'MMMM yyyy')} - [Your Date Here]</span>
+                      </a>   
+                  </motion.button>
+            </div>
+      </div>
+          
+      <div className="flex items-center md:max-h-[500px] md:h-[60%] flex-col md:flex-row desk:h-3/4 ">
+        <div className="flex w-full   justify-center md:w-[72%] lg:w-[70%] desk:w-[70%] flex-col h-full ">  
+          <motion.div 
+            initial={{ boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)" }}
+            animate={{ 
+              boxShadow:   shadowBox  , 
+              borderColor:  borderColor ,
+            }}
+            transition={{
+              boxShadow: {
+                duration: 5,
+                ease: "easeInOut",
+              },
+              borderColor: {
+                duration: 5, // Set your desired duration for borderColor
+                ease: "easeInOut",
+              },
+            }}
+          
+          className={`   md:overflow-x-hidden items-stretch flex-col-reverse relative 
+              bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00]  
+                from-white from-10%  to-[#efefef] flex  
+              md:flex-row w-[90%]  md:w-full rounded-r-2xl md:h-[95%] desk:h-[80%] justify-stretch 
+              gap-2
+              `} >
+              <DesignHeader /> 
+              <div className="flex items-stretch justify-center w-full md:w-1/2 " > 
+              <AnimatePresence mode="wait">
+                  { currentLanguage ?
+                  <motion.div
+                    initial={{opacity:0}}
+                    animate={{opacity:1}}
+                    exit={{opacity:0}}
+                    className="z-10 py-1 w-full"
+                  >
+                    <Chat
+                      setFollowQts={setFollowQts}
+                      followQts={followQts} 
+                      langHistory={langHistory}
+                      setCurrentLanguage={setCurrentLanguage} 
+                      currentLanguage={currentLanguage} 
+                      chatHistory={chatHistory} 
+                      setChatHistory={setChatHistory} 
+                      chatMessage={chatMessage} 
+                      setChatMessage={setChatMessage} 
+                      setLangHistory={setLangHistory} 
+                      modelChat={modelChat}
+                      modelGen={modelGen}
+                      />
+                  </motion.div>  : 
+                  <motion.div
+                    key={"layout-images"}
+                    initial={{opacity:0}}
+                    animate={{opacity:1}}
+                    exit={{opacity:0}}
 
-      <div className="flex items-center  h-3/4 ">
-      {/*----------------------------------------------------------------------------*/}
-        <div className=" flex flex-[2] flex-col   h-full " >
-        
-        <header className="flex px-2  w-2/5 mb-10 rounded-2xl py-5 items-center justify-between">
-        <div className="flex  text-white items-center gap-2">
-          <button className="" >
-            LOGO
-          </button>
-          <button>
-            advaible
-          </button>
-        </div> 
+                    className="z-[100] flex justify-center items-center"
+                  >
+                    <LayoutImages setId={setIdImg} />
+                  </motion.div> 
+                }
+              </AnimatePresence>   
+              </div>  
 
-        <a className="text-white" href="
-        ">
-          blog
-        </a>
-      </header>
-
-        <span className="text-[#98CE00]  font-extralight text-sm self-end" >
-            <div>人生は風前の灯火</div> 
+          
+            <div className="flex md:w-1/2 flex-col mix-blend-multiply gap-1 items-center text-center justify-center py-3  p-2 lg:mr-10 ">
             
-        </span> 
-          <div className="relative bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00] shadow-2xl shadow-[#98CE00]  from-white from-10%  to-[#efefef]   flex rounded-r-2xl h-3/5 justify-end pl-4" >
+              <Display isInitialContent={isInitialContent} colors={currentLanguage?.colors} translatedText={currentLanguage ? currentLanguage?.translatedText : undefined} />
+            
+              <div className=" flex flex-col  items-center justify-center" >
+              <motion.button 
+                animate={{
+                  backgroundColor:  btnColor ,
+                  boxShadow: btnShadow ,
+                }}
+                transition={{
+                  duration:4
+                }}
+                disabled={isLoading}
+                onClick={handleSubmit} className="w-44  bg-[#98CE00] p-1 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md" >
+                  <AnimatePresence mode="wait" >
+                    {isLoading ? 
+                    <motion.div
+                      key={"Loader2"}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{  opacity: 0 }} 
+                    ><Loader2 className={`text-white animate-spin`} /></motion.div> : 
+                    <motion.div
+                    key={"magic"}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{exit:{duration:0.1}}}
+                      exit={{ opacity:0 }} 
+                    ><MagicWand04Icon /></motion.div> }
+                  </AnimatePresence>
+                </motion.button>
+                <div className="flex items-center  max-w-44 justify-center gap-2 mt-2" >
+                  <button className="border p-1 h-8 rounded text-sm bg-white shadow-md w-full " onClick={handleReset} >
+                    Reset
+                  </button>
+                  {currentLanguage && <SelectModels  setModelChat={setModelChat} setModelFollow={setModelFollow} setModelGen={setModelGen} />}
+                </div>
+                
+                <AnimatePresence mode="wait" >
+              </AnimatePresence>
+              </div>
+
+            </div>  
+          </motion.div>
+        </div>
+        <div className="relative flex items-center  justify-center flex-1">          
+          {isMobile ? null:<Dots 
+          
+          numberOfDotEachLine={ isTablet ? 3 : isLaptop ? 5 : 7}
+          width={3}
+          height={3}   
+          gapBlock={1}
+          gapLine={1}
+          colors={ memoizedColors }  absolute={false}  numberOfLine={isTablet ? 24 : isSmallLaptop ? 28  :  32 } />}
+        </div>
+      </div>
+      <Navbar memoizedColors={memoizedColors} shadowBox={shadowBox} borderColor={borderColor} />
+    </div>
+    <ToolKit colors={ currentLanguage ? [...ca] : defaultColors} />
+    <OverviewProjects />
+    <section className="  flex flex-col px-8 lg:px-48 overflow-hidden  pt-4 md:pt-16 pb-28 md:pb-20  ">
+      
+      <div className="relative overflow-hidden bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00]   from-white from-10%  to-[#efefef]   flex rounded-2xl h-3/5 justify-end pl-4" >
           <div className="absolute h-full overflow-hidden w-full " >
             <MySvg7 className=" absolute  h-72" />
             {/* Right */}
@@ -234,173 +469,30 @@ return (
               {/*Cercle bottom input*/}
               <div className="absolute -bottom-[35%] left-[20%] border-[60px]  border-[#e5e5e5]  rounded-full  h-[200px] w-[200px] " />
           </div>
-            <div className=" px-2  h-full text-xs flex flex-1 items-center font-extralight  self-center " >
-              <div className="h-full  w-full" > 
-                <Chat langHistory={langHistory} chatMessage={chatMessage} setChatMessage={setChatMessage} setLangHistory={setLangHistory} />
-                  {/* <LayoutGrid cards={cards} /> */}
-              </div>
-            
-            </div>
-          
-            <div className=" flex flex-col mix-blend-multiply flex-1 gap-2 items-center text-center justify-center mr-10 ">
-              <Display isInitialContent={isInitialContent} translatedText={currentLanguage ? currentLanguage!.translatedText : undefined} />
-              <button onClick={handleSubmit} className="w-44 mt-2 bg-[#98CE00] p-1 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md" >
-                <MagicWand04Icon />
-                
+            <div className=" py-8 flex flex-col mix-blend-multiply flex-1 gap-2 items-center text-center justify-center">
+            <motion.h2
+            initial={{opacity:0}}
+            whileInView={{opacity:1}}
+            viewport={{root:useRe,amount:0.5}}
+            className="text-black relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-medium p-2 gap-1" >
+            <span className="z-20" >
+                About Me
+            </span>
+            <Dots2 numberOfDotEachLine={7} 
+                width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={isInView ? [...defC]:defC} numberOfLine={2} />
+        </motion.h2>
+              <p className="mt-8 w-2/3 z-1000 font-nunito  text-gray-700 self-center text-xl  text-center" >
+                I started playing with computers when I was 11 years-old. Since then I have been tinkering with all sorts of technologies that in some way or another led me to work on music, photography, sound engineering, electric engineering, automation, video production, feature film post-production, VR games, and 3D sound.
+              </p>
+              <button onClick={handleSubmit} className="w-44 mt-6 gap-2 bg-[#98CE00] p-3 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md" >
+                <span className=" font-nunito font-bold text-gray-800" >
+                  Contact Me
+                </span> 
+                <MagicWand04Icon />    
               </button>
             </div>  
           </div>
-        </div>
-        {/*----------------------------------------------------------------------------*/}
-        <div className="relative flex items-center  justify-center flex-1">          
-          {<Dots 
-          key={JSON.stringify(currentLanguage?.colors)} 
-          numberOfDotEachLine={8}
-          width={3}
-          height={3}   
-          gapBlock={1}
-          gapLine={1}
-          colors={ currentLanguage ? [...ca] : defaultColors}  absolute={false}  numberOfLine={36} />}
-        </div>
-      </div>
-      <nav className=" flex flex-wrap mt-16 font-poiret-one items-center justify-evenly " >
-        <div className="" >
-          <Dots numberOfDotEachLine={6} 
-                width={3} height={3}     absolute={false} colors={ currentLanguage ? [...ca] : defaultColors} numberOfLine={2} />
-        </div>
-      
-        <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50 text-white  text-2xl font-bold border-[1px] p-1 rounded-md font-out left-1 text-nowrap" href="">
-              My ToolKits        
-          </a>
-        </div>  
-        <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50 border-[1px] p-1 rounded-md text-white text-2xl font-bold font-out left-1 text-nowrap" href="">
-              My Project        
-          </a>
-          {/* <Dots numberOfDotEachLine={8} numberOfLine={4} /> */}
-        </div>
-        <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50 text-white border-[1px] p-1 rounded-md text-2xl font-bold font-out left-1 text-nowrap" href="">
-            Contact Me      
-          </a>
-        </div>
-        <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50 text-white border-[1px] p-1 rounded-md  text-2xl font-bold font-out left-1 text-nowrap" href="">
-            About Me      
-          </a>
-          {/* <Dots numberOfDotEachLine={8} numberOfLine={4} /> */}
-        </div>
-      </nav>
-      
-    </div>
-    <ToolKit />
-    <OverviewProjects />
-    <section className="flex flex-col px-48  bg-[#0f0f0f]  overflow-hidden  pt-16 pb-20  ">
-      <h2 className="text-white relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-medium p-2 gap-1" >
-          <span className="z-20" >
-              About
-          </span>
-          <Dots numberOfDotEachLine={7} 
-                width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={defColors} numberOfLine={2} />
-      </h2>
-      <p className="mt-8 w-2/3 text-white self-center text-xl  text-center" >
-        I started playing with computers when I was 11 years-old. Since then I have been tinkering with all sorts of technologies that in some way or another led me to work on music, photography, sound engineering, electric engineering, automation, video production, feature film post-production, VR games, and 3D sound.
-      </p>
-      
     </section>
   </main>
   );
 }
-
-const SkeletonOne = () => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
-        House in the woods
-      </p>
-      <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        A serene and tranquil retreat, this house in the woods offers a peaceful
-        escape from the hustle and bustle of city life.
-      </p>
-    </div>
-  );
-};
- 
-const SkeletonTwo = () => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
-        House above the clouds
-      </p>
-      <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        Perched high above the world, this house offers breathtaking views and a
-        unique living experience. It&apos;s a place where the sky meets home,
-        and tranquility is a way of life.
-      </p>
-    </div>
-  );
-};
-const SkeletonThree = () => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
-        Greens all over
-      </p>
-      <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        A house surrounded by greenery and nature&apos;s beauty. It&apos;s the
-        perfect place to relax, unwind, and enjoy life.
-      </p>
-    </div>
-  );
-};
-const SkeletonFour = () => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
-        Rivers are serene
-      </p>
-      <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        A house by the river is a place of peace and tranquility. It&apos;s the
-        perfect place to relax, unwind, and enjoy life.
-      </p>
-    </div>
-  );
-};
- 
-const cards = [
-  {
-    id: 1,
-    content: <SkeletonOne />,
-    className: "md:col-span-2",
-    thumbnail:
-      "https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=3474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 2,
-    content: <SkeletonTwo />,
-    className: "col-span-1",
-    thumbnail:
-      "https://images.unsplash.com/photo-1464457312035-3d7d0e0c058e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 3,
-    content: <SkeletonThree />,
-    className: "col-span-1",
-    thumbnail:
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 4,
-    content: <SkeletonFour />,
-    className: "md:col-span-2",
-    thumbnail:
-      "https://images.unsplash.com/photo-1475070929565-c985b496cb9f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
-
-/* bg-gradient-to-l from-white from-10%  to-[#e7e7e7] bg-[url('/26669.jpg')] bg-repeat bg-[url('/26669.jpg')] bg-cover*/

@@ -2,9 +2,17 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import axios from "axios";
 import { z } from "zod"
+import {ChatOpenAI} from "@langchain/openai"
+import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+interface StyleObject {
+  backgroundColor?: string;
+  [key: string]: any; // Allows for other properties like border, etc.
 }
 
 interface TailwindClassConfig {
@@ -85,7 +93,7 @@ export function generateTailwindClasses(
     if (includeBorder) {
       borderOpacityLevels.forEach((opacity) => {
         const style: React.CSSProperties = {
-          border: `1px solid ${hexToRGBA(color, opacity)}`,
+          border: `2px solid ${hexToRGBA(color, opacity)}`,
         };
         // If not including circles, set background to transparent
         if (!includeCircle) {
@@ -98,6 +106,48 @@ export function generateTailwindClasses(
 
   return styles;
 }
+
+export function extractBackgroundColors(arr:React.CSSProperties[]) {
+  return arr
+    .filter(item => item.backgroundColor) // Only consider items with backgroundColor property
+    .map(item => {
+      // Modify the rgba color string to set the opacity to 1
+      const rgba = item.backgroundColor;
+      const newRgba = rgba!.replace(/rgba\((\d+),(\d+),(\d+),[^)]+\)/, 'rgba($1,$2,$3,1)');
+      return newRgba;
+    });
+}
+
+export const shiftColors = (arr:string[]) => {
+  
+    const newArr = [...arr]; // Copy the array to avoid mutating state directly
+    const lastColor = newArr.pop(); // Remove the last color
+    // Add it to the front
+    return lastColor;
+  
+};
+
+export function extractJSON(text:string) {
+  try {
+    // Chercher le début de l'objet JSON (premier '{')
+    const startIndex = text.indexOf('{');
+    if (startIndex === -1) return null;
+    
+    // Chercher la fin de l'objet JSON (dernier '}')
+    const endIndex = text.lastIndexOf('}');
+    if (endIndex === -1) return null;
+    
+    // Extraire le JSON
+    const jsonString = text.substring(startIndex, endIndex + 1);
+    
+    // Vérifier que c'est un JSON valide
+   
+    
+    return jsonString;
+} catch (error) {
+    return null;
+}
+}
 /* // Exemple d'utilisation
 const colors = ['#C6C6C3', '#E11010', '#000000', '#F5D03D'];
 const config: TailwindClassConfig = {
@@ -107,3 +157,38 @@ const config: TailwindClassConfig = {
   includeCircle: true,
 
  */
+
+  export function getModelInstance(shortName:string) {
+    const models:{[key:string]:string} = {
+      "gpt-4o": "gpt-4o",
+      "gpt-4o-mini": "gpt-4o-mini",
+      "gpt-4": "gpt-4",
+      "gpt-4-turbo": "gpt-4-turbo",
+      "gpt-3.5": "gpt-3.5-turbo",
+      "Mixtral-8x7B": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+      "Mixtral-8x22B": "mistralai/Mixtral-8x22B-Instruct-v0.1",
+      "Llama-3.1-405B": "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+      "Llama-3.1-70B": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+      "Llama-3.1-8B": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+      "WizardLM-2-8x22B": "microsoft/WizardLM-2-8x22B",
+      "Gemma-2-27B": "google/gemma-2-27b-it",
+      "Qwen-2.5-7B": "Qwen/Qwen2.5-7B-Instruct-Turbo"
+    };
+  
+    const modelName = models[shortName];
+  
+    if (!modelName) {
+      throw new Error(`Unknown model short name: ${shortName}`);
+    }
+  
+    // Check if the model is an OpenAI model (starts with "gpt")
+    if (shortName.startsWith("gpt")) {
+      return new ChatOpenAI({
+        model: modelName,
+      });
+    } else {
+      return new ChatTogetherAI({
+        model: modelName
+      });
+    }
+  }

@@ -10,16 +10,18 @@ interface Props {
     text:string,
     delay?:number,
     speed?:number,
+    onComplete?:()=>void
     cursor?:string | React.ReactNode,
     component?: keyof JSX.IntrinsicElements | React.ComponentType<any>,
     className?:string,
 }
 
-export const TypeWritter = ({
+export const TypeWritter = React.memo(({
     text,
     delay=0,
     speed=50,
     cursor,
+    onComplete,
     component:Component = 'div',
     className,
     
@@ -48,6 +50,7 @@ export const TypeWritter = ({
             },speed) 
         } else if (currentIndex === text.length && !isComplete){
             setIsComplete(true)
+            if (onComplete) onComplete() 
         }
 
         return () => clearTimeout(timer)
@@ -74,4 +77,4 @@ const renderCursor = () => {
             {!isComplete ? renderCursor() : null}
         </Component>
     )
-}
+})
