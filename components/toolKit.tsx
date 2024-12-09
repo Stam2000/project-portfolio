@@ -85,8 +85,7 @@ const ToolKit =({colors}:{colors:React.CSSProperties[]})=>{
                 </motion.h2>
 
                 <p className="md:mt-6 mt-8 text-md text-justify font-nunito text-gray-700 " >
-                    Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, 
-                    desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. 
+                From frameworks to libraries, this tool kit is my creative playground I use daily to code, design, and innovate in my development and AI engineering journey 🧭. 
                 </p>
 
                 <div className="mt-12 self-center w-[90%]  font-nunito text-gray-700 md:w-full mb-16" >

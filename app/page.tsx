@@ -149,6 +149,7 @@ const isMobile = useMediaQuery({ maxWidth:500 })
 const isTablet = useMediaQuery({ maxWidth:768 })
 const isSmallLaptop = useMediaQuery({ maxWidth:1024 })
 const isLaptop = useMediaQuery({maxWidth:1280})
+const isBigScreen = useMediaQuery({minWidth:1440})
 
 useEffect(() => {
   const newBgColors = extractBackgroundColors(ca);
@@ -240,12 +241,12 @@ return (
             </motion.div>
         </motion.div>}
       </AnimatePresence> 
-    <div className="relative md:h-lvh desk:flex desk:flex-col desk:jusify-center ">
-      <div className="py-8" > 
+    <div className="relative md:h-lvh deskB:flex deskB:flex-col  deskB:justify-start ">
+      <div className="py-8 " > 
         <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col md:flex-row items-center justify-center md:w-fit" >
-              <div className="text-white" >
-                logo
-              </div>
+          <div className="text-white" >
+            logo
+          </div>
             <motion.button animate={{ 
                           borderColor:  borderColor ,
                           }}
@@ -260,15 +261,15 @@ return (
                               ease: "easeInOut",
                           },
                           }} className="relative flex items-center border bg-none rounded-full px-2 p-1 justify-center gap-1">
-                      <a  className="z-50 font-nunito text-slate-100 bg-none text-[10px] md:text-sm font-light font-out left-1 text-nowrap" href="">
+                      <a  className="z-50 font-nunito text-white bg-none text-[10px] md:text-sm font-light font-out left-1 text-nowrap" href="">
                           Advaible for work  | <span className="font-bold" >{format(new Date(),'MMMM yyyy')} - [Your Date Here]</span>
                       </a>   
                   </motion.button>
             </div>
       </div>
           
-      <div className="flex items-center md:max-h-[500px] md:h-[60%] flex-col md:flex-row desk:h-3/4 ">
-        <div className="flex w-full   justify-center md:w-[72%] lg:w-[70%] desk:w-[70%] flex-col h-full ">  
+      <div className="flex items-center deskB:mt-12  md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
+        <div className="flex w-full  justify-center md:w-[72%] lg:w-[70%] deskB:w-[70%] flex-col h-full ">  
           <motion.div 
             initial={{ boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)" }}
             animate={{ 
@@ -361,14 +362,15 @@ return (
                       animate={{ opacity: 1 }}
                       transition={{exit:{duration:0.1}}}
                       exit={{ opacity:0 }} 
-                    ><MagicWand04Icon /></motion.div> }
+                      className="flex items-center justify-center text-[12px] text-white gap-2"
+                    >Click Me<MagicWand04Icon height={20} /></motion.div> }
                   </AnimatePresence>
                 </motion.button>
                 <div className="flex items-center  max-w-44 justify-center gap-2 mt-2" >
-                  <button className="border p-1 h-8 rounded text-sm bg-white shadow-md w-full " onClick={handleReset} >
+                  <button className="border p-[2px] h-8 rounded text-sm bg-white shadow-md w-full " onClick={handleReset} >
                     Reset
                   </button>
-                  {currentLanguage && <SelectModels  setModelChat={setModelChat} setModelFollow={setModelFollow} setModelGen={setModelGen} />}
+                  <SelectModels  setModelChat={setModelChat} setModelFollow={setModelFollow} setModelGen={setModelGen} />
                 </div>
                 
                 <AnimatePresence mode="wait" >
@@ -381,12 +383,17 @@ return (
         <div className="relative flex items-center  justify-center flex-1">          
           {isMobile ? null:<Dots 
           
-          numberOfDotEachLine={ isTablet ? 3 : isLaptop ? 5 : 7}
+          numberOfDotEachLine={ isTablet ? 3 
+                                            : isLaptop ? 5 
+                                                            : 7}
           width={3}
           height={3}   
           gapBlock={1}
           gapLine={1}
-          colors={ memoizedColors }  absolute={false}  numberOfLine={isTablet ? 24 : isSmallLaptop ? 28  :  32 } />}
+          colors={ memoizedColors }  absolute={false}  
+          numberOfLine={isTablet ? 24 
+                                      : isSmallLaptop ? 28  
+                                                        : isBigScreen ? 32 : 20 } />}
         </div>
       </div>
       <Navbar memoizedColors={memoizedColors} shadowBox={shadowBox} borderColor={borderColor} />
@@ -438,9 +445,11 @@ return (
             <Dots2 numberOfDotEachLine={7} 
                 width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={isInView ? [...defC]:defC} numberOfLine={2} />
         </motion.h2>
-              <p className="mt-8 w-2/3 z-1000 font-nunito  text-gray-700 self-center text-xl  text-center" >
-                I started playing with computers when I was 11 years-old. Since then I have been tinkering with all sorts of technologies that in some way or another led me to work on music, photography, sound engineering, electric engineering, automation, video production, feature film post-production, VR games, and 3D sound.
-              </p>
+              <article className="mt-8 w-[90%] z-1000 font-nunito  text-gray-700 self-center text-xl  text-start" >
+              <p className="mb-4 ">Hi there! 👋 I’m Manuel, a full-stack developer and AI engineer based in Berlin, currently studying Computer Engineering at TU Berlin. My journey into coding began with a passion for gaming and the realization that coding felt like wielding a superpower 🦸. The true turning point came when I decided to create apps that cater to my needs or solve everyday problems, even though I had no idea where to begin or what tools to use. This sparked my curiosity and led me to dive into coding, starting with Python, progressing to JavaScript, and eventually pursuing a career in AI engineering. Along the way, I’ve turned my ideas into reality and tackled meaningful challenges.</p>
+
+              <p>Fast forward to today, I’ve come a long way! 🚀 I love blending creativity with technical skills to craft unique solutions. There’s still so much to learn, but every step forward is an adventure. If you’re up for collaborating or brainstorming cool ideas, let’s make something awesome together! 💡</p>
+              </article>
               <button onClick={handleSubmit} className="w-44 mt-6 gap-2 bg-[#98CE00] p-3 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md" >
                 <span className=" font-nunito font-bold text-gray-800" >
                   Contact Me

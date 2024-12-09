@@ -128,12 +128,12 @@ if(isTablet){
         </div>
       
         <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50 text-white  text-xl font-bold  p-2 md:p-1 rounded-md font-out left-1 text-nowrap" href="">
+          <a className="z-50 text-white  deskB:text-xl font-bold  p-2 md:p-1 rounded-md font-out left-1 text-nowrap" href="">
               My ToolKits        
           </a>
         </div>  
         <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50  p-2 md:p-1 rounded-md text-white text-xl font-bold font-out left-1 text-nowrap" href="">
+          <a className="z-50  p-2 md:p-1 rounded-md text-white deskB:text-xl font-bold font-out left-1 text-nowrap" href="">
               My Project        
           </a>
         </div>
@@ -154,7 +154,7 @@ if(isTablet){
                 ease: "easeInOut",
               },
             }} className="relative flex items-center border-2 bg-none rounded-md p-2 justify-center gap-1">
-          <a  className="z-50 text-white bg-none    text-xl font-bold font-out left-1 text-nowrap" href="">
+          <a  className="z-50 text-white bg-none    deskB:text-xl font-bold font-out left-1 text-nowrap" href="">
             Contact Me      
           </a>
           
@@ -166,7 +166,7 @@ if(isTablet){
         </div>
         
         <div className="relative flex items-center justify-center gap-1">
-          <a className="z-50 text-white  p-2 md:p-1 rounded-md  text-xl font-bold font-out left-1 text-nowrap" href="">
+          <a className="z-50 text-white  p-2 md:p-1 rounded-md  deskB:text-xl font-bold font-out left-1 text-nowrap" href="">
             About Me      
           </a>
         </div>
