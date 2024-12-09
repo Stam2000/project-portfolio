@@ -235,7 +235,7 @@ return (
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2, delay: 0.1 }}
         style={{ pointerEvents: "auto" }}
-        onClick={()=>{setIdImg(null)}} className="top-10 bottom-10 left-10 bg-black overflow-hidden  right-10 z-[100] rounded-2xl fixed flex items-center justify-center" >
+        onClick={()=>{setIdImg(null)}} className="top-5 bottom-5 left-5 right-5  md:top-10 md:bottom-10 md:left-10 bg-black overflow-hidden  md:right-10 z-[100] rounded-2xl fixed flex items-center justify-center" >
             <motion.div layoutId={idImg} >
                 <span className="absolute right-4 top-4 hover:cursor-pointer text-white"><Minimize2/></span>
             </motion.div>
@@ -402,7 +402,7 @@ return (
     <OverviewProjects />
     <section className="  flex flex-col px-8 lg:px-48 overflow-hidden  pt-4 md:pt-16 pb-28 md:pb-20  ">
       
-      <div className="relative overflow-hidden bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00]   from-white from-10%  to-[#efefef]   flex rounded-2xl h-3/5 justify-end pl-4" >
+      <div className="relative overflow-hidden bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00]   from-white from-10%  to-[#efefef]   flex rounded-2xl h-3/5 justify-end " >
           <div className="absolute h-full overflow-hidden w-full " >
             <MySvg7 className=" absolute  h-72" />
             
@@ -433,12 +433,12 @@ return (
               <div className="absolute bottom-[29%] left-[40%] rounded-full bg-white h-[28px] w-[28px] " />
               <div className="absolute -bottom-[35%] left-[20%] border-[60px]  border-[#e5e5e5]  rounded-full  h-[200px] w-[200px] " />
           </div>
-            <div className=" py-8 flex flex-col mix-blend-multiply flex-1 gap-2 items-center text-center justify-center">
+            <div className=" py-8 flex flex-col mix-blend-multiply flex-1 gap-2  items-center text-center justify-center">
             <motion.h2
             initial={{opacity:0}}
             whileInView={{opacity:1}}
             viewport={{root:useRe,amount:0.5}}
-            className="text-black relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-medium p-2 gap-1" >
+            className="text-black relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-medium md:p-2 gap-1" >
             <span className="z-20" >
                 About Me
             </span>
@@ -446,7 +446,9 @@ return (
                 width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={isInView ? [...defC]:defC} numberOfLine={2} />
         </motion.h2>
               <article className="mt-8 w-[90%] z-1000 font-nunito  text-gray-700 self-center text-md  text-justify" >
-              <p className="mb-4 ">Hi there! 👋 I’m Manuel, a full-stack developer and AI engineer based in Berlin, currently studying Computer Engineering at TU Berlin. My journey into coding began with a passion for gaming and the realization that coding felt like wielding a superpower 🦸. The true turning point came when I decided to create apps that cater to my needs or solve everyday problems, even though I had no idea where to begin or what tools to use. This sparked my curiosity and led me to dive into coding, starting with Python, progressing to JavaScript, and eventually pursuing a career in AI engineering. Along the way, I’ve turned my ideas into reality and tackled meaningful challenges.</p>
+              <p className="mb-4 ">Hi there! 👋 I’m Manuel, a full-stack developer and AI engineer based in Berlin, currently studying Computer Engineering at TU Berlin. My journey into coding began with a passion for gaming and the realization that coding felt like wielding a superpower 🦸. </p>
+                
+                <p  className="mb-4" > The true turning point came when I decided to create apps that cater to my needs or solve everyday problems, even though I had no idea where to begin or what tools to use. This sparked my curiosity and led me to dive into coding, starting with Python, progressing to JavaScript, and eventually pursuing a career in AI engineering. Along the way, I’ve turned my ideas into reality and tackled meaningful challenges.</p>
 
               <p>Fast forward to today, I’ve come a long way! 🚀 I love blending creativity with technical skills to craft unique solutions. There’s still so much to learn, but every step forward is an adventure. If you’re up for collaborating or brainstorming cool ideas, let’s make something awesome together! 💡</p>
               </article>
