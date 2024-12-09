@@ -223,6 +223,8 @@ useEffect(() => {
     }
     setIsLoading(false)
 }
+
+console.log(idImg)
  
 /*pt-24 md:pt-28 desk:pt-20 deskB:pt-24 */
 
@@ -238,6 +240,7 @@ return (
         onClick={()=>{setIdImg(null)}} className="top-5 bottom-5 left-5 right-5  md:top-10 md:bottom-10 md:left-10 bg-black overflow-hidden  md:right-10 z-[100] rounded-2xl fixed flex items-center justify-center" >
             <motion.div layoutId={idImg} >
                 <span className="absolute right-4 top-4 hover:cursor-pointer text-white"><Minimize2/></span>
+                <motion.img className={` object-cover `} src={`/${idImg}`}  alt={idImg}/>
             </motion.div>
         </motion.div>}
       </AnimatePresence> 
@@ -324,8 +327,9 @@ return (
                     animate={{opacity:1}}
                     exit={{opacity:0}}
 
-                    className="z-[100] flex justify-center items-center"
-                  >
+                    className=" flex flex-col   justify-center items-center"
+                  > 
+                    <span className="h-[5%] italic mt-2 font-zeyada text-lg font-bold" >because i love art 💚</span>
                     <LayoutImages setId={setIdImg} />
                   </motion.div> 
                 }

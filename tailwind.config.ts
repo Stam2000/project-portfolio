@@ -123,7 +123,8 @@ const config: Config = {
   			teko: ['var(--font-teko)'],
   			oxygen: ['var(--font-oxygen)'],
   			'yeseva-one': ['var(--font-yeseva-one)'],
-  			sans: ['var(--font-roboto)', 'system-ui', 'sans-serif']
+  			sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
+			zeyada: ['var(--font-zeyada)','cursive']
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

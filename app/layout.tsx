@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One } from 'next/font/google'
+import { Poiret_One, Roboto, Nunito, Teko, Oxygen, Yeseva_One,Zeyada } from 'next/font/google'
 import { MyProvider } from "@/components/contextProvider";
 import Particles from "@/components/ui/particles";
 
@@ -41,6 +41,12 @@ const yesevaOne = Yeseva_One({
   variable: '--font-yeseva-one',
 });
 
+const zeyada = Zeyada({
+  weight: '400', 
+  subsets: ['latin'], 
+  variable: '--font-zeyada',
+});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -56,7 +62,7 @@ export default function RootLayout({
     <html lang="en">
       
       <body
-        className={`${poiretOne.variable} ${roboto.variable} ${nunito.variable} ${teko.variable} ${oxygen.variable} ${yesevaOne.variable} bg-gradient-to-br from-black from-10% via-[#101010] via-50% to-black to-100% font-sans`}
+        className={`${poiretOne.variable} ${roboto.variable} ${nunito.variable} ${teko.variable} ${oxygen.variable} ${yesevaOne.variable} ${zeyada.variable} bg-gradient-to-br from-black from-10% via-[#101010] via-50% to-black to-100% font-sans`}
       >
         <MyProvider>
           <Particles quantity={200} className="fixed right-0 left-0 top-0 bottom-0"/>

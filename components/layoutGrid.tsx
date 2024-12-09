@@ -6,10 +6,10 @@ const LayoutImages = ({setId}:{setId:React.Dispatch<React.SetStateAction<string|
 
 
     const images = [
-        {src:"26669"},
-        {src:"bg"},
-        {src:"bg2"},
-        {src:"bg3"},
+        {src:"cars.jpeg"},
+        {src:"landscape.jpeg"},
+        {src:"lion.jpeg"},
+        {src:"guitar.jpeg"},
     ]
 
     const setIdFunc = (e:React.MouseEvent<HTMLDivElement,MouseEvent>)=>{
@@ -19,11 +19,12 @@ const LayoutImages = ({setId}:{setId:React.Dispatch<React.SetStateAction<string|
 
     return(
         <>
-            <div className=" lg:ml-4 z-50 h-full  md:h-[70%] w-[90%] md:w-full py-4 grid grid-rows-4 grid-cols-7  grid-flow-col gap-2 md:gap-4">
-                <motion.div layoutId={images[0].src} id={images[0].src}onClick={(e)=>{setIdFunc(e)}} className="row-span-2 overflow-hidden col-span-4 bg-slate-200 hover:cursor-pointer rounded-xl">{/* <motion.img className={` w-full h-full `} src={`/${images[0].src}.jpg`}  alt={"26669"}/> */}</motion.div>
-                <motion.div layoutId={images[1].src} id={images[1].src} onClick={(e)=>{setIdFunc(e) }} className="col-span-3 row-span-2 overflow-hidden bg-slate-200 hover:cursor-pointer rounded-xl">{/* <motion.img className={`w-full h-full `} src={`/${images[1].src}.jpg`}  alt={`${images[1].src}`}/> */}</motion.div>
-                <motion.div layoutId={images[2].src} id={images[2].src} onClick={(e)=>{setIdFunc(e) }}  className="row-span-2 col-span-4 overflow-hidden bg-slate-200 hover:cursor-pointer rounded-xl">{/* <motion.img className={`w-full  h-full `} src={`/${images[2].src}.jpg`}  alt={`${images[2].src}`}/> */}</motion.div>
-                <motion.div layoutId={images[3].src} id={images[3].src} onClick={(e)=>{setIdFunc(e) }} className="row-span-2 col-span-3 overflow-hidden bg-slate-200 hover:cursor-pointer rounded-xl">{/* <motion.img  className={`w-full h-full `} src={`/${images[3].src}.jpg`}  alt={`${images[3].src}`}/> */}</motion.div>
+            
+            <div className=" lg:ml-4 -z-10 h-full opacity-[78%] md:h-[65%] deskB:h-[80%] w-[90%] md:w-full py-4 grid grid-rows-4 grid-cols-7  grid-flow-col gap-2 md:gap-4">
+                <motion.div layoutId={images[0].src} id={images[0].src}onClick={(e)=>{setIdFunc(e)}} className="row-span-2 z-0 flex items-center justify-center overflow-hidden col-span-4  hover:cursor-pointer rounded-xl"><motion.img className={` object-cover rounded-xl `} src={`/${images[0].src}`}  alt={"26669"}/></motion.div>
+                <motion.div layoutId={images[1].src} id={images[1].src} onClick={(e)=>{setIdFunc(e) }} className="col-span-3 z-0 flex items-center justify-center row-span-2 overflow-hidden  hover:cursor-pointer rounded-xl"><motion.img className={`object-cover rounded-xl `} src={`/${images[1].src}`}  alt={`${images[1].src}`}/></motion.div>
+                <motion.div layoutId={images[2].src} id={images[2].src} onClick={(e)=>{setIdFunc(e) }}  className="row-span-2 z-0 flex items-center justify-center col-span-4 overflow-hidden  hover:cursor-pointer rounded-xl"><motion.img className={`object-cover rounded-xl `} src={`/${images[2].src}`}  alt={`${images[2].src}`}/></motion.div>
+                <motion.div layoutId={images[3].src} id={images[3].src} onClick={(e)=>{setIdFunc(e) }} className="row-span-2 z-0 flex items-center justify-center col-span-3 overflow-hidden  hover:cursor-pointer rounded-xl"><motion.img  className={`object-cover rounded-xl `} src={`/${images[3].src}`}  alt={`${images[3].src}`}/></motion.div>
             </div> 
         </>
         
