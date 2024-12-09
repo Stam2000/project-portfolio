@@ -146,7 +146,7 @@ you role is to generate random  informations  in order to create a persona. thes
             input:"generate new persona"
         })
         
-        console.log(response)
+
     
         return response
   
@@ -155,7 +155,6 @@ you role is to generate random  informations  in order to create a persona. thes
 export const DataGenerator = async ( data : Form ) => {
 
   const persona = JSON.stringify(data)
-  console.log(persona)
 
 const moreDetails = `i want to provide you with more informations.
 
@@ -344,7 +343,6 @@ exemple of output:
     input:`generate a more detailed persona for ${persona}`
   })
 
-  console.log(guideLine)
 
   const currentDate = new Date();
   const threeMonthsBefore = subMonths(currentDate, 3);
@@ -382,7 +380,6 @@ for (let week = 0; week < 3; week++){
     chat_history:History
    })
 
-   console.log(weekData)
 
   History.push(new HumanMessage("next week"))
   History.push(new AIMessage(JSON.stringify(weekData)))

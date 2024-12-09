@@ -28,7 +28,8 @@ import LayoutImages from "@/components/layoutGrid";
 import DesignHeader from "@/components/designHeader";
 import { useRef } from "react";
 import {format} from 'date-fns'
-
+import { GithubIcon } from "@/components/customIcon";
+import { LinkedIcon } from "@/components/customIcon";
 
 
   type Role = "ai"|"user"
@@ -224,7 +225,6 @@ useEffect(() => {
     setIsLoading(false)
 }
 
-console.log(idImg)
  
 /*pt-24 md:pt-28 desk:pt-20 deskB:pt-24 */
 
@@ -456,12 +456,19 @@ return (
 
               <p>Fast forward to today, I’ve come a long way! 🚀 I love blending creativity with technical skills to craft unique solutions. There’s still so much to learn, but every step forward is an adventure. If you’re up for collaborating or brainstorming cool ideas, let’s make something awesome together! 💡</p>
               </article>
-              <button onClick={handleSubmit} className="w-44 mt-6 gap-2 bg-[#98CE00] p-3 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md" >
-                <span className=" font-nunito font-bold text-gray-800" >
-                  Contact Me
-                </span> 
-                <MagicWand04Icon />    
-              </button>
+              <div className="flex flex-col gap-2 items-center justify-center" >
+                <button onClick={handleSubmit} className="w-44 mt-6 gap-2 bg-[#98CE00] p-3 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md" >
+                  <a className=" font-nunito font-bold text-white" href="mailto:manuel@sopmanuel.com" >
+                    Contact Me
+                  </a> 
+                  <MagicWand04Icon />    
+                </button>
+                <div  className="grid grid-cols-2 gap-2" >
+                  <a  href="https://github.com/Stam2000" ><GithubIcon width={35} height={35} color="black" className="custom-class" /></a>
+                  <a  href="https://www.linkedin.com/in/manuel-sop-0905b9207" ><LinkedIcon width={35} height={35} color="black" className="custom-class" /></a>
+                </div> 
+              </div>
+              
             </div>  
           </div>
     </section>

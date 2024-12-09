@@ -36,7 +36,7 @@ const zodSchema = z.object({
       name:z.string().describe("text to be translated : Hello i'm Manuel"),
       fullStack:z.string().describe("text to translate : Full Stack"),
       AiDev:z.string().describe("text to translate: AI Developer"),
-      description:z.string().describe("text to translate : I love exploring and creating 🚀 I'm a lifelong learner 🎓 and I might have a thing for traditional Neapolitan Pizza 🍕 ")
+      description:z.string().describe("text to translate : Turning daily problems 🧩 into solutions with code 💻, while fueling my creativity 🎨 and love for chicken 🍗.")
   }).describe("The translation of the given hero section text into the language"),
   funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
   colors: z.array(z.string()).describe("An array of colors in code (example #98CE00) representing the language’s culture, flag, or fictional setting"),
@@ -53,7 +53,7 @@ const zodSchema = z.object({
       name:"text to be translate : Hello i'm Manuel",
       fullStack:"text to translate : Full Stack",
       AiDev:"text to translate: AI Developer",
-      description:"text to translate : I love exploring and creating 🚀 I'm a lifelong learner 🎓 and I might have a thing for traditional Neapolitan Pizza 🍕 "----
+      description:"text to translate : Turning daily problems 🧩 into solutions with code 💻, while fueling my creativity 🎨 and love for chicken 🍗.
       
      and cultural or fictional information (when fictional languages) for a hero section text. 
     The goal is to immerse users in different languages, sparking curiosity about the language and its background. 
@@ -100,9 +100,9 @@ tags\n{format_instructions}
         memoryPrompt,
         model,
         (prevRes)=>{
-          console.log(prevRes)
+  
           const extracted = extractJSON(prevRes.content)
-          console.log(extracted)
+
           
           const res = {
             ...prevRes,
@@ -133,7 +133,7 @@ tags\n{format_instructions}
       const validSch = zodSchemaGen.safeParse(response).success 
       validRes = validSch ? !validRes : false 
       it = it++
-      console.log(it)
+
     }
     
     
@@ -235,7 +235,7 @@ Respond only in valid JSON following this JSON object schema:
         input}
       );
 
-      console.log(res)
+
 
     return res
 }
@@ -303,13 +303,7 @@ Repeating questions that have already been answered.
           input:updatedChatMessage,
       })
       
-      console.log(response)
-  
+
       return response
 
 }
-
-/* 535719ace9b7b0a8066566bd075b52112da2087dd66592fa884a4e975d79b911 */
-
-/* claude APi
-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 */

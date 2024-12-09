@@ -33,8 +33,7 @@ const Dots = ({numberOfDotEachLine,
             useEffect(() => {
                   setCount( prev => prev + 1 )
               }, [colors]);
-    console.log(count)
-    console.log(colors)
+
     
     const randomDist1 = useMemo(() => {
         return dotGeneratorGrid(numberOfDotEachLine, numberOfLine, colors);

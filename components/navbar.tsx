@@ -2,6 +2,7 @@ import Dots from "./dots"
 import { GithubIcon, LinkedIcon } from "./customIcon"
 import { motion } from "framer-motion"
 import {useMediaQuery} from "react-responsive"
+import {Mail} from "lucide-react"
 
 const Navbar = ({memoizedColors,shadowBox,borderColor}:{shadowBox:string[],borderColor:string[],memoizedColors:React.CSSProperties[]}) => {
 
@@ -44,13 +45,13 @@ if(isMobile){
                             ease: "easeInOut",
                         },
                         }} className="relative flex items-center border-2 bg-none rounded-md p-2 justify-center gap-1">
-                    <a  className="z-50 text-white bg-none text-2xl font-bold font-out left-1 text-nowrap" href="">
-                        Contact Me      
+                    <a  className="z-50 text-white bg-none text-2xl font-bold font-out left-1  flex gap-2 items-center text-nowrap" href="mailto:manuel@sopmanuel.com">
+                        Contact Me <Mail size={20} />
                     </a>   
                 </motion.button>
                     <div className=" z-10 flex gap-3 text-white items-center justify-center " >
-                        <GithubIcon width={35} height={35} color="white" className="custom-class" />
-                        <LinkedIcon width={35} height={35} color="white" className="custom-class" />
+                      <a  href="https://github.com/Stam2000" ><GithubIcon width={35} height={35} color="white" className="custom-class" /></a>
+                      <a  href="https://www.linkedin.com/in/manuel-sop-0905b9207" ><LinkedIcon width={35} height={35} color="white" className="custom-class" /></a>
                     </div>
             </div>
             
@@ -99,13 +100,13 @@ if(isTablet){
                                 ease: "easeInOut",
                             },
                             }} className="relative flex items-center border-2 bg-none rounded-md p-2 justify-center gap-1">
-                        <a  className="z-50 text-white bg-none text-2xl font-bold font-out left-1 text-nowrap" href="">
-                            Contact Me      
+                        <a  className="z-50 text-white bg-none text-2xl font-bold font-out left-1  flex gap-2 items-center text-nowrap" href="mailto:manuel@sopmanuel.com">
+                            Contact Me <Mail size={20} />
                         </a>   
                     </motion.button>
                         <div className=" z-10 flex gap-3 text-white items-center justify-center " >
-                            <GithubIcon width={35} height={35} color="white" className="custom-class" />
-                            <LinkedIcon width={35} height={35} color="white" className="custom-class" />
+                          <a  href="https://github.com/Stam2000" ><GithubIcon width={35} height={35} color="white" className="custom-class" /></a>
+                          <a  href="https://www.linkedin.com/in/manuel-sop-0905b9207" ><LinkedIcon width={35} height={35} color="white" className="custom-class" /></a>
                         </div>
                 </div>
                 
@@ -154,14 +155,14 @@ if(isTablet){
                 ease: "easeInOut",
               },
             }} className="relative flex items-center border-2 bg-none rounded-md p-2 justify-center gap-1">
-          <a  className="z-50 text-white bg-none    deskB:text-xl font-bold font-out left-1 text-nowrap" href="">
-            Contact Me      
+          <a  className="z-50 text-white bg-none  flex gap-2 items-center  deskB:text-xl font-bold font-out left-1 text-nowrap" href="mailto:manuel@sopmanuel.com">
+            Contact Me  <Mail size={20} />
           </a>
           
         </motion.button>
           <div className=" z-10 flex gap-3 text-white items-center justify-center " >
-          <GithubIcon width={35} height={35} color="white" className="custom-class" />
-          <LinkedIcon width={35} height={35} color="white" className="custom-class" />
+            <a  href="https://github.com/Stam2000" ><GithubIcon width={35} height={35} color="white" className="custom-class" /></a>
+            <a  href="https://www.linkedin.com/in/manuel-sop-0905b9207" ><LinkedIcon width={35} height={35} color="white" className="custom-class" /></a>
           </div>
         </div>
         

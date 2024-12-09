@@ -18,7 +18,7 @@ export const Display = ({ translatedText,colors}:Props) => {
     const {isTypingCompleted,setIsTypingCompleted} = useContext(MyContext)
     useEffect(() => {
         setIsTypingCompleted(false);
-        console.log(isTypingCompleted)
+
       }, [translatedText]);
 
 

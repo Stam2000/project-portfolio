@@ -77,7 +77,7 @@ export const Chat =React.memo(({setLangHistory,langHistory,chatMessage,setChatMe
         setFollowQts(newFollowQts);
   
         if (response.outputFunctionCall) {
-          console.log(response.outputFunctionCall)
+
           setCurrentLanguage(response.outputFunctionCall)
           setLangHistory(prev => [
             ...prev,

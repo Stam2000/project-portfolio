@@ -30,14 +30,11 @@ const Dots = ({numberOfDotEachLine,
         viewportRoot
     }:Props)=>{
 
-    console.log(viewportRoot)
-
     const [count,setCount]  = useState(1)
             useEffect(() => {
                   setCount( prev => prev + 1 )
               }, [colors]);
-    console.log(count)
-    console.log(colors)
+
     
     const defaultColors=[
         { backgroundColor: "#D1D5DB" },
@@ -63,13 +60,7 @@ const Dots = ({numberOfDotEachLine,
 
     const defaultwithB = defaultColors.filter(CssProp => CssProp.borderColor)
 
-    useEffect(() => {
-        if (viewportRoot?.current) {
-          console.log('viewportRoot is set:', viewportRoot.current);
-        } else {
-          console.warn('viewportRoot is not set or current is null');
-        }
-      }, [viewportRoot]);
+
     
     const defautOnlyB = defaultColors.filter(CssProp => CssProp.backgroundColor)
 
