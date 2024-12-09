@@ -445,7 +445,7 @@ return (
             <Dots2 numberOfDotEachLine={7} 
                 width={4} height={4}  gapLine={1} className=" -bottom-4 z-0" absolute={false} colors={isInView ? [...defC]:defC} numberOfLine={2} />
         </motion.h2>
-              <article className="mt-8 w-[90%] z-1000 font-nunito  text-gray-700 self-center text-xl  text-start" >
+              <article className="mt-8 w-[90%] z-1000 font-nunito  text-gray-700 self-center text-md  text-justify" >
               <p className="mb-4 ">Hi there! 👋 I’m Manuel, a full-stack developer and AI engineer based in Berlin, currently studying Computer Engineering at TU Berlin. My journey into coding began with a passion for gaming and the realization that coding felt like wielding a superpower 🦸. The true turning point came when I decided to create apps that cater to my needs or solve everyday problems, even though I had no idea where to begin or what tools to use. This sparked my curiosity and led me to dive into coding, starting with Python, progressing to JavaScript, and eventually pursuing a career in AI engineering. Along the way, I’ve turned my ideas into reality and tackled meaningful challenges.</p>
 
               <p>Fast forward to today, I’ve come a long way! 🚀 I love blending creativity with technical skills to craft unique solutions. There’s still so much to learn, but every step forward is an adventure. If you’re up for collaborating or brainstorming cool ideas, let’s make something awesome together! 💡</p>
