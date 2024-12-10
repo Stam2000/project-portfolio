@@ -97,9 +97,9 @@ const defColors = [
 ];
 
 export default function Home() {
-  const [modelGen, setModelGen] = useState<string>("gpt-4o-mini");
-  const [modelFollow, setModelFollow] = useState<string>("gpt-4o-mini");
-  const [modelChat, setModelChat] = useState<string>("gpt-4o-mini");
+  const [modelGen, setModelGen] = useState<string>("gpt-4o");
+  const [modelFollow, setModelFollow] = useState<string>("gpt-4o");
+  const [modelChat, setModelChat] = useState<string>("gpt-4o");
   const [idImg, setIdImg] = useState<string | null>(null);
   const [langHistory, setLangHistory] = useState<BaseMessage[]>([]);
   const [isInitialContent, setIsInitialContent] = useState(true);
@@ -329,7 +329,11 @@ export default function Home() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                      transition={{exit:isMobile ? { duration: 0.1,
+                        type: "spring",
+                        stiffness: 230,
+                        damping: 40 } : null}}
+                      exit={isMobile ? {opacity:0,height:0}:{ opacity: 0 }}
                       className="z-10 py-1 w-full"
                     >
                       <Chat
