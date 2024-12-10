@@ -371,7 +371,7 @@ export default function Home() {
                   translatedText={currentLanguage ? currentLanguage : undefined}
                 />
 
-                <div className=" flex flex-col  items-center justify-center">
+                <div className=" flex flex-col my-4 items-center justify-center">
                   <motion.button
                     animate={{
                       backgroundColor: btnColor,
