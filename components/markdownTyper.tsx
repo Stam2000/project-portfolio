@@ -181,6 +181,8 @@ const MarkdownTypewriter: React.FC<MarkdownTypewriterProps> = ({
   className = "",
   cursor = cursorPresets.block,
 }) => {
+
+  
   const [state, setState] = useState<TypewriterState>({
     segments: [],
     currentSegmentIndex: 0,
@@ -230,11 +232,22 @@ const MarkdownTypewriter: React.FC<MarkdownTypewriterProps> = ({
 
   useEffect(() => {
     const processedSegments = processContent(content);
+    setState({
+      segments: processedSegments,
+      currentSegmentIndex: 0,
+      currentCharIndex: 0,
+      isStarted: false,
+      showCursor: true,
+    });
+  }, [content, processContent]);
+
+/*   useEffect(() => {
+    const processedSegments = processContent(content);
     setState((prev) => ({
       ...prev,
       segments: processedSegments,
     }));
-  }, [content, processContent]);
+  }, [content, processContent]); */
 
   useEffect(() => {
     if (state.segments.length === 0) return;

@@ -254,7 +254,11 @@ export default function Home() {
         )}
       </AnimatePresence>
       <div className="relative md:h-lvh deskB:flex deskB:flex-col  deskB:justify-start ">
-        <div className="py-8  ">
+        <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{duration:1}}
+        className="py-8">
           <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col md:flex-row items-center justify-center md:w-fit">
             <div className="text-white">logo</div>
             <motion.button
@@ -285,10 +289,14 @@ export default function Home() {
               </a>
             </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         <div className="flex items-center deskB:mt-12   md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
-          <div
+          <motion.div
+           initial={{opacity:0}}
+           animate={{opacity:1}}
+           transition={{duration:1,delay:0.5}}
+           key={`main-container`}
             className="flex w-full justify-center md:w-[72%] lg:w-[70%] deskB:w-[70%] flex-col h-full "
           >
             <motion.div
@@ -374,7 +382,7 @@ export default function Home() {
                     }}
                     disabled={isLoading}
                     onClick={handleSubmit}
-                    className="w-44  bg-[#98CE00] p-1 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md"
+                    className="w-44  bg-[#98CE00] p-1 flex items-center justify-center border-[1px] shadow-lg h-8 shadow-[#dcff7d] border-slate-500 rounded-md"
                   >
                     <AnimatePresence mode="wait">
                       {isLoading ? (
@@ -393,7 +401,7 @@ export default function Home() {
                           animate={{ opacity: 1 }}
                           transition={{ exit: { duration: 0.1 } }}
                           exit={{ opacity: 0 }}
-                          className="flex items-center justify-center text-[12px] text-white gap-2"
+                          className="flex items-center justify-center text-[12px]  text-white gap-2"
                         >
                           Click Me
                           <MagicWand04Icon height={20} />
@@ -422,7 +430,7 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
           <div
             className="relative flex flex-col items-center  justify-center flex-1"
             suppressHydrationWarning={true}
@@ -449,6 +457,7 @@ export default function Home() {
           </div>
         </div>
         <Navbar
+          currentLanguage={currentLanguage ? true : false }
           memoizedColors={memoizedColors}
           shadowBox={shadowBox}
           borderColor={borderColor}

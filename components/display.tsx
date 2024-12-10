@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodSchemaGen } from "@/lib/utils";
 import { MyContext } from "./contextProvider";
 import { useContext, useEffect } from "react";
-
+import MarkdownTypewriter from "./markdownTyper";
 type TranslatedText = z.infer<typeof zodSchemaGen>;
 
 type Props = {
@@ -68,14 +68,14 @@ export const Display = ({ translatedText, colors }: Props) => {
             className="z-50 text-md deskB:text-lg mb-4 font-light text-gray-800 font-oxygen"
           />
 
-          <TypeWritter
-            text={`--${translatedText!.nameOfLanguage}--`}
+          <MarkdownTypewriter 
+            content={`--${translatedText!.nameOfLanguage}--`}
             className="text-lg font-oxygen font-extrabold "
           />
-          <TypeWritter
-            text={`${translatedText!.languageHistory.region} - ${
+          <MarkdownTypewriter
+            content={`**region**: ${translatedText!.languageHistory.region} - **spoken period**: ${
               translatedText!.languageHistory.spokenPeriod
-            }(${translatedText!.languageHistory.numberOfSpeakers})`}
+            }-**number of speaker**: ${translatedText!.languageHistory.numberOfSpeakers}`}
             className="text-[13px] font-oxygen italic"
           />
         </div>

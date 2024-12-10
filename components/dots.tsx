@@ -92,7 +92,7 @@ const Dots = ({
                     key={`randomDist1-color-${colorIndex}-${lineIndex}-${location}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: Math.random() * 3, duration: 1 }}
+                    transition={{ delay: Math.random() * 3, duration: 0.8 }}
                     className={`
                                     ${
                                       width
@@ -127,7 +127,7 @@ const Dots = ({
                     key={`randomDist2-color-${colorIndex}-${lineIndex}-${location}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: Math.random() * 3, duration: 1 }}
+                    transition={{ delay: Math.random() * 3, duration: 0.8 }}
                     className={` 
                                 ${
                                   width
