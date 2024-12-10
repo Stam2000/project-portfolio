@@ -116,12 +116,12 @@ tags\n{format_instructions}
     parserGenNew,
   ]);
 
-  let validRes: boolean = false;
+ 
   let response;
   let it: number = 0;
-
   const maxAttempts = 5;
-  while (!validRes && it < maxAttempts) {
+
+  while ( it < maxAttempts) {
     try {
       response = await genLchain.invoke({
         input:
@@ -132,15 +132,13 @@ tags\n{format_instructions}
       return response;
     } catch (err) {
       console.log(err);
-      if (it === maxAttempts) {
-        return { description: "Something went wrong. Please try again." };
-      }
-      it = it++;
+      it++;
     }
-
-    const validSch = zodSchemaGen.safeParse(response).success;
-    validRes = validSch ? !validRes : false;
   }
+  
+
+  throw new Error("Something went wrong. Please try again.")
+
 };
 
 /* ----------------------------------------------------------------- */
@@ -157,10 +155,13 @@ export const ChatManager = async ({
   modelGen: string;
   modelChat: string;
 }) => {
+
+  console.log(modelChat)
+  console.log(input)
   const model = getModelInstance(modelChat);
   const MEMORY_KEY = "chat_history";
   const SystemPrompt = `
-    You are an AI language assistant designed to help users explore and learn about new languages. Your primary function is to answer any follow-up questions the user might have about a language they are discovering. 
+    You are an AI language assistant designed to help users explore and learn about new languages. Your task is to answer any follow-up questions **(strictly respecting the JSON)** output format  the user might have about a language they are discovering. 
     You also have the ability to call a tool called "generate_language" to generate a new language for the user to explore.
     -**Immersion and Engagement:** Aim to immerse the user in the language experience. 
     Provide translations and cultural or fictional context to spark curiosity and deepen their connection with the language.
@@ -182,23 +183,30 @@ export const ChatManager = async ({
 Respond only in valid JSON following this JSON object schema: 
 
 {
-  outputFunctionCall:  z.object({
+  "outputFunctionCall":  z.object({
   nameOfLanguage: z.string().describe("Name of the language"),
   description: z.string().describe("Informative details about the language, including its origin, date of creation, and extinction if applicable"),
-  translatedText: z.string().describe("The translation of the given hero section text into the language"),
+  translatedText: z.object({
+      name:z.string().describe("text to be translated : Hello i'm Manuel"),
+      fullStack:z.string().describe("text to translate : Full Stack"),
+      AiDev:z.string().describe("text to translate: AI Developer"),
+      description:z.string().describe("text to translate : Turning daily problems 🧩 into solutions with code 💻, while fueling my creativity 🎨 and love for chicken 🍗.")
+  }).describe("The translation of the given hero section text into the language"),
   funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
-  colors: z.array(z.string()).describe("An array of colors representing the language’s culture, flag, or fictional setting"),
+  colors: z.array(z.string()).describe("An array of colors in code (example #98CE00) representing the language’s culture, flag, or fictional setting"),
   languageHistory: z.object({
     spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
     region: z.string().describe("The region or regions where the language is or was spoken"),
     numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
-    isExtinct: z.boolean().describe("Whether the language is extinct or still in use"),
-  }).describe("A detailed field containing historical and speaker information about the language"),
-}).nullable().describe("result of the call of the function generating the languages | null if no call occured"),
+    isExtinct: z.boolean().describe("Whether the language is extinct or still in use value Boolean"),
+  }).describe("A detailed field containing historical and speaker information about the language  / null if no call occured"),
+}) // outputFunctionCall:null if no call occured",
 
-
-  output:output:z.string().describe("your response here")
+ "output":output:z.string().describe("here you response to the user query")
 }
+
+if no call tool occured here is your response struture : 
+{"outputFunctionCall":null,output:here you response to the user query}
     `;
 
   const memoryPrompt = await ChatPromptTemplate.fromMessages([
@@ -248,12 +256,54 @@ Respond only in valid JSON following this JSON object schema:
 
   const chain = RunnableSequence.from([agentRunnable, parserChatManager]);
 
-  const res = await chain.invoke({
-    chat_history: chatHistory,
-    input,
-  });
+  const maxAttempts = 5;
+  let attempts = 0
 
-  return res;
+
+  while(attempts < maxAttempts){
+    
+    const inpt = attempts > 0 ? `your last attempt to generate a message failed because you have not respeted the output format instruction please try again and strictly format the output as instructed you
+    output format instruction : {
+  "outputFunctionCall":  z.object({
+  nameOfLanguage: z.string().describe("Name of the language"),
+  description: z.string().describe("Informative details about the language, including its origin, date of creation, and extinction if applicable"),
+  translatedText: z.object({
+      name:z.string().describe("text to be translated : Hello i'm Manuel"),
+      fullStack:z.string().describe("text to translate : Full Stack"),
+      AiDev:z.string().describe("text to translate: AI Developer"),
+      description:z.string().describe("text to translate : Turning daily problems 🧩 into solutions with code 💻, while fueling my creativity 🎨 and love for chicken 🍗.")
+  }).describe("The translation of the given hero section text into the language"),
+  funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
+  colors: z.array(z.string()).describe("An array of colors in code (example #98CE00) representing the language’s culture, flag, or fictional setting"),
+  languageHistory: z.object({
+    spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
+    region: z.string().describe("The region or regions where the language is or was spoken"),
+    numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
+    isExtinct: z.boolean().describe("Whether the language is extinct or still in use value Boolean"),
+  }).describe("A detailed field containing historical and speaker information about the language  / null if no call occured"),
+}) // outputFunctionCall:null if no call occured",
+
+ "output":output:z.string().describe("here you response to the user query")
+}
+
+user input:${input} ` : `please your response must respect the output JSON structure ${input}`
+
+
+
+    try{
+      const res = await chain.invoke({
+        chat_history: chatHistory,
+        input : inpt 
+      });
+      return res;
+    }catch(err){
+      console.log(attempts)
+      console.log(err);
+      attempts++;
+    }
+  }
+
+throw new Error("Something went wrong. Please try again.")
 };
 
 export const followUpQuestion = async ({
@@ -325,9 +375,21 @@ Repeating questions that have already been answered.
     parserFollowUp,
   ]);
 
-  const response = await genLchain.invoke({
-    input: updatedChatMessage,
-  });
+  const maxAttempts = 5;
+  let attempts = 0
 
-  return response;
+  while(attempts < maxAttempts){
+    try{
+      const res = await genLchain.invoke({
+        input: updatedChatMessage,
+      });
+      return res;
+    }catch(err){
+      console.log(err);
+      attempts++;
+    }
+  }
+
+
+  throw new Error("Something went wrong. Please try again.");
 };

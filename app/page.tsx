@@ -401,8 +401,11 @@ export default function Home() {
                     </button>
                     <SelectModels
                       setModelChat={setModelChat}
+                      currentModelChat={modelChat}
                       setModelFollow={setModelFollow}
+                      currentModelFollow={modelFollow}
                       setModelGen={setModelGen}
+                      currentModelGen={modelGen}
                     />
                     
                   </div>

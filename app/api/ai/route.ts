@@ -9,20 +9,6 @@ export async function POST(request: Request) {
 
     const response = await GenNewLg(modelGen, langHistory);
 
-    if (!response) {
-      return NextResponse.json(
-        { error: "Something went wrong. Please try again." },
-        { status: 500 },
-      );
-    }
-
-    if (response.description === "Something went wrong. Please try again.") {
-      return NextResponse.json(
-        { error: "Something went wrong. Please try again." },
-        { status: 500 },
-      );
-    }
-
     const followQts = await followUpQuestion({
       input: "newLanguage",
       modelFollow,

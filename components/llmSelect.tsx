@@ -9,9 +9,12 @@ import {
 
 type Props = {
   setModel?: React.Dispatch<React.SetStateAction<string>>;
+  currentModel?: string;
 };
 
-const LlmSelect = ({ setModel }: Props) => {
+//TODO Set current model
+
+const LlmSelect = ({ setModel,currentModel }: Props) => {
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
   const options = [
@@ -22,10 +25,8 @@ const LlmSelect = ({ setModel }: Props) => {
         { label: "gpt-4o mini", value: "gpt-4o-mini" },
         { label: "gpt 4", value: "gpt-4" },
         { label: "gpt-4 Turbo", value: "gpt-4-turbo" },
-        { label: "gpt-3.5-turbo", value: "gpt-3.5" },
       ],
-    },
-    {
+    },{
       label: "Mixtral",
       items: [
         { label: "Mixtral-8x7B", value: "Mixtral-8x7B" },
@@ -37,7 +38,6 @@ const LlmSelect = ({ setModel }: Props) => {
       items: [
         { label: "Llama 3.1 405B", value: "Llama-3.1-405B" },
         { label: "Llama 3.1 70B", value: "Llama-3.1-70B" },
-        { label: "Llama 3.1 8B", value: "Llama-3.1-8B" },
       ],
     },
     {
@@ -48,7 +48,7 @@ const LlmSelect = ({ setModel }: Props) => {
         { label: "Qwen 2.5 72B", value: "Qwen-2.5-7B" },
       ],
     },
-  ];
+  ]; 
 
   const handleChange = (e: { value: string }) => {
     setSelectedModel(e.value);
@@ -63,7 +63,51 @@ const LlmSelect = ({ setModel }: Props) => {
         onChange={handleChange}
         optionGroupLabel="label"
         optionGroupChildren="items"
-        placeholder="Select a model"
+        placeholder={currentModel}
+      />
+    </div>
+  );
+};
+
+const LlmSelectChat = ({ setModel,currentModel }: Props) => {
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
+
+  const options = [
+    {
+      label: "Open AI",
+      items: [
+        { label: "gpt-4o", value: "gpt-4o" },
+        { label: "gpt-4o mini", value: "gpt-4o-mini" },
+        { label: "gpt 4", value: "gpt-4" },
+        { label: "gpt-4 Turbo", value: "gpt-4-turbo" },
+
+      ],
+    },
+    {
+      label: "Llama",
+      items: [
+        { label: "Llama 3.1 405B", value: "Llama-3.1-405B" },
+        { label: "Llama 3.1 70B", value: "Llama-3.1-70B" },
+        { label: "Llama 3.1 8B", value: "Llama-3.1-8B" },
+      ],
+    },
+  ];
+
+
+  const handleChange = (e: { value: string }) => {
+    setSelectedModel(e.value);
+    if (setModel) setModel(e.value);
+  };
+
+  return (
+    <div>
+      <Dropdown
+        value={selectedModel}
+        options={options}
+        onChange={handleChange}
+        optionGroupLabel="label"
+        optionGroupChildren="items"
+        placeholder={currentModel}
       />
     </div>
   );
@@ -71,12 +115,18 @@ const LlmSelect = ({ setModel }: Props) => {
 
 export const SelectModels = ({
   setModelGen,
+  currentModelGen,
   setModelFollow,
+  currentModelFollow,
   setModelChat,
+  currentModelChat,
 }: {
   setModelFollow: React.Dispatch<React.SetStateAction<string>>;
+  currentModelGen:string,
   setModelChat: React.Dispatch<React.SetStateAction<string>>;
+  currentModelFollow:string;
   setModelGen: React.Dispatch<React.SetStateAction<string>>;
+  currentModelChat:string;
 }) => {
   return (
     <Popover>
@@ -94,15 +144,15 @@ export const SelectModels = ({
         <div className=" flex flex-col text-sm lg:flex-row items-center justify-evenly gap-2 pt-2">
           <div>
             <span className="font-nunito font-bold">Generator</span>
-            <LlmSelect setModel={setModelGen} />
+            <LlmSelect currentModel={currentModelGen} setModel={setModelGen} />
           </div>
           <div>
             <span className="font-nunito font-bold">Follow up questions</span>
-            <LlmSelect setModel={setModelFollow} />
+            <LlmSelect currentModel={currentModelFollow} setModel={setModelFollow} />
           </div>
           <div>
             <span className="font-nunito font-bold">Chat</span>
-            <LlmSelect setModel={setModelChat} />
+            <LlmSelectChat currentModel={currentModelChat} setModel={setModelChat} />
           </div>
         </div>
       </PopoverContent>

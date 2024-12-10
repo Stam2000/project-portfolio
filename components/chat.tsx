@@ -1,6 +1,6 @@
 "use client";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import { useState, useCallback, useMemo, useContext } from "react";
+import { useState, useCallback, useMemo, useContext, useLayoutEffect, useRef } from "react";
 import React from "react";
 import axios from "axios";
 import { z } from "zod";
@@ -11,6 +11,7 @@ import { TypeWritter } from "./typeWritter";
 import { v4 as uuidv4 } from "uuid";
 import { AnimatePresence } from "framer-motion";
 import { MyContext } from "./contextProvider";
+import MarkdownTypewriter from "./markdownTyper";
 
 type ResGen = z.infer<typeof zodSchemaGen>;
 type Props = {
@@ -78,8 +79,8 @@ export const Chat = React.memo(
   }: Props) => {
     const [inputValue, setInput] = useState<string>("");
     const { isTypingCompleted, isLoading } = useContext(MyContext);
-    console.log(isTypingCompleted);
-    console.log(isLoading);
+    const [error,setError] = useState<string>("")
+    const chat = useRef<HTMLDivElement>(null);
 
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +91,7 @@ export const Chat = React.memo(
 
     const sendMessage = useCallback(
       async (message: string) => {
+        setError("")
         setInput("");
         setChatHistory((prev) => [...prev, new HumanMessage(message)]);
 
@@ -112,6 +114,7 @@ export const Chat = React.memo(
             modelChat,
             modelGen,
           });
+
 
           setFollowQts(newFollowQts);
 
@@ -149,6 +152,7 @@ export const Chat = React.memo(
             ]);
           }
         } catch (error) {
+          setError("Something went wrong, please try again");
           console.error("Error making POST request:", error);
           setInput("");
         }
@@ -179,6 +183,8 @@ export const Chat = React.memo(
       },
       [sendMessage],
     );
+
+    
 
     const questionButtons = useMemo(
       () =>
@@ -215,7 +221,10 @@ export const Chat = React.memo(
                     rounded-b-xl rounded-tl-xl `
               }`}
             >
-              <TypeWritter text={message.content} className="z-10" speed={1} />
+              <MarkdownTypewriter content={message.content} className="z-10" cursor={{
+                      shape: 'underscore',
+                      color: 'bg-slate-100'
+                    }}  typeSpeed={1} />
               {/* {message.content} */}
               {message.funfact && (
                 <div className="  bg-gray-200 mt-2 z-10 text-slate-950 p-3 rounded-md">
@@ -237,17 +246,26 @@ export const Chat = React.memo(
       [chatMessage],
     );
 
+    useLayoutEffect(() => {
+      if (chat.current) {
+          chat.current.scrollTo({
+              top: chat.current.scrollHeight,
+              behavior: "smooth"
+          });
+      }
+  }, [messages]);
     return (
       <div className=" relative w-full z-10 pt-2 h-[400px]  md:h-full ">
-        <ScrollArea className="gap-4 h-[calc(100%-95px)] rounded-md w-full  px-2  ">
+        <ScrollArea ref={chat} className="gap-4 h-[calc(100%-95px)] rounded-md w-full  px-2  ">
           <AnimatePresence initial={false}>
-            <div className="flex flex-col gap-4 px-1">{messages}</div>
-          </AnimatePresence>
+            <div className="flex flex-col gap-4 px-1">{messages} </div>
+          </AnimatePresence><div  />
         </ScrollArea>
         <div className="absolute w-full px-4 bottom-1">
           <form onSubmit={handleSubmit} action="">
             <ScrollArea className="rounded-md px-1 ">
               <div className="flex pb-3 gap-1 px-1 whitespace-nowrap">
+                {error && <span className="text-red-500" >{error} </span>}
                 <button
                   type="button"
                   onClick={() =>
@@ -255,7 +273,7 @@ export const Chat = React.memo(
                   }
                   className="border-[2px] text-[16px] font-medium font-oxygen w-fit border-slate-600 text-slate-700 px-2 rounded-sm"
                 >
-                  new language
+                    new language
                 </button>
                 {questionButtons}
               </div>
