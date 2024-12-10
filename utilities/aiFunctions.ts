@@ -1,33 +1,39 @@
-import { RunnableSequence,RunnableLambda} from "@langchain/core/runnables"
-import {ChatOpenAI} from "@langchain/openai"
-import {ChatPromptTemplate,MessagesPlaceholder} from "@langchain/core/prompts"
-import { DynamicStructuredTool } from "langchain/tools"
-import { z } from "zod"
-import { StructuredOutputParser } from "@langchain/core/output_parsers"
-import { AIMessage,BaseMessage,HumanMessage } from "@langchain/core/messages"
-import { AgentExecutor, createToolCallingAgent } from "langchain/agents"
-import {zodSchemaGen,zodSchemaChat} from "@/lib/utils"
-import { ChatTogetherAI } from "@langchain/community/chat_models/togetherai"
-import { extractJSON } from "@/lib/utils"
-import { getModelInstance } from "@/lib/utils"
+import { RunnableSequence, RunnableLambda } from "@langchain/core/runnables";
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
+import { DynamicStructuredTool } from "langchain/tools";
+import { z } from "zod";
+import { StructuredOutputParser } from "@langchain/core/output_parsers";
+import { AIMessage, BaseMessage, HumanMessage } from "@langchain/core/messages";
+import { AgentExecutor, createToolCallingAgent } from "langchain/agents";
+import { zodSchemaGen, zodSchemaChat } from "@/lib/utils";
+import { extractJSON } from "@/lib/utils";
+import { getModelInstance } from "@/lib/utils";
 
-const parserGenNew = StructuredOutputParser.fromZodSchema(zodSchemaGen)
+const parserGenNew = StructuredOutputParser.fromZodSchema(zodSchemaGen);
 
-const parserChatManager = StructuredOutputParser.fromZodSchema(zodSchemaChat)
+const parserChatManager = StructuredOutputParser.fromZodSchema(zodSchemaChat);
 
-const parserFollowUp = StructuredOutputParser.fromZodSchema( z.object({
-  questions:z.array(z.string().describe("follow up question")).describe("c'et un array contenant les follow up questions")
-}))
-
+const parserFollowUp = StructuredOutputParser.fromZodSchema(
+  z.object({
+    questions: z
+      .array(z.string().describe("follow up question"))
+      .describe("c'et un array contenant les follow up questions"),
+  }),
+);
 
 // responsible of generating the langage
 /* ----------------------------------------------------------------- */
-export const GenNewLg = async (modelGen:string,langageHistory?:BaseMessage[],)=>{
+export const GenNewLg = async (
+  modelGen: string,
+  langageHistory?: BaseMessage[],
+) => {
+  const model = getModelInstance(modelGen);
+  console.log(modelGen);
 
-    const model = getModelInstance(modelGen)
-    console.log(modelGen)
-
-    const formatInstructions = `Respond only in valid JSON. don't ask any text around, your response should only conaint the JSON object. The JSON object you return should match the following schema:
+  const formatInstructions = `Respond only in valid JSON. don't ask any text around, your response should only conaint the JSON object. The JSON object you return should match the following schema:
 
 const zodSchema = z.object({
   nameOfLanguage: z.string().describe("Name of the language"),
@@ -46,10 +52,10 @@ const zodSchema = z.object({
     numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
     isExtinct: z.boolean().describe("Whether the language is extinct or still in use value Boolean"),
   }).describe("A detailed field containing historical and speaker information about the language"),
-});;`
+});;`;
 
-    const MEMORY_KEY = "chat_history"
-    const SystemPrompt=`You are an AI assistant tasked with generating translation for each key of this object ----- 
+  const MEMORY_KEY = "chat_history";
+  const SystemPrompt = `You are an AI assistant tasked with generating translation for each key of this object ----- 
       name:"text to be translate : Hello i'm Manuel",
       fullStack:"text to translate : Full Stack",
       AiDev:"text to translate: AI Developer",
@@ -79,88 +85,81 @@ const zodSchema = z.object({
     The format of the JSON should be:
 tags\n{format_instructions}
 
-    `
+    `;
 
+  const memoryPrompt = await ChatPromptTemplate.fromMessages([
+    ["system", SystemPrompt],
+    new MessagesPlaceholder(MEMORY_KEY),
+    ["human", "{input}"],
+  ]).partial({
+    format_instructions: formatInstructions,
+  });
 
-    const memoryPrompt =await  ChatPromptTemplate.fromMessages([
-        ["system",SystemPrompt],
-        new MessagesPlaceholder(MEMORY_KEY),
-        ["human","{input}"],
-    ]).partial({
-        format_instructions: formatInstructions,
-      })
+  const genLchain = RunnableSequence.from([
+    {
+      input: (i) => i.input,
+      chat_history: (i) => i.chat_history,
+    },
+    memoryPrompt,
+    model,
+    (prevRes) => {
+      const extracted = extractJSON(prevRes.content);
 
-    
+      const res = {
+        ...prevRes,
+        content: extracted,
+      };
 
-    const genLchain = RunnableSequence.from([
-        {
-            input : (i) => i.input,
-            chat_history : (i) => i.chat_history 
-        },
-        memoryPrompt,
-        model,
-        (prevRes)=>{
-  
-          const extracted = extractJSON(prevRes.content)
+      const aiRes = new AIMessage(res);
+      return aiRes;
+    },
+    parserGenNew,
+  ]);
 
-          
-          const res = {
-            ...prevRes,
-              content:extracted
-          }
+  let validRes: boolean = false;
+  let response;
+  let it: number = 0;
 
-          const aiRes = new AIMessage(res)
+  const maxAttempts = 5;
+  while (!validRes && it < maxAttempts) {
+    try {
+      response = await genLchain.invoke({
+        input:
+          "let's us discover a new langage please carefuly respect all instructions",
+        chat_history: langageHistory ? langageHistory : [],
+      });
 
-          console.log(aiRes)
-          return aiRes
-        },
-        parserGenNew
-    ])
-
-    let validRes:boolean = false
-    let response
-    let it:number = 0 
-    
-    const maxAttempts = 5
-
-
-    while (!validRes && it <  maxAttempts ){
-
-
-      try{
-        response = await genLchain.invoke({
-          input:"let's us discover a new langage please carefuly respect all instructions",
-          chat_history : langageHistory ? langageHistory : []
-        })
-
-        return response
-      }catch(err){
-
-        if (it === maxAttempts) {
-      
-          return 'Something went wrong. Please try again.';
-    
+      return response;
+    } catch (err) {
+      console.log(err);
+      if (it === maxAttempts) {
+        return { description: "Something went wrong. Please try again." };
       }
-          it = it++
-      }
-
-
-
-
-      const validSch = zodSchemaGen.safeParse(response).success 
-      validRes = validSch ? !validRes : false 
-
-
+      it = it++;
     }
 
-} 
+    const validSch = zodSchemaGen.safeParse(response).success;
+    validRes = validSch ? !validRes : false;
+  }
+};
 
 /* ----------------------------------------------------------------- */
-export const ChatManager = async ( {input,chatHistory,langHistory,modelGen,modelChat}: {input:string,chatHistory:BaseMessage[],langHistory:BaseMessage[],modelGen:string,modelChat:string}) => {
-
-  const model = getModelInstance(modelChat)
-    const MEMORY_KEY = "chat_history"
-    const SystemPrompt=`
+export const ChatManager = async ({
+  input,
+  chatHistory,
+  langHistory,
+  modelGen,
+  modelChat,
+}: {
+  input: string;
+  chatHistory: BaseMessage[];
+  langHistory: BaseMessage[];
+  modelGen: string;
+  modelChat: string;
+}) => {
+  const model = getModelInstance(modelChat);
+  const MEMORY_KEY = "chat_history";
+  const SystemPrompt = `
     You are an AI language assistant designed to help users explore and learn about new languages. Your primary function is to answer any follow-up questions the user might have about a language they are discovering. 
     You also have the ability to call a tool called "generate_language" to generate a new language for the user to explore.
     -**Immersion and Engagement:** Aim to immerse the user in the language experience. 
@@ -176,9 +175,9 @@ export const ChatManager = async ( {input,chatHistory,langHistory,modelGen,model
       tags\n{format_instructions}
 
       
-    `
+    `;
 
-const formatInstructions =`
+  const formatInstructions = `
 
 Respond only in valid JSON following this JSON object schema: 
 
@@ -200,73 +199,88 @@ Respond only in valid JSON following this JSON object schema:
 
   output:output:z.string().describe("your response here")
 }
-    `
+    `;
 
+  const memoryPrompt = await ChatPromptTemplate.fromMessages([
+    ["system", SystemPrompt],
+    new MessagesPlaceholder(MEMORY_KEY),
+    ["human", "{input}"],
+    new MessagesPlaceholder("agent_scratchpad"),
+  ]).partial({
+    format_instructions: formatInstructions,
+  });
 
-    const memoryPrompt = await  ChatPromptTemplate.fromMessages([
-        ["system",SystemPrompt],
-        new MessagesPlaceholder(MEMORY_KEY),
-        ["human","{input}"],
-        new MessagesPlaceholder("agent_scratchpad")
-      ]).partial({
-        format_instructions: formatInstructions,
-    })
+  const tools = [
+    new DynamicStructuredTool({
+      name: "generate_language",
+      description:
+        "Generates a new language with the given name and returns its details in JSON format.",
+      schema: zodSchemaGen,
+      func: async () => {
+        const result = await GenNewLg(modelGen, langHistory);
+        return JSON.stringify(result);
+      },
+    }),
+  ];
 
-    const tools = [
-        new DynamicStructuredTool({
-            name: "generate_language",
-            description: "Generates a new language with the given name and returns its details in JSON format.",
-            schema: zodSchemaGen,
-            func: async () =>{ const result = await GenNewLg(modelGen,langHistory)
-            return JSON.stringify(result);}
-      }),
-    ]
+  const agent = await createToolCallingAgent({
+    llm: model,
+    tools,
+    prompt: memoryPrompt,
+  });
+  const agentExecutor = new AgentExecutor({
+    agent,
+    tools,
+  });
 
-    const agent = await createToolCallingAgent({llm:model,tools,prompt:memoryPrompt})
-    const agentExecutor  = new AgentExecutor({
-        agent,
-        tools,
-    })
+  const agentRunnable = new RunnableLambda({
+    func: async ({
+      chat_history,
+      input,
+    }: {
+      input: string;
+      chat_history: BaseMessage[];
+    }) => {
+      const resp = await agentExecutor.invoke({ chat_history, input });
+      return resp.output;
+    },
+  });
 
-    const agentRunnable = new RunnableLambda({
-        func: async ({ chat_history, input }:{
-            input:string,
-            chat_history:BaseMessage[]
-        }) => {
-          const resp = await agentExecutor.invoke({ chat_history, input });
-          return resp.output;
-        }
-    });
-      
-    const chain = RunnableSequence.from([
-        agentRunnable,
-        parserChatManager
-    ])
-    
-   const res = await chain.invoke({
-        chat_history: chatHistory,
-        input}
-      );
+  const chain = RunnableSequence.from([agentRunnable, parserChatManager]);
 
+  const res = await chain.invoke({
+    chat_history: chatHistory,
+    input,
+  });
 
+  return res;
+};
 
-    return res
-}
+export const followUpQuestion = async ({
+  input,
+  modelFollow,
+  chatHistory,
+  AIMsg,
+}: {
+  input: string;
+  chatHistory: BaseMessage[];
+  AIMsg: string;
+  modelFollow: string;
+}) => {
+  const model = getModelInstance(modelFollow);
 
-export const followUpQuestion  = async ({input,modelFollow,chatHistory,AIMsg}: {input:string,chatHistory:BaseMessage[],AIMsg:string,modelFollow:string})=>{
-
-  const model = getModelInstance(modelFollow)
-
-  const updatedChatMessage = [...chatHistory ,new HumanMessage(input),new AIMessage(JSON.stringify(AIMsg))]
+  const updatedChatMessage = [
+    ...chatHistory,
+    new HumanMessage(input),
+    new AIMessage(JSON.stringify(AIMsg)),
+  ];
   const formatInstructions = `Respond only in valid JSON. The JSON object you return should match the following schema:
 
   const zodSchema = z.object({{
     questions:z.array({{z.string().describe("follow up question")}}).describe("c'et un array contenant les follow up questions")
-}});;`
-  
+}});;`;
 
-      const SystemPrompt=
-      `Given the following chat history, generate a list of potential follow-up questions that build on the previous responses.
+  const SystemPrompt = `Given the following chat history, generate a list of potential follow-up questions that build on the previous responses.
       The follow-up questions should maintain the conversation’s context, encourage deeper discussion, and explore any unanswered or implied ideas. 
       Ensure the questions are open-ended, engaging, and relevant to the topics discussed.
 
@@ -296,27 +310,24 @@ Repeating questions that have already been answered.
   
       The format of the JSON should be:
   tags\n{format_instructions}
-      `
-  
-  
-      const memoryPrompt =await  ChatPromptTemplate.fromMessages([
-          ["system",SystemPrompt],
-          ["human","{input}"],
-      ]).partial({
-          format_instructions: formatInstructions,
-        })
-      
-      const genLchain = RunnableSequence.from([
-          memoryPrompt,
-          model,
-          parserFollowUp
-      ])
-  
-      const response = await genLchain.invoke({
-          input:updatedChatMessage,
-      })
-      
+      `;
 
-      return response
+  const memoryPrompt = await ChatPromptTemplate.fromMessages([
+    ["system", SystemPrompt],
+    ["human", "{input}"],
+  ]).partial({
+    format_instructions: formatInstructions,
+  });
 
-}
+  const genLchain = RunnableSequence.from([
+    memoryPrompt,
+    model,
+    parserFollowUp,
+  ]);
+
+  const response = await genLchain.invoke({
+    input: updatedChatMessage,
+  });
+
+  return response;
+};
