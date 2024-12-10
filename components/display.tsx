@@ -26,7 +26,7 @@ export const Display = ({ translatedText, colors }: Props) => {
           <span
             className={`text-[${
               colors ? colors[0] : "#FFFFFF"
-            }] lg:pl-16 font-poiret-one -mb-2 font-semibold italic text-xl md:text-2xl self-start`}
+            }] lg:pl-16 font-poiret-one mt-4 -mb-2 font-semibold italic text-xl md:text-2xl self-start`}
           >
             Hello I'm Manuel,
           </span>
