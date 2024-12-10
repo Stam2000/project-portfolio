@@ -34,7 +34,7 @@ export const Display = ({ translatedText, colors }: Props) => {
             <span className="text-[#636363] pr-3">Full Stack</span> AI✨
             Developer.
           </h1>
-          <p className="z-50 text-md deskB:text-lg mb-4 font-light text-gray-800 font-oxygen ">
+          <p className="z-50 tet-sm lg:text-md deskB:text-lg mt-6 mb-8 font-light text-gray-800 font-oxygen ">
             Turning daily problems 🧩 into solutions with code 💻, while fueling
             my creativity 🎨 and love for chicken 🍗.
           </p>
@@ -65,7 +65,7 @@ export const Display = ({ translatedText, colors }: Props) => {
             component={"p"}
             speed={1}
             onComplete={() => setIsTypingCompleted(true)}
-            className="z-50 text-md deskB:text-lg mb-4 font-light text-gray-800 font-oxygen"
+            className="z-50 text-sm lg:text-md deskB:text-lg mt-6 mb-8 font-light text-gray-800 font-oxygen"
           />
 
           <MarkdownTypewriter 

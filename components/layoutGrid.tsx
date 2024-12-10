@@ -20,7 +20,7 @@ const LayoutImages = ({
 
   return (
     <>
-      <div className=" lg:ml-4 -z-10 h-full  md:h-[65%] deskB:h-[80%] w-full md:w-full py-4 grid grid-rows-4 grid-cols-7  grid-flow-col gap-2 md:gap-4">
+      <div className=" lg:ml-4 -z-10 h-full  md:h-[65%] deskB:h-[80%] w-[90%] md:w-full py-4 grid grid-rows-4 grid-cols-7  grid-flow-col gap-2 md:gap-4">
         <motion.div
           layoutId={images[0].src}
           id={images[0].src}

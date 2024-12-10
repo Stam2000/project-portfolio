@@ -435,7 +435,7 @@ export default function Home() {
             className="relative flex flex-col items-center  justify-center flex-1"
             suppressHydrationWarning={true}
           >
-            {currentLanguage && (
+            {currentLanguage && !isTablet &&  (
               <span className="text-white  font-zeyada text-2xl  ">
                 Colors by AI
               </span>
