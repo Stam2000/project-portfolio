@@ -216,8 +216,15 @@ export default function Home() {
     setIsLoading(false);
   }
 
+  const [computedValues, setComputedValues] = useState({ lines: 20, dotsEachLine: 7 });
 
+  useEffect(() => {
+    const dotsEachLine = isTablet ? 3 : isLaptop ? 5 : 7;
+    const lines = isTablet ? 24 : isSmallLaptop ? 28 : isBigScreen ? 32 : 20;
+    setComputedValues({ lines, dotsEachLine });
+  }, [isTablet, isLaptop, isSmallLaptop, isBigScreen]);
 
+  
   return (
     <main>
       <AnimatePresence>
@@ -429,17 +436,14 @@ export default function Home() {
                 <Dots
                 key={"main-dots"}
                   location={`main-dots`}
-                  numberOfDotEachLine={isTablet ? 3 : isLaptop ? 5 : 7}
+                  numberOfDotEachLine={computedValues.dotsEachLine}
                   width={3}
                   height={3}
                   gapBlock={1}
                   gapLine={1}
                   colors={memoizedColors}
                   absolute={false}
-                  numberOfLine={
-                    isTablet ? 24 : isSmallLaptop ? 28 : isBigScreen ? 32 : 20
-                  }
-                  
+                  numberOfLine={computedValues.lines} 
                 />
             )}
           </div>
