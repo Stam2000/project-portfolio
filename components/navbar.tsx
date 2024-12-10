@@ -45,7 +45,7 @@ if(isMobile){
                             ease: "easeInOut",
                         },
                         }} className="relative flex items-center border-2 bg-none rounded-md p-2 justify-center gap-1">
-                    <a  className="z-50 text-white bg-none text-2xl font-bold font-out left-1  flex gap-2 items-center text-nowrap" href="mailto:manuel@sopmanuel.com">
+                    <a  className="z-50 text-white bg-none text-xl font-bold font-out left-1  flex gap-2 items-center text-nowrap" href="mailto:manuel@sopmanuel.com">
                         Contact Me <Mail size={20} />
                     </a>   
                 </motion.button>
@@ -100,7 +100,7 @@ if(isTablet){
                                 ease: "easeInOut",
                             },
                             }} className="relative flex items-center border-2 bg-none rounded-md p-2 justify-center gap-1">
-                        <a  className="z-50 text-white bg-none text-2xl font-bold font-out left-1  flex gap-2 items-center text-nowrap" href="mailto:manuel@sopmanuel.com">
+                        <a  className="z-50 text-white bg-none text-xl font-bold font-out left-1  flex gap-2 items-center text-nowrap" href="mailto:manuel@sopmanuel.com">
                             Contact Me <Mail size={20} />
                         </a>   
                     </motion.button>

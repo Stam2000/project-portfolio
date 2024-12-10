@@ -30,7 +30,7 @@ export const zodSchemaGen = z.object({
       name:z.string().describe("text to be translated : Hello i'm Manuel"),
       fullStack:z.string().describe("text to translate : Full Stack"),
       AiDev:z.string().describe("text to translate: AI Developer"),
-      description:z.string().describe("text to translate : I love exploring and creating 🚀 I'm a lifelong learner 🎓 and I might have a thing for traditional Neapolitan Pizza 🍕 ")
+      description:z.string().describe("text to translate : Turning daily problems 🧩 into solutions with code 💻, while fueling my creativity 🎨 and love for chicken 🍗.")
   }).describe("The translation of the given hero section text into the language"),
   funFact: z.string().describe("A fun fact about the language, culture, or population using this language"),
   colors: z.array(z.string()).describe("An array of colors in code (example #98CE00) representing the language’s culture, flag, or fictional setting"),
@@ -38,7 +38,7 @@ export const zodSchemaGen = z.object({
     spokenPeriod: z.string().describe("The time interval during which the language was or is spoken, e.g., '500 BCE - 400 CE' or 'still spoken today'"),
     region: z.string().describe("The region or regions where the language is or was spoken"),
     numberOfSpeakers: z.string().describe("The number of speakers, either currently if the language is still spoken, or historically if extinct"),
-    isExtinct: z.boolean().describe("Whether the language is extinct or still in use"),
+    isExtinct: z.boolean().describe("Whether the language is extinct or still in use value Boolean"),
   }).describe("A detailed field containing historical and speaker information about the language"),
 });
 

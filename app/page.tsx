@@ -339,7 +339,7 @@ return (
           
             <div className="flex md:w-1/2 flex-col mix-blend-multiply gap-1 items-center text-center justify-center py-3  p-2 lg:mr-10 ">
             
-              <Display isInitialContent={isInitialContent} colors={currentLanguage?.colors} translatedText={currentLanguage ? currentLanguage?.translatedText : undefined} />
+              <Display isInitialContent={isInitialContent} colors={currentLanguage?.colors} translatedText={currentLanguage ? currentLanguage : undefined} />
             
               <div className=" flex flex-col  items-center justify-center" >
               <motion.button 
