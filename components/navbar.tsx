@@ -18,8 +18,9 @@ const Navbar = ({
 
   if (isMobile) {
     return (
-      <div className="mt-32 flex flex-col font-poiret-one gap-8 items-center justify-center ">
+      <div className="mt-28 flex flex-col font-poiret-one gap-8 items-center justify-center ">
         <div className="w-full  flex items-center justify-center  ">
+        <span  className="text-white  font-zeyada text-2xl  " >Colors by AI</span>
           <Dots
             numberOfDotEachLine={7}
             width={3}

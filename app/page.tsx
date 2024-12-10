@@ -39,6 +39,7 @@ import { format } from "date-fns";
 import { GithubIcon } from "@/components/customIcon";
 import { LinkedIcon } from "@/components/customIcon";
 import { MagicWand04Icon } from "@/components/SVG";
+import { Span } from "next/dist/trace";
 
 type Role = "ai" | "user";
 interface Message {
@@ -247,7 +248,7 @@ export default function Home() {
         )}
       </AnimatePresence>
       <div className="relative md:h-lvh deskB:flex deskB:flex-col  deskB:justify-start ">
-        <div className="py-8 ">
+        <div className="py-8  ">
           <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col md:flex-row items-center justify-center md:w-fit">
             <div className="text-white">logo</div>
             <motion.button
@@ -280,8 +281,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex items-center deskB:mt-12  md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
-          <div className="flex w-full  justify-center md:w-[72%] lg:w-[70%] deskB:w-[70%] flex-col h-full ">
+        <div className="flex items-center deskB:mt-12   md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
+          <motion.div initial={{opacity:0}}  animate={{opacity:1}} className="flex bg-slate-500 w-full justify-center md:w-[72%] lg:w-[70%] deskB:w-[70%] flex-col h-full ">
             <motion.div
               initial={{ boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)" }}
               animate={{
@@ -414,8 +415,9 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-          </div>
-          <div className="relative flex items-center  justify-center flex-1">
+          </motion.div>
+          <div key={"dots-pages"} className="relative flex flex-col items-center  justify-center flex-1">
+            {currentLanguage && <span  className="text-white  font-zeyada text-2xl  " >Colors by AI</span>}
             {isMobile ? null : (
               <Dots
                 numberOfDotEachLine={isTablet ? 3 : isLaptop ? 5 : 7}
