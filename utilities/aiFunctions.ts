@@ -119,27 +119,40 @@ tags\n{format_instructions}
 
     let validRes:boolean = false
     let response
-    let it:number = 0   
+    let it:number = 0 
+    
+    const maxAttempts = 5
 
-    while (!validRes){
+
+    while (!validRes && it <  maxAttempts ){
+
+
+      try{
+        response = await genLchain.invoke({
+          input:"let's us discover a new langage please carefuly respect all instructions",
+          chat_history : langageHistory ? langageHistory : []
+        })
+
+        return response
+      }catch(err){
+
+        if (it === maxAttempts) {
+      
+          return 'Something went wrong. Please try again.';
+    
+      }
+          it = it++
+      }
 
 
 
-       response = await genLchain.invoke({
-        input:"let's us discover a new langage please carefuly respect all instructions",
-        chat_history : langageHistory ? langageHistory : []
-      })
 
       const validSch = zodSchemaGen.safeParse(response).success 
       validRes = validSch ? !validRes : false 
-      it = it++
+
 
     }
-    
-    
-    console.log(response)
 
-    return response
 } 
 
 /* ----------------------------------------------------------------- */
