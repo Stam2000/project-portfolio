@@ -482,7 +482,6 @@ export const SparkleSVG = ({
   </svg>
 );
 
-
 export const MagicWand04Icon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -518,4 +517,4 @@ export const MagicWand04Icon = (props: React.SVGProps<SVGSVGElement>) => (
       strokeLinejoin="round"
     />
   </svg>
-)
+);

@@ -14,7 +14,7 @@ type Props = {
 
 //TODO Set current model
 
-const LlmSelect = ({ setModel,currentModel }: Props) => {
+const LlmSelect = ({ setModel, currentModel }: Props) => {
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
   const options = [
@@ -26,7 +26,8 @@ const LlmSelect = ({ setModel,currentModel }: Props) => {
         { label: "gpt 4", value: "gpt-4" },
         { label: "gpt-4 Turbo", value: "gpt-4-turbo" },
       ],
-    },{
+    },
+    {
       label: "Mixtral",
       items: [
         { label: "Mixtral-8x7B", value: "Mixtral-8x7B" },
@@ -48,7 +49,7 @@ const LlmSelect = ({ setModel,currentModel }: Props) => {
         { label: "Qwen 2.5 72B", value: "Qwen-2.5-7B" },
       ],
     },
-  ]; 
+  ];
 
   const handleChange = (e: { value: string }) => {
     setSelectedModel(e.value);
@@ -69,7 +70,7 @@ const LlmSelect = ({ setModel,currentModel }: Props) => {
   );
 };
 
-const LlmSelectChat = ({ setModel,currentModel }: Props) => {
+const LlmSelectChat = ({ setModel, currentModel }: Props) => {
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
   const options = [
@@ -80,7 +81,6 @@ const LlmSelectChat = ({ setModel,currentModel }: Props) => {
         { label: "gpt-4o mini", value: "gpt-4o-mini" },
         { label: "gpt 4", value: "gpt-4" },
         { label: "gpt-4 Turbo", value: "gpt-4-turbo" },
-
       ],
     },
     {
@@ -92,7 +92,6 @@ const LlmSelectChat = ({ setModel,currentModel }: Props) => {
       ],
     },
   ];
-
 
   const handleChange = (e: { value: string }) => {
     setSelectedModel(e.value);
@@ -122,11 +121,11 @@ export const SelectModels = ({
   currentModelChat,
 }: {
   setModelFollow: React.Dispatch<React.SetStateAction<string>>;
-  currentModelGen:string,
+  currentModelGen: string;
   setModelChat: React.Dispatch<React.SetStateAction<string>>;
-  currentModelFollow:string;
+  currentModelFollow: string;
   setModelGen: React.Dispatch<React.SetStateAction<string>>;
-  currentModelChat:string;
+  currentModelChat: string;
 }) => {
   return (
     <Popover>
@@ -148,11 +147,17 @@ export const SelectModels = ({
           </div>
           <div>
             <span className="font-nunito font-bold">Follow up questions</span>
-            <LlmSelect currentModel={currentModelFollow} setModel={setModelFollow} />
+            <LlmSelect
+              currentModel={currentModelFollow}
+              setModel={setModelFollow}
+            />
           </div>
           <div>
             <span className="font-nunito font-bold">Chat</span>
-            <LlmSelectChat currentModel={currentModelChat} setModel={setModelChat} />
+            <LlmSelectChat
+              currentModel={currentModelChat}
+              setModel={setModelChat}
+            />
           </div>
         </div>
       </PopoverContent>

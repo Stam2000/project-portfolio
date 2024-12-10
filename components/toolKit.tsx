@@ -71,6 +71,8 @@ const ToolKit = ({ colors }: { colors: React.CSSProperties[] }) => {
         <motion.h2 className="text-slate-950 relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-extrabold  md:p-2 round">
           <span className="z-20">ToolKits</span>
           <Dots
+            location={`toolkits-dots`}
+            key={"s"}
             numberOfDotEachLine={isMobile ? 4 : 7}
             width={4}
             height={4}

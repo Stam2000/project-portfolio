@@ -23,7 +23,6 @@ export const ProjectDisplay = () => {
     { name: "huggingface", displayName: "Huggingface" },
     { name: "javascript", displayName: "Javascript" },
     { name: "langchain", displayName: "Langchain" },
-    { name: "logo-javascript", displayName: "Javascript" },
     { name: "mongodb-icon", displayName: "Mongodb" },
   ];
 
@@ -35,7 +34,10 @@ export const ProjectDisplay = () => {
           <div className="grid grid-cols-4 2xl:grid-cols-5 gap-2   mt-6 ">
             {logoObjects.map((lg, index) => {
               return (
-                <div className=" text-slate-800 text-sm lg:text-lg bg-gray-300 rounded-sm p-1 text-center">
+                <div
+                  key={lg.displayName}
+                  className=" text-slate-800 text-sm lg:text-lg bg-gray-300 rounded-sm p-1 text-center"
+                >
                   {lg.displayName}
                 </div>
               );
@@ -50,6 +52,7 @@ export const ProjectDisplay = () => {
           </p>
           <div className="flex items-center justify-center ">
             <Dots
+              key={`projects-dots`}
               numberOfDotEachLine={isMobile ? 10 : 18}
               height={2}
               width={2}
@@ -58,6 +61,7 @@ export const ProjectDisplay = () => {
               absolute={false}
               colors={defaultColors}
               numberOfLine={2}
+              location={"project"}
             />
           </div>
         </div>
@@ -65,7 +69,7 @@ export const ProjectDisplay = () => {
           <div className="flex items-center md:w-[90%] 2xl:w-[75%]  justify-center text-xl text-white font-nunito ">
             <img
               className={` rounded-xl object-cover `}
-              src={`/w.jpg`}
+              src={`/cars.jpeg`}
               alt={"lg.displayName"}
             />
           </div>

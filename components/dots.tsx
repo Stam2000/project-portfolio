@@ -1,7 +1,8 @@
+"use client"
 import dotGeneratorGrid from "@/utilities/dotGenerator";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 interface Props {
   numberOfDotEachLine: number;
@@ -13,6 +14,7 @@ interface Props {
   width?: number;
   height?: number;
   className?: string;
+  location:string
 }
 /* const dotVariants = {
     initial: { opacity: 0 },
@@ -29,11 +31,14 @@ const Dots = ({
   height,
   className,
   colors,
+  location
 }: Props) => {
   const [count, setCount] = useState(1);
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCount((prev) => prev + 1);
   }, [colors]);
+
+  console.log(count)
 
   const randomDist1 = useMemo(() => {
     return dotGeneratorGrid(numberOfDotEachLine, numberOfLine, colors);
@@ -60,7 +65,7 @@ const Dots = ({
   const AllClasses = () => (
     <>
       <div className="hidden">
-        {sizeClasses.map((sizeClass) => (
+        {sizeClasses.map((sizeClass:string) => (
           <div key={sizeClass} className={sizeClass} />
         ))}
       </div>
@@ -75,15 +80,16 @@ const Dots = ({
           absolute ? "absolute" : "null"
         } ${className} flex gap-${gapBlock}`}
       >
-        <motion.div layout key={count} className="flex flex-col gap-1">
-          {randomDist1.map((line, index) => {
+        <div  key={count} className="flex flex-col gap-1">
+          {randomDist1.map((line, lineIndex) => {
             return (
-              <motion.div
-                className={` flex items-center justify-evenly gap-${gapLine} `}
+              <div
+                key={`randomDist1-${lineIndex}-${location}`}
+                className={` flex items-center justify-evenly gap-${gapLine}`}
               >
                 {line.map((color, colorIndex) => (
                   <motion.div
-                    key={`${color.id}+${color.colorValue}`}
+                    key={`randomDist1-color-${colorIndex}-${lineIndex}-${location}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: Math.random() * 3, duration: 1 }}
@@ -99,24 +105,26 @@ const Dots = ({
                                         : `h-${Math.floor(Math.random() * 3)}`
                                     } rounded-full`}
                     style={color.color}
+                    suppressHydrationWarning={true}
                   ></motion.div>
                 ))}
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* Part 2 Start */}
 
-        <motion.div layout key={count + 1} className="flex flex-col gap-1">
-          {randomDist2.map((line, index) => {
+        <div key={count + 1} className="flex flex-col gap-1">
+          {randomDist2.map((line, lineIndex) => {
             return (
-              <motion.div
+              <div
+                key={`randomDist2-${lineIndex}-${location}`}
                 className={`flex items-center justify-evenly gap-${gapLine} `}
               >
                 {line.map((color, colorIndex) => (
                   <motion.div
-                    key={`${color.id}+${color.colorValue}`}
+                    key={`randomDist2-color-${colorIndex}-${lineIndex}-${location}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: Math.random() * 3, duration: 1 }}
@@ -132,12 +140,13 @@ const Dots = ({
                                     : `h-${Math.floor(Math.random() * 3)}`
                                 } rounded-full`}
                     style={color.color}
+                    suppressHydrationWarning={true}
                   ></motion.div>
                 ))}
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </>
   );

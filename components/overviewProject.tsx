@@ -30,6 +30,7 @@ const OverviewProjects = () => {
       >
         <span className="z-20">Projects</span>
         <Dots
+          location={`Project-dots`}
           numberOfDotEachLine={7}
           width={4}
           height={4}

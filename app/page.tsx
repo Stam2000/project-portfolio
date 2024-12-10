@@ -39,7 +39,6 @@ import { format } from "date-fns";
 import { GithubIcon } from "@/components/customIcon";
 import { LinkedIcon } from "@/components/customIcon";
 import { MagicWand04Icon } from "@/components/SVG";
-import { Span } from "next/dist/trace";
 
 type Role = "ai" | "user";
 interface Message {
@@ -113,7 +112,7 @@ export default function Home() {
   const [followQts, setFollowQts] = useState<{ questions: string[] }>({
     questions: [],
   });
-  const [error,setError] = useState<string>("")
+  const [error, setError] = useState<string>("");
   const { isLoading, setIsLoading } = useContext(MyContext);
 
   const useRe = useRef(null);
@@ -178,7 +177,7 @@ export default function Home() {
   }, [ca]);
 
   async function handleSubmit() {
-    setError("")
+    setError("");
     setIsLoading(true);
     try {
       const {
@@ -282,7 +281,9 @@ export default function Home() {
         </div>
 
         <div className="flex items-center deskB:mt-12   md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
-          <motion.div initial={{opacity:0}}  animate={{opacity:1}} className="flex bg-slate-500 w-full justify-center md:w-[72%] lg:w-[70%] deskB:w-[70%] flex-col h-full ">
+          <div
+            className="flex w-full justify-center md:w-[72%] lg:w-[70%] deskB:w-[70%] flex-col h-full "
+          >
             <motion.div
               initial={{ boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)" }}
               animate={{
@@ -408,29 +409,38 @@ export default function Home() {
                       setModelGen={setModelGen}
                       currentModelGen={modelGen}
                     />
-                    
                   </div>
-                  {error && <span className="text-red-600" >{error}</span>}
+                  {error && <span className="text-red-600">{error}</span>}
                   <AnimatePresence mode="wait"></AnimatePresence>
                 </div>
               </div>
             </motion.div>
-          </motion.div>
-          <div key={"dots-pages"} className="relative flex flex-col items-center  justify-center flex-1">
-            {currentLanguage && <span  className="text-white  font-zeyada text-2xl  " >Colors by AI</span>}
+          </div>
+          <div
+            className="relative flex flex-col items-center  justify-center flex-1"
+            suppressHydrationWarning={true}
+          >
+            {currentLanguage && (
+              <span className="text-white  font-zeyada text-2xl  ">
+                Colors by AI
+              </span>
+            )}
             {isMobile ? null : (
-              <Dots
-                numberOfDotEachLine={isTablet ? 3 : isLaptop ? 5 : 7}
-                width={3}
-                height={3}
-                gapBlock={1}
-                gapLine={1}
-                colors={memoizedColors}
-                absolute={false}
-                numberOfLine={
-                  isTablet ? 24 : isSmallLaptop ? 28 : isBigScreen ? 32 : 20
-                }
-              />
+                <Dots
+                key={"main-dots"}
+                  location={`main-dots`}
+                  numberOfDotEachLine={isTablet ? 3 : isLaptop ? 5 : 7}
+                  width={3}
+                  height={3}
+                  gapBlock={1}
+                  gapLine={1}
+                  colors={memoizedColors}
+                  absolute={false}
+                  numberOfLine={
+                    isTablet ? 24 : isSmallLaptop ? 28 : isBigScreen ? 32 : 20
+                  }
+                  
+                />
             )}
           </div>
         </div>
@@ -568,6 +578,7 @@ export default function Home() {
             >
               <span className="z-20">About Me</span>
               <Dots2
+                location={`about-dots`}
                 numberOfDotEachLine={7}
                 width={4}
                 height={4}

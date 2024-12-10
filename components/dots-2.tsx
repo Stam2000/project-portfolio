@@ -1,3 +1,4 @@
+
 import dotGeneratorGrid from "@/utilities/dotGenerator";
 import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,6 +15,7 @@ interface Props {
   height?: number;
   className?: string;
   viewportRoot?: React.RefObject<HTMLElement>;
+  location: string;
 }
 
 const Dots = ({
@@ -27,6 +29,7 @@ const Dots = ({
   className,
   colors,
   viewportRoot,
+  location
 }: Props) => {
   const [count, setCount] = useState(1);
   useEffect(() => {
@@ -100,18 +103,18 @@ const Dots = ({
           absolute ? "absolute" : "null"
         } ${className} flex gap-${gapBlock}`}
       >
-        <AnimatePresence mode="wait">
-          <div className="flex flex-col gap-1">
-            {randomDist1.map((line, index) => {
+
+          <div key={`randomDist1-${location}`} className="flex flex-col gap-1">
+            {randomDist1.map((line, lineIndex) => {
               return (
                 <motion.div
-                  key={`random-${index}`}
+                  key={`randomDist1-${lineIndex}-${location}`}
                   className={` flex items-center justify-evenly gap-${gapLine} `}
                 >
                   {line.map((color, colorIndex) => {
                     return (
                       <motion.div
-                        key={`${color.id}+${color.colorValue}`}
+                        key={`randomDist1-color-${colorIndex}-${lineIndex}-${location}`}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         whileInView={
@@ -144,20 +147,18 @@ const Dots = ({
               );
             })}
           </div>
-        </AnimatePresence>
         {/* Part 2 Start */}
 
-        <div className="flex flex-col gap-1">
-          {randomDist2.map((line, index) => {
+        <div key={`randomDist2-${location}-${location}`} className="flex flex-col gap-1">
+          {randomDist2.map((line, lineIndex) => {
             return (
-              <AnimatePresence>
                 <motion.div
-                  key={`radom-${index}`}
+                  key={`randomDist2-${lineIndex}-${location}`}
                   className={`flex items-center justify-evenly gap-${gapLine} `}
                 >
                   {line.map((color, colorIndex) => (
                     <motion.div
-                      key={`${color.id}+${color.colorValue}`}
+                      key={`randomDist2-color-${colorIndex}-${lineIndex}-${location}`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       whileInView={
@@ -186,7 +187,6 @@ const Dots = ({
                     ></motion.div>
                   ))}
                 </motion.div>
-              </AnimatePresence>
             );
           })}
         </div>

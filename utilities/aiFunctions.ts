@@ -116,12 +116,11 @@ tags\n{format_instructions}
     parserGenNew,
   ]);
 
- 
   let response;
   let it: number = 0;
   const maxAttempts = 5;
 
-  while ( it < maxAttempts) {
+  while (it < maxAttempts) {
     try {
       response = await genLchain.invoke({
         input:
@@ -135,10 +134,8 @@ tags\n{format_instructions}
       it++;
     }
   }
-  
 
-  throw new Error("Something went wrong. Please try again.")
-
+  throw new Error("Something went wrong. Please try again.");
 };
 
 /* ----------------------------------------------------------------- */
@@ -155,9 +152,8 @@ export const ChatManager = async ({
   modelGen: string;
   modelChat: string;
 }) => {
-
-  console.log(modelChat)
-  console.log(input)
+  console.log(modelChat);
+  console.log(input);
   const model = getModelInstance(modelChat);
   const MEMORY_KEY = "chat_history";
   const SystemPrompt = `
@@ -257,12 +253,12 @@ if no call tool occured here is your response struture :
   const chain = RunnableSequence.from([agentRunnable, parserChatManager]);
 
   const maxAttempts = 5;
-  let attempts = 0
+  let attempts = 0;
 
-
-  while(attempts < maxAttempts){
-    
-    const inpt = attempts > 0 ? `your last attempt to generate a message failed because you have not respeted the output format instruction please try again and strictly format the output as instructed you
+  while (attempts < maxAttempts) {
+    const inpt =
+      attempts > 0
+        ? `your last attempt to generate a message failed because you have not respeted the output format instruction please try again and strictly format the output as instructed you
     output format instruction : {
   "outputFunctionCall":  z.object({
   nameOfLanguage: z.string().describe("Name of the language"),
@@ -286,24 +282,23 @@ if no call tool occured here is your response struture :
  "output":output:z.string().describe("here you response to the user query")
 }
 
-user input:${input} ` : `please your response must respect the output JSON structure ${input}`
+user input:${input} `
+        : `please your response must respect the output JSON structure ${input}`;
 
-
-
-    try{
+    try {
       const res = await chain.invoke({
         chat_history: chatHistory,
-        input : inpt 
+        input: inpt,
       });
       return res;
-    }catch(err){
-      console.log(attempts)
+    } catch (err) {
+      console.log(attempts);
       console.log(err);
       attempts++;
     }
   }
 
-throw new Error("Something went wrong. Please try again.")
+  throw new Error("Something went wrong. Please try again.");
 };
 
 export const followUpQuestion = async ({
@@ -376,20 +371,19 @@ Repeating questions that have already been answered.
   ]);
 
   const maxAttempts = 5;
-  let attempts = 0
+  let attempts = 0;
 
-  while(attempts < maxAttempts){
-    try{
+  while (attempts < maxAttempts) {
+    try {
       const res = await genLchain.invoke({
         input: updatedChatMessage,
       });
       return res;
-    }catch(err){
+    } catch (err) {
       console.log(err);
       attempts++;
     }
   }
-
 
   throw new Error("Something went wrong. Please try again.");
 };

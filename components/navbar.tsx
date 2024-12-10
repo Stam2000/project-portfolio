@@ -20,8 +20,11 @@ const Navbar = ({
     return (
       <div className="mt-28 flex flex-col font-poiret-one gap-8 items-center justify-center ">
         <div className="w-full  flex items-center justify-center  ">
-        <span  className="text-white  font-zeyada text-2xl  " >Colors by AI</span>
+          <span className="text-white  font-zeyada text-2xl  ">
+            Colors by AI
+          </span>
           <Dots
+            location={`navbar-dots`}
             numberOfDotEachLine={7}
             width={3}
             height={3}
@@ -112,6 +115,7 @@ const Navbar = ({
       <div className=" mt-20 flex flex-col  font-poiret-one gap-8 items-center justify-center ">
         <div className="w-full  flex items-center justify-center  ">
           <Dots
+            location={`navbar-dots`}
             numberOfDotEachLine={7}
             width={3}
             height={3}
@@ -201,6 +205,7 @@ const Navbar = ({
     <nav className=" absolute left-4 right-4 bottom-8 deskB:bottom-10 flex flex-wrap flex-row  font-poiret-one gap-4 items-center justify-center md:justify-evenly ">
       <div className="w-full lg:w-fit flex items-center justify-center">
         <Dots
+          location={`navbar-dots`}
           numberOfDotEachLine={6}
           width={3}
           height={3}
