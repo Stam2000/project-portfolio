@@ -123,8 +123,11 @@ tags\n{format_instructions}
   while (it < maxAttempts) {
     try {
       response = await genLchain.invoke({
-        input:
-          "let's us discover a new langage please carefuly respect all instructions",
+        input: it > 0 
+        ? 
+        `"your last attempt failed please try again. to be parsed because of an incorrect output structure. please try again strictly follow all the instructions and strictly respect the output structure`
+          :
+        "let's us discover a new langage please carefuly respect all instructions",
         chat_history: langageHistory ? langageHistory : [],
       });
 
@@ -376,7 +379,7 @@ Repeating questions that have already been answered.
   while (attempts < maxAttempts) {
     try {
       const res = await genLchain.invoke({
-        input: updatedChatMessage,
+        input: attempts > 0 ? "your last attempt failed please try again. to be parsed because of an incorrect output structure. please try again strictly respect the output structure" : updatedChatMessage,
       });
       return res;
     } catch (err) {

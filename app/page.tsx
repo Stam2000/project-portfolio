@@ -16,6 +16,7 @@ import {
   MySvg5,
   MySvg6,
   MySvg7,
+  LogoSvg
 } from "@/components/SVG";
 import { z } from "zod";
 import React from "react";
@@ -224,6 +225,13 @@ export default function Home() {
     setComputedValues({ lines, dotsEachLine });
   }, [isTablet, isLaptop, isSmallLaptop, isBigScreen]);
 
+  const colorLogo = useMemo(()=>{
+      if(currentLanguage){
+        return currentLanguage.colors[Math.floor(Math.random()*currentLanguage.colors.length-1)]
+      }else{
+        return `#fdf0d5`
+      }
+  },[currentLanguage])
   
   return (
     <main>
@@ -260,7 +268,8 @@ export default function Home() {
           transition={{duration:1}}
         className="py-8">
           <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col md:flex-row items-center justify-center md:w-fit">
-            <div className="text-white">logo</div>
+          <LogoSvg className="w-28 h-28" primaryColor="#fff" secondaryColor={colorLogo} />
+
             <motion.button
               animate={{
                 borderColor: borderColor,

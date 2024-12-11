@@ -1,3 +1,4 @@
+"use client"
 import {
   MySvg,
   MySvg2,
@@ -8,13 +9,20 @@ import {
   MySvg7,
 } from "@/components/SVG";
 import { useMediaQuery } from "react-responsive";
+import { useState,useEffect } from "react";
 
 const DesignHeader = () => {
-  const isMobile = useMediaQuery({ maxWidth: 500 });
+  const isSmallLaptop = useMediaQuery({ minWidth: 1024 });
+  const [isMob,setIsMob] = useState(false)
+
+  useEffect(()=>{
+    setIsMob(isSmallLaptop)
+  },[isSmallLaptop])
+
 
   return (
     <div className="absolute h-full overflow-hidden w-full ">
-      {isMobile ? null : <MySvg7 className=" absolute  h-72" />}
+      {isMob ? null : <MySvg7 className=" absolute  h-72" />}
       {/* Right */}
       {/* <MySvg className="absolute h-8 top-[10%] left-1/2 " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg4 className="absolute h-16 top-[29%] opacity-75 right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
@@ -22,13 +30,13 @@ const DesignHeader = () => {
         className="z-0 absolute h-8 top-[15%] -left-[10%] md:top-[10%] md:left-1/2 "
         primaryColor="white"
         secondaryColor="#bcbcbc"
-        tertiaryColor="#dcdcdc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg4
         className="z-0 absolute h-16 top-[29%] opacity-75 right-[30%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+          secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       {/* Group 1*/}
       {/* <MySvg5 className="absolute h-16 top-[7%]  -right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
@@ -39,47 +47,47 @@ const DesignHeader = () => {
       <MySvg5
         className="z-0 absolute h-16 top-[7%]  -right-[5%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
-      <MySvg6
-        className="z-0 absolute h-5 top-[30%]  right-[1%] "
+      {isMob && <MySvg6
+        className="z-10 opacity-20 absolute h-7 top-[30%]  right-[18%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
-      />
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
+      />}
       <MySvg
-        className="z-0 absolute h-3 top-[38%]  right-[1%] "
+        className="z-0 absolute h-3 top-[46%]  left-[15%] md:top-[46%]  md:right-[23%] "
+        primaryColor="white"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
+      />
+      {isMob &&  <MySvg2
+        className="z-10 opacity-40 absolute h-2 top-[28%]  right-[10%] "
+        primaryColor="white"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
+      />}
+      {isMob && <MySvg5
+        className="z-0 absolute h-5 top-[10%]  right-[20%] "
         primaryColor="white"
         secondaryColor="#dcdcdc"
         tertiaryColor="#bcbcbc"
-      />
-      <MySvg2
-        className="z-0 absolute h-2 top-[28%]  right-[1%] "
-        primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
-      />
-      <MySvg5
-        className="z-0 absolute h-3 top-[30%]  right-[10%] "
-        primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
-      />
+      />}
       {/*Group 1 end*/}
       {/* <MySvg className="absolute h-8  bottom-[40%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg3 className="absolute h-20  bottom-[7%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
       <MySvg
-        className="z-0 absolute h-8  bottom-[40%]  right-[5%] "
+        className="z-0 absolute h-8  bottom-[45%]  right-[5%] md:bottom-[40%]  md:right-[5%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg3
         className="z-0 absolute md:h-20 h-16  bottom-[7%]  right-[5%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       {/*Group 2 */}
       {/* <MySvg5 className="absolute h-12  bottom-[30%] opacity-80  right-[25%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="white" />
@@ -90,32 +98,32 @@ const DesignHeader = () => {
       <MySvg5
         className="z-0 absolute h-12  bottom-[30%] opacity-80  right-[25%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="white"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg6
-        className="z-0 absolute h-8  bottom-[18%] opacity-80  right-[35%] "
+        className="z-0 absolute h-8  bottom-[18%] opacity-80  right-[45%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg4
         className="z-0 absolute h-8  bottom-[36%] opacity-80  left-[0%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg2
-        className="z-0 absolute h-3  bottom-[38%] opacity-80  right-[35%] "
+        className="z-0 absolute h-3  bottom-[38%] opacity-80  right-[40%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg3
         className="z-0 absolute h-5 bottom-[25%] left-[20%] md:bottom-[28%] opacity-80  md:right-[40%] "
-        primaryColor="white"
-        secondaryColor="#eaeaea"
-        tertiaryColor="#bcbcbc"
+        primaryColor="whitek"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       {/*Group 3 */}
       {/* <MySvg2 className="absolute h-8  top-[1%]  right-[20%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
@@ -123,24 +131,24 @@ const DesignHeader = () => {
           <MySvg4 className="absolute h-6  bottom-[1%]  right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <div className="absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " /> */}
       <MySvg2
-        className="z-0 absolute h-8  top-[1%]  right-[20%] "
+        className="z-0 absolute h-8 top-[1%]  left-[20%] md:top-[1%]  md:right-[20%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg
-        className="z-0 absolute h-4  top-[20%]  right-[16%] "
+        className="z-0 absolute h-4 top-[20%]  right-[58%]  md:top-[20%]  md:right-[16%] "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
       <MySvg4
-        className="z-0 absolute h-6  bottom-[1%] opacity-50 right-[30%] "
+        className="z-0 absolute h-6  bottom-[1%] right-[30%] opacity-50  "
         primaryColor="white"
-        secondaryColor="#dcdcdc"
-        tertiaryColor="#bcbcbc"
+        secondaryColor="#bcbcbc"
+        tertiaryColor="#f7f7f7"
       />
-      <div className="absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " />
+      <div className="z-0 absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " />
       {/* Right end */}
 
       {/*CARREE gris tout en haut du cercle Input */}

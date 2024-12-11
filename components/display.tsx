@@ -71,12 +71,14 @@ export const Display = ({ translatedText, colors }: Props) => {
           <MarkdownTypewriter 
             content={`--${translatedText!.nameOfLanguage}--`}
             className="text-lg font-oxygen font-extrabold "
+            typeSpeed={1}
           />
           <MarkdownTypewriter
             content={`**region**: ${translatedText!.languageHistory.region} - **spoken period**: ${
               translatedText!.languageHistory.spokenPeriod
             }-**number of speaker**: ${translatedText!.languageHistory.numberOfSpeakers}`}
             className="text-[13px] font-oxygen italic"
+            typeSpeed={3}
           />
         </div>
       )}
