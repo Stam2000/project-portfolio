@@ -266,8 +266,8 @@ export default function Home() {
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{duration:1}}
-        className="py-8">
-          <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col md:flex-row items-center justify-center md:w-fit">
+        className="py-8 md:py-0">
+          <div className="flex lg:ml-40 lg:gap-24  md:ml-10 md:gap-16 flex-col  md:flex-row items-center justify-center md:w-fit">
           <LogoSvg className="w-28 h-28" primaryColor="#fff" secondaryColor={colorLogo} />
 
             <motion.button
@@ -300,7 +300,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        <div className="flex items-center deskB:mt-12   md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
+        <div className="flex items-center md:max-h-[500px] md:h-[60%] flex-col md:flex-row  deskB:max-h-full ">
           <motion.div
            initial={{opacity:0}}
            animate={{opacity:1}}
