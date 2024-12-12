@@ -217,10 +217,12 @@ export function getModelInstance(shortName: string) {
   if (shortName.startsWith("gpt")) {
     return new ChatOpenAI({
       model: modelName,
+      temperature:0.7,
     });
   } else {
     return new ChatTogetherAI({
       model: modelName,
+      temperature:0.7
     });
   }
 }
