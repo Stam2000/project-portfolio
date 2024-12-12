@@ -15,9 +15,11 @@ const DesignHeader = () => {
   const isMobile = useMediaQuery({ maxWidth: 500 });
   const isSmallLaptop = useMediaQuery({ minWidth: 1024 });
   const [isMob,setIsMob] = useState(false)
+  /* const [isSmallLap,setIsSmallLap]=useState(false) */ 
 
   useEffect(()=>{
     setIsMob(isSmallLaptop)
+    /* setIsSmallLap(isSmallLaptop) */
   },[isSmallLaptop])
 
 
@@ -34,7 +36,7 @@ const DesignHeader = () => {
         tertiaryColor="#f7f7f7"
       />
       <MySvg4
-        className="z-0 absolute h-16 top-[29%] opacity-75 right-[30%] "
+        className="z-0 absolute h-16 top-[29%] opacity-50 right-[30%] "
         primaryColor="white"
           secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
@@ -51,30 +53,30 @@ const DesignHeader = () => {
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
       />
-      {isMob ? <MySvg6
+      {isMob && <MySvg6
         className="z-10 opacity-20 absolute h-7 top-[30%]  right-[18%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
-      />:undefined}
+      />}
       <MySvg
         className="z-0 absolute h-3 top-[46%]  left-[15%] md:top-[46%]  md:right-[23%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
       />
-      {isMob ?  <MySvg2
+      {isMob &&  <MySvg2
         className="z-10 opacity-40 absolute h-2 top-[28%]  right-[10%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
-      />:undefined}
-      {isMob ? <MySvg5
+      />}
+      {isMob && <MySvg5
         className="z-0 absolute h-5 top-[10%]  right-[20%] "
         primaryColor="white"
         secondaryColor="#dcdcdc"
         tertiaryColor="#bcbcbc"
-      />:undefined}
+      />}
       {/*Group 1 end*/}
       {/* <MySvg className="absolute h-8  bottom-[40%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg3 className="absolute h-20  bottom-[7%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
@@ -132,7 +134,7 @@ const DesignHeader = () => {
           <MySvg4 className="absolute h-6  bottom-[1%]  right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <div className="absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " /> */}
       <MySvg2
-        className="z-0 absolute h-8 top-[1%]  left-[20%] md:top-[1%]  md:right-[20%] "
+        className="z-0 absolute h-8 top-[1%] opacity-50  left-[20%] md:top-[1%]  md:right-[20%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
@@ -153,7 +155,7 @@ const DesignHeader = () => {
       {/* Right end */}
 
       {/*CARREE gris tout en haut du cercle Input */}
-      { isSmallLaptop ? <div
+      { isMob ? <div
         className={`absolute top-[20%] left-[38%]  md:top-[14%] md:left-[36%] rounded-2xl rotate-[35deg] border-[10px] border-white md:border-[#bcbcbc] h-[60px] w-[60px]`}
       />:null}
       {/*Cercle*/}
@@ -164,12 +166,12 @@ const DesignHeader = () => {
       />
       {/*Cercle*/}
       {/* <div className={`absolute top-[8%] left-[54%] rounded-full bg-red-500 h-[20px] w-[20px]`} /> */}
-      { isSmallLaptop ? <div
+      { isMob ? <div
         className={`absolute top-[11%] left-[7%] md:top-[8%] md:left-[54%] rounded-full bg-white h-[20px] w-[20px]`}
       />:null}
       {/*CARREE*/}
       {/* <div className={`absolute bottom-[40%] left-[37%] md:bottom-[44%] md:left-[24%] rounded-lg -rotate-[15deg] border-[7px] border-[#ffffff] h-[35px] w-[35px]`} /> */}
-      {isSmallLaptop ? <div
+      {isMob ? <div
         className={`absolute bottom-[40%] left-[37%] md:bottom-[44%] md:left-[24%] rounded-lg -rotate-[15deg] border-[7px] border-[#ffffff] h-[35px] w-[35px]`}
       /> : null }
       {/*Cercle*/}
