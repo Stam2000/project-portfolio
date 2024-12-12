@@ -36,7 +36,7 @@ const DesignHeader = () => {
         tertiaryColor="#f7f7f7"
       />
       <MySvg4
-        className="z-0 absolute h-16 top-[29%] opacity-50 right-[30%] "
+        className="z-0 absolute h-10 lg:h-16 top-[29%] opacity-40 right-[30%] "
         primaryColor="white"
           secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
@@ -48,7 +48,7 @@ const DesignHeader = () => {
           <MySvg2 className="absolute h-2 top-[28%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg5 className="absolute h-3 top-[30%]  right-[10%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
       <MySvg5
-        className="z-0 absolute h-16 top-[7%] opacity-[70%] -right-[5%] "
+        className="z-0 absolute h-14 lg:h-16 top-[7%] opacity-[70%] -right-[5%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
