@@ -234,7 +234,7 @@ export const Chat = React.memo(
                   <span className="italic">
                     <TypeWritter
                       text={message.funfact}
-                      delay={8000}
+                      delay={6000}
                       speed={1}
                     />
                   </span>

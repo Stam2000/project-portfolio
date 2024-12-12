@@ -12,6 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import { useState,useEffect } from "react";
 
 const DesignHeader = () => {
+  const isMobile = useMediaQuery({ maxWidth: 500 });
   const isSmallLaptop = useMediaQuery({ minWidth: 1024 });
   const [isMob,setIsMob] = useState(false)
 
@@ -22,7 +23,7 @@ const DesignHeader = () => {
 
   return (
     <div className="absolute h-full overflow-hidden w-full ">
-      {isMob ? null : <MySvg7 className=" absolute  h-72" />}
+      {isMobile ? null : <MySvg7 className=" absolute  h-72" />}
       {/* Right */}
       {/* <MySvg className="absolute h-8 top-[10%] left-1/2 " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg4 className="absolute h-16 top-[29%] opacity-75 right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
