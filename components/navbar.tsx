@@ -78,12 +78,13 @@ const Navbar = ({
               <a
                 className="z-50 text-white bg-none text-xl font-bold font-out left-1  flex gap-2 items-center text-nowrap"
                 href="mailto:manuel@sopmanuel.com"
+                target="_blank"
               >
                 Contact Me <Mail size={20} />
               </a>
             </motion.button>
             <div className=" z-10 flex gap-3 text-white items-center justify-center ">
-              <a href="https://github.com/Stam2000">
+              <a href="https://github.com/Stam2000" target="_blank">
                 <GithubIcon
                   width={35}
                   height={35}
@@ -91,7 +92,7 @@ const Navbar = ({
                   className="custom-class"
                 />
               </a>
-              <a href="https://www.linkedin.com/in/manuel-sop-0905b9207">
+              <a href="https://www.linkedin.com/in/manuel-sop-0905b9207" target="_blank">
                 <LinkedIcon
                   width={35}
                   height={35}
@@ -265,12 +266,13 @@ const Navbar = ({
           <a
             className="z-50 text-white bg-none  flex gap-2 items-center  deskB:text-xl font-bold font-out left-1 text-nowrap"
             href="mailto:manuel@sopmanuel.com"
+            target="_blank"
           >
             Contact Me <Mail size={20} />
           </a>
         </motion.button>
-        <div className=" z-10 flex gap-3 text-white items-center justify-center ">
-          <a href="https://github.com/Stam2000">
+        <div className=" z-10 flex gap-3 text-white items-center justify-center " >
+          <a href="https://github.com/Stam2000" target="_blank">
             <GithubIcon
               width={35}
               height={35}
@@ -278,7 +280,7 @@ const Navbar = ({
               className="custom-class"
             />
           </a>
-          <a href="https://www.linkedin.com/in/manuel-sop-0905b9207">
+          <a href="https://www.linkedin.com/in/manuel-sop-0905b9207" target="_blank">
             <LinkedIcon
               width={35}
               height={35}

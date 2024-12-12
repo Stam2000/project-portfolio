@@ -610,8 +610,32 @@ export default function Home() {
                 gapLine={1}
                 className=" -bottom-4 z-0"
                 absolute={false}
-                colors={isInView ? [...defaultColors] : defaultColors}
+                colors={[
+                  { backgroundColor: "#D1D5DB" },
+                  { backgroundColor: "#FFFFFF" },
+                  { backgroundColor: "black" },
+                  { backgroundColor: "rgba(152, 206, 0, 0.8)" },
+                  { borderWidth: "3px", borderColor: "#FFFFFF" },
+                  { backgroundColor: "rgba(152, 206, 0, 0.4)" },
+                  { borderWidth: "3px", borderColor: "#98CE00" },
+                  { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.9)" },
+                  { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.4)" },
+                ]}
                 numberOfLine={2}
+                defaultColors={[
+                  { backgroundColor: "#D1D5DB" },
+                  { backgroundColor: "black" },
+                  { backgroundColor: "rgba(152, 206, 0, 1)" },
+                  { borderWidth: "3px", borderColor: "black" },
+                  { borderWidth: "3px", borderColor: "#98CE00" },
+                  { borderWidth: "3px", borderColor: "#000000" },
+                  { borderWidth: "3px", borderColor: "#000000" },
+                  { borderWidth: "3px", borderColor: "#98CE00" },
+                  { borderWidth: "3px", borderColor: "#98CE00" },
+                  { borderWidth: "3px", borderColor: "white" },
+                  { borderWidth: "3px", borderColor: "#ffffff" },
+                  { borderWidth: "3px", borderColor: "#D1D5DB" },
+                ]}
               />
             </motion.h2>
             <article className="mt-8 w-[90%] z-1000 font-nunito mix-blend-multiply text-gray-700 self-center text-md  text-justify">
@@ -650,13 +674,14 @@ export default function Home() {
                 <a
                   className=" font-nunito font-bold text-white"
                   href="mailto:manuel@sopmanuel.com"
+                  target="_blank"
                 >
                   Contact Me
                 </a>
                 <MagicWand04Icon />
               </button>
               <div className="grid grid-cols-2 gap-2">
-                <a href="https://github.com/Stam2000">
+                <a href="https://github.com/Stam2000" target="_blank">
                   <GithubIcon
                     width={35}
                     height={35}
@@ -664,7 +689,7 @@ export default function Home() {
                     className="custom-class"
                   />
                 </a>
-                <a href="https://www.linkedin.com/in/manuel-sop-0905b9207">
+                <a href="https://www.linkedin.com/in/manuel-sop-0905b9207" target="_blank">
                   <LinkedIcon
                     width={35}
                     height={35}
@@ -673,6 +698,7 @@ export default function Home() {
                   />
                 </a>
               </div>
+              <a href="mailto:manuel@sopmanuel.com" className="font-oxygen italic text-slate-800" >manuel@sopmanuel.com</a>
             </div>
           </div>
         </div>

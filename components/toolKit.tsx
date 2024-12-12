@@ -80,6 +80,20 @@ const ToolKit = ({ colors }: { colors: React.CSSProperties[] }) => {
             className=" -bottom-4 z-0"
             absolute={false}
             viewportRoot={ref}
+            defaultColors={[
+              { backgroundColor: "#D1D5DB" },
+              { backgroundColor: "black" },
+              { backgroundColor: "rgba(152, 206, 0, 1)" },
+              { borderWidth: "3px", borderColor: "black" },
+              { borderWidth: "3px", borderColor: "#98CE00" },
+              { borderWidth: "3px", borderColor: "#000000" },
+              { borderWidth: "3px", borderColor: "#000000" },
+              { borderWidth: "3px", borderColor: "#98CE00" },
+              { borderWidth: "3px", borderColor: "#98CE00" },
+              { borderWidth: "3px", borderColor: "white" },
+              { borderWidth: "3px", borderColor: "#ffffff" },
+              { borderWidth: "3px", borderColor: "#D1D5DB" },
+            ]}
             colors={colors}
             numberOfLine={2}
           />

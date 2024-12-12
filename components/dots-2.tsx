@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-  const defaultColors =[
+  const defaulColors =[
     { backgroundColor: "#D1D5DB" },
     { backgroundColor: "#FFFFFF" },
     { backgroundColor: "rgba(152, 206, 0, 0.8)" },
@@ -22,7 +22,15 @@ interface Props {
   gapBlock?: number;
   gapLine?: number;
   colors: React.CSSProperties[];
-  defaultsColors?:React.CSSProperties[];
+  defaultColors?:({
+    backgroundColor: string;
+    borderWidth?: undefined;
+    borderColor?: undefined;
+} | {
+    borderWidth: string;
+    borderColor: string;
+    backgroundColor?: undefined;
+})[];
   width?: number;
   height?: number;
   className?: string;
@@ -45,7 +53,7 @@ const Dots = ({
   colors,
   viewportRoot,
   location,
-  defaultsColors = defaultColors
+  defaultColors = defaulColors
 }: Props) => {
   const [count, setCount] = useState(1);
   useEffect(() => {
