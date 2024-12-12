@@ -149,13 +149,13 @@ const DesignHeader = () => {
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
       />
-      <div className="z-0 absolute top-[32%] right-[20%] rounded-full bg-gray-100 h-[20px] w-[20px] " />
+      <div className="z-0 absolute top-[32%] right-[20%] rounded-full bg-white h-[20px] w-[20px] " />
       {/* Right end */}
 
       {/*CARREE gris tout en haut du cercle Input */}
-      <div
+      { isSmallLaptop ? <div
         className={`absolute top-[20%] left-[38%]  md:top-[14%] md:left-[36%] rounded-2xl rotate-[35deg] border-[10px] border-white md:border-[#bcbcbc] h-[60px] w-[60px]`}
-      />
+      />:null}
       {/*Cercle*/}
 
       {/* TODO modify z-index */}
@@ -164,14 +164,14 @@ const DesignHeader = () => {
       />
       {/*Cercle*/}
       {/* <div className={`absolute top-[8%] left-[54%] rounded-full bg-red-500 h-[20px] w-[20px]`} /> */}
-      <div
+      { isSmallLaptop ? <div
         className={`absolute top-[11%] left-[7%] md:top-[8%] md:left-[54%] rounded-full bg-white h-[20px] w-[20px]`}
-      />
+      />:null}
       {/*CARREE*/}
       {/* <div className={`absolute bottom-[40%] left-[37%] md:bottom-[44%] md:left-[24%] rounded-lg -rotate-[15deg] border-[7px] border-[#ffffff] h-[35px] w-[35px]`} /> */}
-      <div
+      {isSmallLaptop ? <div
         className={`absolute bottom-[40%] left-[37%] md:bottom-[44%] md:left-[24%] rounded-lg -rotate-[15deg] border-[7px] border-[#ffffff] h-[35px] w-[35px]`}
-      />
+      /> : null }
       {/*Cercle*/}
       {/* <div className={`absolute bottom-[45%] left-[20%] md:bottom-[51%] md:left-[42%] rounded-full bg-slate-700 h-[10px] w-[10px]`} /> */}
       <div

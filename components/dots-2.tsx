@@ -4,6 +4,17 @@ import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
+  const defaultColors =[
+    { backgroundColor: "#D1D5DB" },
+    { backgroundColor: "#FFFFFF" },
+    { backgroundColor: "rgba(152, 206, 0, 0.8)" },
+    { borderWidth: "3px", borderColor: "#FFFFFF" },
+    { backgroundColor: "rgba(152, 206, 0, 0.2)" },
+    { borderWidth: "3px", borderColor: "#98CE00" },
+    { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.9)" },
+    { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.2)" },
+  ];
+
 interface Props {
   numberOfDotEachLine: number;
   numberOfLine: number;
@@ -11,12 +22,16 @@ interface Props {
   gapBlock?: number;
   gapLine?: number;
   colors: React.CSSProperties[];
+  defaultsColors?:React.CSSProperties[];
   width?: number;
   height?: number;
   className?: string;
   viewportRoot?: React.RefObject<HTMLElement>;
   location: string;
 }
+
+type WithBackground<T> = Omit<T,"backgroundColor"> & { backgroundColor?: string };
+type WithBorder<T> = Omit<T,"border"> & { border?: string, borderColor?:string };	
 
 const Dots = ({
   numberOfDotEachLine,
@@ -29,23 +44,15 @@ const Dots = ({
   className,
   colors,
   viewportRoot,
-  location
+  location,
+  defaultsColors = defaultColors
 }: Props) => {
   const [count, setCount] = useState(1);
   useEffect(() => {
     setCount((prev) => prev + 1);
   }, [colors]);
 
-  const defaultColors = [
-    { backgroundColor: "#D1D5DB" },
-    { backgroundColor: "#000000" },
-    { backgroundColor: "rgba(152, 206, 0, 0.8)" },
-    { borderWidth: "2px", borderColor: "#181818" },
-    { backgroundColor: "rgba(152, 206, 0, 0.8)" },
-    { borderWidth: "2px", borderColor: "#98CE00" },
-    { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
-    { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.8)" },
-  ];
+
 
   /*       const defColors=[
         { backgroundColor: "#D1D5DB" },
@@ -57,11 +64,15 @@ const Dots = ({
         { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.2)" }
       ] */
 
-  const defaultwithB = defaultColors.filter((CssProp) => CssProp.borderColor);
+  let defaultwithB : WithBackground<typeof defaultColors[number]>[] = defaultColors.filter((CssProp) => CssProp.borderColor);
+  defaultwithB = defaultwithB.map((CssProp) =>{return {...CssProp, backgroundColor : 'transparent'}});
 
-  const defautOnlyB = defaultColors.filter(
+
+  let defautOnlyB:WithBorder<typeof defaultColors[number]>[] = defaultColors.filter(
     (CssProp) => CssProp.backgroundColor,
   );
+
+  defautOnlyB = defautOnlyB.map((CssProp) =>{return {...CssProp, border : 'none',borderColor:"transparent"}});
 
   const randomDist1 = useMemo(() => {
     return dotGeneratorGrid(numberOfDotEachLine, numberOfLine, colors);
@@ -118,26 +129,26 @@ const Dots = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         whileInView={
-                          color.color.border || color.color.borderColor
+                          color.color.borderColor
                             ? defaultwithB[
-                                Math.floor(Math.random() * defaultwithB.length)
+                                Math.floor(Math.random() * (defaultwithB.length))
                               ]
                             : defautOnlyB[
-                                Math.floor(Math.random() * defautOnlyB.length)
+                                Math.floor(Math.random() * (defautOnlyB.length))
                               ]
                         }
                         viewport={{ root: viewportRoot, amount: 0.5 }}
-                        transition={{ delay: Math.random() * 1 }}
+                        transition={{ delay:0.1 + Math.random() * 1 }}
                         className={`
                                     ${
                                       width
                                         ? `w-${width}`
-                                        : `w-${Math.floor(Math.random() * 3)}`
+                                        : `w-${Math.floor(Math.random() * 2)}`
                                     } 
                                     ${
                                       height
                                         ? `h-${height}`
-                                        : `h-${Math.floor(Math.random() * 3)}`
+                                        : `h-${Math.floor(Math.random() * 2)}`
                                     } rounded-full`}
                         style={color.color}
                       ></motion.div>
@@ -162,26 +173,26 @@ const Dots = ({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       whileInView={
-                        color.color.border || color.color.borderColor
+                      color.color.borderColor
                           ? defaultwithB[
-                              Math.floor(Math.random() * defaultwithB.length)
+                              Math.floor(Math.random() * (defaultwithB.length))
                             ]
                           : defautOnlyB[
-                              Math.floor(Math.random() * defautOnlyB.length)
+                              Math.floor(Math.random() * (defautOnlyB.length))
                             ]
                       }
                       viewport={{ root: viewportRoot, amount: 0.5 }}
-                      transition={{ delay: Math.random() * 1 }}
+                      transition={{ delay:0.1 + Math.random() * 1 }}
                       className={` 
                                 ${
                                   width
                                     ? `w-${width}`
-                                    : `w-${Math.floor(Math.random() * 3)}`
+                                    : `w-${Math.floor(Math.random() * 2)}`
                                 } 
                                 ${
                                   height
                                     ? `h-${height}`
-                                    : `h-${Math.floor(Math.random() * 3)}`
+                                    : `h-${Math.floor(Math.random() * 2)}`
                                 } rounded-full`}
                       style={color.color}
                     ></motion.div>

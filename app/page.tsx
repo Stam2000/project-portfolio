@@ -236,7 +236,7 @@ export default function Home() {
   return (
     <main>
       <AnimatePresence>
-        {idImg && (
+        {idImg ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -259,7 +259,7 @@ export default function Home() {
               />
             </motion.div>
           </motion.div>
-        )}
+        ):undefined}
       </AnimatePresence>
       <div className="relative md:h-lvh deskB:flex deskB:flex-col  deskB:justify-start ">
         <motion.div
@@ -331,7 +331,7 @@ export default function Home() {
               gap-2
               `}
             >
-              <DesignHeader />
+              {/* <DesignHeader /> */}
               <div className="flex items-stretch justify-center w-full md:w-1/2 ">
                 <AnimatePresence mode="wait">
                   {currentLanguage ? (
@@ -595,7 +595,7 @@ export default function Home() {
             <div className="absolute bottom-[29%] left-[40%] rounded-full bg-white h-[28px] w-[28px] " />
             <div className="absolute -bottom-[35%] left-[20%] border-[60px]  border-[#e5e5e5]  rounded-full  h-[200px] w-[200px] " />
           </div>
-          <div className=" py-8 flex flex-col mix-blend-multiply flex-1 gap-2  items-center text-center justify-center">
+          <div className=" py-8 flex flex-col flex-1 gap-2  items-center text-center justify-center">
             <motion.h2
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -611,11 +611,11 @@ export default function Home() {
                 gapLine={1}
                 className=" -bottom-4 z-0"
                 absolute={false}
-                colors={isInView ? [...defC] : defC}
+                colors={isInView ? [...defaultColors] : defaultColors}
                 numberOfLine={2}
               />
             </motion.h2>
-            <article className="mt-8 w-[90%] z-1000 font-nunito  text-gray-700 self-center text-md  text-justify">
+            <article className="mt-8 w-[90%] z-1000 font-nunito mix-blend-multiply text-gray-700 self-center text-md  text-justify">
               <p className="mb-4 ">
                 Hi there! 👋 I’m Manuel, a full-stack developer and AI engineer
                 based in Berlin, currently studying Computer Engineering at TU
@@ -643,7 +643,7 @@ export default function Home() {
                 ideas, let’s make something awesome together! 💡
               </p>
             </article>
-            <div className="flex flex-col gap-2 items-center justify-center">
+            <div className="flex flex-col gap-2 mix-blend-multiply items-center justify-center">
               <button
                 onClick={handleSubmit}
                 className="w-44 mt-6 gap-2 bg-[#98CE00] p-3 flex items-center justify-center border-[1px] shadow-lg shadow-[#dcff7d] border-slate-500 rounded-md"
