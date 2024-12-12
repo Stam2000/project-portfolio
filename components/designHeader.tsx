@@ -30,7 +30,7 @@ const DesignHeader = () => {
       {/* <MySvg className="absolute h-8 top-[10%] left-1/2 " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg4 className="absolute h-16 top-[29%] opacity-75 right-[30%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
       <MySvg
-        className="z-0 absolute h-8 top-[15%] -left-[10%] md:top-[10%] md:left-1/2 "
+        className="z-0 absolute h-8 top-[15%] opacity-[60%] -left-[10%] md:top-[10%] md:left-1/2 "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
@@ -48,7 +48,7 @@ const DesignHeader = () => {
           <MySvg2 className="absolute h-2 top-[28%]  right-[1%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg5 className="absolute h-3 top-[30%]  right-[10%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
       <MySvg5
-        className="z-0 absolute h-16 top-[7%]  -right-[5%] "
+        className="z-0 absolute h-16 top-[7%] opacity-[70%] -right-[5%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
@@ -81,7 +81,7 @@ const DesignHeader = () => {
       {/* <MySvg className="absolute h-8  bottom-[40%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg3 className="absolute h-20  bottom-[7%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}
       <MySvg
-        className="z-0 absolute h-8  bottom-[45%]  right-[5%] md:bottom-[40%]  md:right-[5%] "
+        className="z-0 absolute h-8  bottom-[45%] opacity-[75%]  right-[5%] md:bottom-[40%]  md:right-[5%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
@@ -111,7 +111,7 @@ const DesignHeader = () => {
         tertiaryColor="#f7f7f7"
       />
       <MySvg4
-        className="z-0 absolute h-8  bottom-[36%] opacity-80  left-[0%] "
+        className="z-0 absolute h-8  bottom-[36%] opacity-70 left-[0%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
