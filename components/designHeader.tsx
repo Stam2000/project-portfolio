@@ -51,30 +51,30 @@ const DesignHeader = () => {
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
       />
-      {isMob && <MySvg6
+      {isMob ? <MySvg6
         className="z-10 opacity-20 absolute h-7 top-[30%]  right-[18%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
-      />}
+      />:undefined}
       <MySvg
         className="z-0 absolute h-3 top-[46%]  left-[15%] md:top-[46%]  md:right-[23%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
       />
-      {isMob &&  <MySvg2
+      {isMob ?  <MySvg2
         className="z-10 opacity-40 absolute h-2 top-[28%]  right-[10%] "
         primaryColor="white"
         secondaryColor="#bcbcbc"
         tertiaryColor="#f7f7f7"
-      />}
-      {isMob && <MySvg5
+      />:undefined}
+      {isMob ? <MySvg5
         className="z-0 absolute h-5 top-[10%]  right-[20%] "
         primaryColor="white"
         secondaryColor="#dcdcdc"
         tertiaryColor="#bcbcbc"
-      />}
+      />:undefined}
       {/*Group 1 end*/}
       {/* <MySvg className="absolute h-8  bottom-[40%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" />
           <MySvg3 className="absolute h-20  bottom-[7%]  right-[5%] " primaryColor="white" secondaryColor="#bcbcbc" tertiaryColor="#bcbcbc" /> */}

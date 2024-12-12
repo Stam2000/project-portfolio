@@ -23,7 +23,6 @@ import React from "react";
 
 import { Display } from "@/components/display";
 import { useMediaQuery } from "react-responsive";
-
 import ToolKit from "@/components/toolKit";
 import { motion, useInView } from "framer-motion";
 import { extractBackgroundColors } from "@/lib/utils";
@@ -115,9 +114,10 @@ export default function Home() {
   });
   const [error, setError] = useState<string>("");
   const { isLoading, setIsLoading } = useContext(MyContext);
-
+  const [shadowBox, setShadowBox] = useState(["0px 0px 0px rgba(152,206,0,1)"]);
   const useRe = useRef(null);
   const isInView = useInView(useRe);
+  const [computedValues, setComputedValues] = useState({ lines: 20, dotsEachLine: 7 });
 
   const ca = useMemo(() => {
     return generateTailwindClasses(
@@ -125,6 +125,17 @@ export default function Home() {
       defaultConfig,
     );
   }, [currentLanguage?.colors]);
+
+  const memoizedColors = useMemo(() => {
+    return currentLanguage ? [...ca] : [...defColors];
+  }, [ca]);
+
+  const isMobile = useMediaQuery({ maxWidth: 500 });
+  const isTablet = useMediaQuery({ maxWidth: 768 });
+  const isSmallLaptop = useMediaQuery({ maxWidth: 1024 });
+  const isLaptop = useMediaQuery({ maxWidth: 1280 });
+  const isBigScreen = useMediaQuery({ minWidth: 1440 });
+
 
   const handleReset = () => {
     setChatHistory([]);
@@ -135,47 +146,6 @@ export default function Home() {
     setIsInitialContent(false);
   };
 
-  const memoizedColors = useMemo(() => {
-    return currentLanguage ? [...ca] : [...defColors];
-  }, [ca]);
-
-  const [shadowBox, setShadowBox] = useState(["0px 0px 0px rgba(152,206,0,1)"]);
-
-  const isMobile = useMediaQuery({ maxWidth: 500 });
-  const isTablet = useMediaQuery({ maxWidth: 768 });
-  const isSmallLaptop = useMediaQuery({ maxWidth: 1024 });
-  const isLaptop = useMediaQuery({ maxWidth: 1280 });
-  const isBigScreen = useMediaQuery({ minWidth: 1440 });
-
-  useEffect(() => {
-    const newBgColors = extractBackgroundColors(ca);
-    const lastColor = shiftColors(shadowBox);
-    const lastBg = shiftColors(borderColor);
-    const lastBtColor = shiftColors(btnColor);
-
-    setBorderColor([
-      lastBg!,
-      `${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
-    ]);
-
-    setBtnColor([
-      lastBtColor!,
-      `${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
-    ]);
-    setBtnShadow([
-      lastColor!,
-      `0px 5px 10px ${
-        newBgColors[Math.floor(Math.random() * newBgColors.length)]
-      }`,
-    ]);
-
-    setShadowBox([
-      lastColor!,
-      `10px 15px 45px ${
-        newBgColors[Math.floor(Math.random() * newBgColors.length)]
-      }`,
-    ]);
-  }, [ca]);
 
   async function handleSubmit() {
     setError("");
@@ -217,7 +187,35 @@ export default function Home() {
     setIsLoading(false);
   }
 
-  const [computedValues, setComputedValues] = useState({ lines: 20, dotsEachLine: 7 });
+  useEffect(() => {
+    const newBgColors = extractBackgroundColors(ca);
+    const lastColor = shiftColors(shadowBox);
+    const lastBg = shiftColors(borderColor);
+    const lastBtColor = shiftColors(btnColor);
+
+    setBorderColor([
+      lastBg!,
+      `${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+    ]);
+
+    setBtnColor([
+      lastBtColor!,
+      `${newBgColors[Math.floor(Math.random() * newBgColors.length)]}`,
+    ]);
+    setBtnShadow([
+      lastColor!,
+      `0px 5px 10px ${
+        newBgColors[Math.floor(Math.random() * newBgColors.length)]
+      }`,
+    ]);
+
+    setShadowBox([
+      lastColor!,
+      `10px 15px 45px ${
+        newBgColors[Math.floor(Math.random() * newBgColors.length)]
+      }`,
+    ]);
+  }, [ca]);
 
   useEffect(() => {
     const dotsEachLine = isTablet ? 3 : isLaptop ? 5 : 7;
@@ -232,6 +230,7 @@ export default function Home() {
         return `#fdf0d5`
       }
   },[currentLanguage])
+
   
   return (
     <main>
@@ -331,7 +330,7 @@ export default function Home() {
               gap-2
               `}
             >
-              {/* <DesignHeader /> */}
+              <DesignHeader />
               <div className="flex items-stretch justify-center w-full md:w-1/2 ">
                 <AnimatePresence mode="wait">
                   {currentLanguage ? (
