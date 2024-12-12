@@ -146,7 +146,7 @@ const Dots = ({
                               ]
                         }
                         viewport={{ root: viewportRoot, amount: 0.5 }}
-                        transition={{ delay:0.1 + Math.random() * 1 }}
+                        transition={{ delay:Math.random() * 0.6 }}
                         className={`
                                     ${
                                       width
@@ -190,7 +190,7 @@ const Dots = ({
                             ]
                       }
                       viewport={{ root: viewportRoot, amount: 0.5 }}
-                      transition={{ delay:0.1 + Math.random() * 1 }}
+                      transition={{ delay:Math.random() * 0.6 }}
                       className={` 
                                 ${
                                   width
