@@ -66,7 +66,7 @@ The main goal of FImae is to help me manage my money more easily and confidently
   {
     name: "Stam V1 ",
     description:
-      "It's a finance app that connects all my bank accounts in one place, giving me a clear, organized view of my finances. With an AI assistant, I can analyze my spending patterns, uncover trends, and even spot opportunities to save. One of my favorite features is how it fills in missing transaction details—like itemizing what I bought during card payments—making my records more accurate. FImae helps me make smarter, data-driven decisions and simplifies financial management.",
+      "I hope you enjoy 🌟.I have tried to make each visit unique, hoping you’ll explore, enjoy, and have fun while discovering my work!",
     link: "https://fimae.sopmanuel.com",
     logoObjects: [
       { name: "next-js", displayName: "Next Js" },
@@ -107,8 +107,9 @@ The main goal of FImae is to help me manage my money more easily and confidently
     ]
   },{
     name:"Real Estate App powerded with AI",
-    description:
-      "A finance app that allows users to track their expenses and income. The app is built using React, Tailwind CSS, and TypeScript. The app is also deployed on Vercel.",
+    description:`Discover your perfect home with  Real Estate, featuring an AI agent that answers all your questions about a property.
+Want to know about the nearest park, supermarket, or even a dancing school? The AI agent goes beyond basic property details, searching the surrounding area to provide you with accurate, real-time information.
+This app was inspired by my own need for more location insights when searching for a home. By combining property listings with smart location-based queries, it empowers users to make informed decisions about where they’ll live.`,
     link: "https://www.sopmanuel.com",
     logoObjects: [
       { name: "react", displayName: "React" },
