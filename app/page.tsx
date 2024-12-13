@@ -97,9 +97,9 @@ const defColors = [
 ];
 
 export default function Home() {
-  const [modelGen, setModelGen] = useState<string>("gpt-4o-mini");
-  const [modelFollow, setModelFollow] = useState<string>("gpt-4o-mini");
-  const [modelChat, setModelChat] = useState<string>("gpt-4o-mini");
+  const [modelGen, setModelGen] = useState<string>("WizardLM-2-8x22B");
+  const [modelFollow, setModelFollow] = useState<string>("WizardLM-2-8x22B");
+  const [modelChat, setModelChat] = useState<string>("WizardLM-2-8x22B");
   const [idImg, setIdImg] = useState<string | null>(null);
   const [langHistory, setLangHistory] = useState<BaseMessage[]>([]);
   const [isInitialContent, setIsInitialContent] = useState(true);

@@ -49,19 +49,21 @@ const ToolKit = ({ colors }: { colors: React.CSSProperties[] }) => {
     { name: "python", displayName: "Python" },
     { name: "drizzle", displayName: "drizzle" },
     { name: "axios-purple", displayName: "Axios" },
+    { name: "motion", displayName: "Motion" },
     { name: "shadcn-ui", displayName: "Shadcn UI" },
     { name: "github-icon", displayName: "Github" },
     { name: "nodejs", displayName: "Nodejs" },
     { name: "hono", displayName: "Hono" },
+    { name: "langgraph", displayName: "LangGraph" },
+    
   ];
 
   const logoObjects = [
-    { name: "mongodb-icon", displayName: "Mongodb" },
+    { name: "mongodb-icon", displayName: "Mongo Db" },
     { name: "expressjs", displayName: "Express Js" },
     { name: "prisma", displayName: "Prisma" },
     { name: "sass", displayName: "Sass" },
     { name: "vue", displayName: "Vue" },
-    { name: "blender", displayName: "Blender" },
     { name: "claude-color", displayName: "Claude API" },
   ];
 

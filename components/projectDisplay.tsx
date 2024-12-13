@@ -6,17 +6,21 @@ const Projects = [
   {
     name: "Finance App",
     description:
-      "A finance app that allows users to track their expenses and income. The app is built using React, Tailwind CSS, and TypeScript. The app is also deployed on Vercel.",
+      `FImae is a finance app that connects all my bank accounts in one place, giving you a clear, organized view of my finances.
+With its built-in AI assistant, you can analyze spending patterns, uncover trends, identify saving opportunities, and fill in missing transaction details like itemized purchases that are often absent in standard bank transaction records. It also lets me discuss my financial data interactively, providing insights and personalized suggestions to help me make smarter financial decisions.
+The main goal of FImae is to help me manage my money more easily and confidently.`,
     link: "https://estate.sopmanuel.com",
     logoObjects: [
-      { name: "blender", displayName: "Blender" },
+      { name: "next-js", displayName: "Next Js" },
+      { name: "typescript", displayName: "Typescript" },
+      { name: "tailwind-css", displayName: "Tailwind Css" },
+      { name: "postgresql", displayName: "Postgresql" },
+      { name: "drizzle", displayName: "drizzle" },
+      { name: "hono", displayName: "Hono" },
       { name: "css", displayName: "Css" },
-      { name: "git-icon", displayName: "Git" },
-      { name: "github-icon", displayName: "Github" },
-      { name: "huggingface", displayName: "Huggingface" },
-      { name: "javascript", displayName: "Javascript" },
       { name: "langchain", displayName: "Langchain" },
-      { name: "mongodb-icon", displayName: "Mongodb" },
+      { name: "openai", displayName: "Openai API" },
+      { name: "shadcn-ui", displayName: "Shadcn UI" },
     ],
     images: {
       src: "finance.jpeg",
@@ -60,19 +64,19 @@ const Projects = [
     ]
   },
   {
-    name: "Finance App",
+    name: "Stam V1 ",
     description:
-      "A finance app that allows users to track their expenses and income. The app is built using React, Tailwind CSS, and TypeScript. The app is also deployed on Vercel.",
+      "It's a finance app that connects all my bank accounts in one place, giving me a clear, organized view of my finances. With an AI assistant, I can analyze my spending patterns, uncover trends, and even spot opportunities to save. One of my favorite features is how it fills in missing transaction details—like itemizing what I bought during card payments—making my records more accurate. FImae helps me make smarter, data-driven decisions and simplifies financial management.",
     link: "https://fimae.sopmanuel.com",
     logoObjects: [
-      { name: "blender", displayName: "Blender" },
-      { name: "css", displayName: "Css" },
-      { name: "git-icon", displayName: "Git" },
-      { name: "github-icon", displayName: "Github" },
-      { name: "huggingface", displayName: "Huggingface" },
-      { name: "javascript", displayName: "Javascript" },
+      { name: "next-js", displayName: "Next Js" },
+      { name: "typescript", displayName: "Typescript" },
+      { name: "tailwind-css", displayName: "Tailwind Css" },
       { name: "langchain", displayName: "Langchain" },
-      { name: "mongodb-icon", displayName: "Mongodb" },
+      { name: "openai", displayName: "Openai API" },
+      { name: "motion", displayName: "Motion"},
+      { name: "together-ai", displayName: "Together AI" },
+      { name: "axios-purple", displayName: "Axios" },
     ],
     images: {
       src: "portfolio.jpeg",
@@ -102,19 +106,20 @@ const Projects = [
       { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.4)" },
     ]
   },{
-    name: "Finance App",
+    name:"Real Estate App powerded with AI",
     description:
       "A finance app that allows users to track their expenses and income. The app is built using React, Tailwind CSS, and TypeScript. The app is also deployed on Vercel.",
     link: "https://www.sopmanuel.com",
     logoObjects: [
-      { name: "blender", displayName: "Blender" },
-      { name: "css", displayName: "Css" },
-      { name: "git-icon", displayName: "Git" },
-      { name: "github-icon", displayName: "Github" },
-      { name: "huggingface", displayName: "Huggingface" },
+      { name: "react", displayName: "React" },
       { name: "javascript", displayName: "Javascript" },
+      { name: "sass", displayName: "Sass" },
       { name: "langchain", displayName: "Langchain" },
-      { name: "mongodb-icon", displayName: "Mongodb" },
+      { name: "langgraph", displayName: "LangGraph" },
+      { name: "expressjs", displayName: "Express Js" },
+      { name: "prisma", displayName: "Prisma" },
+      { name: "mongodb-icon", displayName: "Mongo Db" },
+      { name: "axios-purple", displayName: "Axios" },
     ],
     images: {
       src: "estate.png",
