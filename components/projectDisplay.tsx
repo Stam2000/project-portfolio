@@ -106,7 +106,7 @@ The main goal of FImae is to help me manage my money more easily and confidently
       { borderWidth: "3px", borderColor: "rgba(152, 206, 0, 0.4)" },
     ]
   },{
-    name:"Real Estate App powerded with AI",
+    name:"Real Estate App powered with AI",
     description:`Discover your perfect home with  Real Estate, featuring an AI agent that answers all your questions about a property.
 Want to know about the nearest park, supermarket, or even a dancing school? The AI agent goes beyond basic property details, searching the surrounding area to provide you with accurate, real-time information.
 This app was inspired by my own need for more location insights when searching for a home. By combining property listings with smart location-based queries, it empowers users to make informed decisions about where they’ll live.`,
