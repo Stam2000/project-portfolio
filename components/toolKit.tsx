@@ -68,10 +68,10 @@ const ToolKit = ({ colors }: { colors: React.CSSProperties[] }) => {
   ];
 
   return (
-    <div ref={ref} className=" pt-20 flex justify-center">
+    <div ref={ref} id="toolkit" className=" pt-20 flex justify-center">
       <div className="flex flex-col z-50 rounded-xl shadow-sm  shadow-white bg-gradient-to-b w-[80%] md:w-3/4 desk:2/3 from-white from-60% to-[#fdfff6] overflow-hidden to-90% pt-12 max-h-[80%] lg:px-12 desk:px-48 px-4 md:px-6 text-black">
         <motion.h2 className="text-slate-950 relative text-4xl self-center flex flex-col items-center mt-15 font-yeseva-one w-fit font-extrabold  md:p-2 round">
-          <span className="z-20">ToolKits</span>
+          <span className="z-20">ToolKit</span>
           <Dots
             location={`toolkits-dots`}
             key={"s"}

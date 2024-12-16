@@ -63,16 +63,6 @@ const defaultConfig: TailwindClassConfig = {
   includeCircle: true,
 };
 
-const defC = [
-  { backgroundColor: "#D1D5DB" },
-  { backgroundColor: "#000000" },
-  { backgroundColor: "rgba(152, 206, 0, 0.8)" },
-  { borderWidth: "2px", borderColor: "#181818" },
-  { backgroundColor: "rgba(152, 206, 0, 0.8)" },
-  { borderWidth: "2px", borderColor: "#98CE00" },
-  { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.9)" },
-  { borderWidth: "2px", borderColor: "rgba(152, 206, 0, 0.8)" },
-];
 
 const defaultColors = [
   { backgroundColor: "#D1D5DB" },
@@ -118,6 +108,13 @@ export default function Home() {
   const useRe = useRef(null);
   const isInView = useInView(useRe);
   const [computedValues, setComputedValues] = useState({ lines: 20, dotsEachLine: 7 });
+
+  const scrollTo = (sectionId:string)=>{
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   const ca = useMemo(() => {
     return generateTailwindClasses(
@@ -233,7 +230,7 @@ export default function Home() {
 
   
   return (
-    <main>
+    <main className="scroll-smooth" >
       <AnimatePresence>
         {idImg ? (
           <motion.div
@@ -475,9 +472,9 @@ export default function Home() {
           borderColor={borderColor}
         />
       </div>
-      <ToolKit colors={currentLanguage ? [...ca] : defaultColors} />
+      <ToolKit  colors={currentLanguage ? [...ca] : defaultColors} />
       <OverviewProjects />
-      <section className="  flex flex-col px-8 lg:px-48 overflow-hidden  pt-4 md:pt-16 pb-28 md:pb-20  ">
+      <section id="about" className="  flex flex-col px-8 lg:px-48 overflow-hidden  pt-4 md:pt-16 pb-28 md:pb-20  ">
         <div className="relative overflow-hidden bg-gradient-to-l border-r-[10px] border-b-[10px]  border-[#98CE00]   from-white from-10%  to-[#efefef]   flex rounded-2xl h-3/5 justify-end ">
           <div className="absolute h-full overflow-hidden w-full ">
             <MySvg7 className=" absolute  h-72" />
@@ -680,7 +677,7 @@ export default function Home() {
                 </a>
                 <MagicWand04Icon />
               </button>
-              <div className="grid grid-cols-2 gap-2">
+{/*               <div className="grid grid-cols-2 gap-2">
                 <a href="https://github.com/Stam2000" target="_blank">
                   <GithubIcon
                     width={35}
@@ -697,7 +694,7 @@ export default function Home() {
                     className="custom-class"
                   />
                 </a>
-              </div>
+              </div> */}
               <a href="mailto:manuel@sopmanuel.com" className="font-oxygen italic text-slate-800" >manuel@sopmanuel.com</a>
             </div>
           </div>

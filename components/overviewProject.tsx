@@ -20,6 +20,7 @@ const OverviewProjects = () => {
   return (
     <section
       ref={useRe}
+      id="projects"
       className="flex  flex-col lg:px-14 desk:px-40  pt-16 pb-10 md:pb-20  "
     >
       <motion.h2

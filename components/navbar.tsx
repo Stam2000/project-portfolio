@@ -18,6 +18,13 @@ const Navbar = ({
   const isMobile = useMediaQuery({ maxWidth: 500 });
   const isTablet = useMediaQuery({ maxWidth: 768 });
 
+  const scrollTo = (sectionId:string)=>{
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   if (isMobile) {
     return (
       <motion.nav
@@ -40,20 +47,20 @@ const Navbar = ({
         </div>
         <nav className="grid grid-cols-2 gap-4">
           <div className="relative flex items-center justify-center gap-1">
-            <a
+            <button
               className="z-50 text-white  text-2xl font-bold  p-2 rounded-md font-out left-1 text-nowrap"
-              href=""
+              onClick={()=>scrollTo("toolkit")}
             >
-              My ToolKits
-            </a>
+              My ToolKit
+            </button>
           </div>
           <div className="relative flex items-center justify-center gap-1">
-            <a
+            <button
               className="z-50  p-2 rounded-md text-white text-2xl font-bold font-out left-1 text-nowrap"
-              href=""
+              onClick={()=>scrollTo("projects")}
             >
-              My Project
-            </a>
+              My Projects
+            </button>
           </div>
           <div className="relative flex  flex-col gap-2">
             <motion.button
@@ -83,7 +90,7 @@ const Navbar = ({
                 Contact Me <Mail size={20} />
               </a>
             </motion.button>
-            <div className=" z-10 flex gap-3 text-white items-center justify-center ">
+{/*             <div className=" z-10 flex gap-3 text-white items-center justify-center ">
               <a href="https://github.com/Stam2000" target="_blank">
                 <GithubIcon
                   width={35}
@@ -100,16 +107,16 @@ const Navbar = ({
                   className="custom-class"
                 />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="relative flex items-center justify-center gap-1">
-            <a
+            <button
               className="z-50 text-white  p-2 md:p-1 rounded-md  text-2xl font-bold font-out left-1 text-nowrap"
-              href=""
+              onClick={()=>scrollTo("about")}
             >
               About Me
-            </a>
+            </button>
           </div>
         </nav>
       </motion.nav>
@@ -135,20 +142,20 @@ const Navbar = ({
         </div>
         <nav className="flex gap-8">
           <div className="relative flex items-center justify-center gap-1">
-            <a
+            <button
               className="z-50 text-white  text-2xl font-bold  p-2 rounded-md font-out left-1 text-nowrap"
-              href=""
+              onClick={()=>scrollTo("toolkit")}
             >
-              My ToolKits
-            </a>
+              My ToolKit
+            </button>
           </div>
           <div className="relative flex items-center justify-center gap-1">
-            <a
+            <button
               className="z-50  p-2 rounded-md text-white text-2xl font-bold font-out left-1 text-nowrap"
-              href=""
+              onClick={()=>scrollTo("projects")}
             >
-              My Project
-            </a>
+              My Projects
+            </button>
           </div>
           <div className="relative flex  flex-col gap-2">
             <motion.button
@@ -177,7 +184,7 @@ const Navbar = ({
                 Contact Me <Mail size={20} />
               </a>
             </motion.button>
-            <div className=" z-10 flex gap-3 text-white items-center justify-center ">
+{/*             <div className=" z-10 flex gap-3 text-white items-center justify-center ">
               <a href="https://github.com/Stam2000">
                 <GithubIcon
                   width={35}
@@ -194,16 +201,16 @@ const Navbar = ({
                   className="custom-class"
                 />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="relative flex items-center justify-center gap-1">
-            <a
+            <button
               className="z-50 text-white  p-2 md:p-1 rounded-md  text-2xl font-bold font-out left-1 text-nowrap"
-              href=""
+              onClick={()=>scrollTo("about")}
             >
               About Me
-            </a>
+            </button>
           </div>
         </nav>
       </motion.nav>
@@ -228,20 +235,20 @@ const Navbar = ({
       </div>
 
       <div className="relative flex items-center justify-center gap-1">
-        <a
+        <button
           className="z-50 text-white  deskB:text-xl font-bold  p-2 md:p-1 rounded-md font-out left-1 text-nowrap"
-          href=""
+          onClick={()=>scrollTo("toolkit")}
         >
-          My ToolKits
-        </a>
+          My ToolKit
+        </button>
       </div>
       <div className="relative flex items-center justify-center gap-1">
-        <a
+        <button
           className="z-50  p-2 md:p-1 rounded-md text-white deskB:text-xl font-bold font-out left-1 text-nowrap"
-          href=""
+          onClick={()=>scrollTo("projects")}
         >
-          My Project
-        </a>
+          My Projects
+        </button>
       </div>
       <div className="relative flex  flex-col gap-2">
         <motion.button
@@ -271,7 +278,7 @@ const Navbar = ({
             Contact Me <Mail size={20} />
           </a>
         </motion.button>
-        <div className=" z-10 flex gap-3 text-white items-center justify-center " >
+{/*         <div className=" z-10 flex gap-3 text-white items-center justify-center " >
           <a href="https://github.com/Stam2000" target="_blank">
             <GithubIcon
               width={35}
@@ -288,16 +295,16 @@ const Navbar = ({
               className="custom-class"
             />
           </a>
-        </div>
+        </div> */}
       </div>
 
       <div className="relative flex items-center justify-center gap-1">
-        <a
+        <button
           className="z-50 text-white  p-2 md:p-1 rounded-md  deskB:text-xl font-bold font-out left-1 text-nowrap"
-          href=""
+          onClick={()=>scrollTo("about")}
         >
           About Me
-        </a>
+        </button>
       </div>
     </motion.nav>
   );

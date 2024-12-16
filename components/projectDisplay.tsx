@@ -9,7 +9,7 @@ const Projects = [
       `FImae is a finance app that connects all my bank accounts in one place, giving you a clear, organized view of my finances.
 With its built-in AI assistant, you can analyze spending patterns, uncover trends, identify saving opportunities, and fill in missing transaction details like itemized purchases that are often absent in standard bank transaction records. It also lets me discuss my financial data interactively, providing insights and personalized suggestions to help me make smarter financial decisions.
 The main goal of FImae is to help me manage my money more easily and confidently.`,
-    link: "https://estate.sopmanuel.com",
+    link: "https://fimae.sopmanuel.com",
     logoObjects: [
       { name: "next-js", displayName: "Next Js" },
       { name: "typescript", displayName: "Typescript" },
@@ -67,7 +67,7 @@ The main goal of FImae is to help me manage my money more easily and confidently
     name: "Stam V1 ",
     description:
       "I hope you enjoy 🌟.I have tried to make each visit unique, hoping you’ll explore, enjoy, and have fun while discovering my work!",
-    link: "https://fimae.sopmanuel.com",
+    link: "https://www.sopmanuel.com",
     logoObjects: [
       { name: "next-js", displayName: "Next Js" },
       { name: "typescript", displayName: "Typescript" },
@@ -110,7 +110,7 @@ The main goal of FImae is to help me manage my money more easily and confidently
     description:`Discover your perfect home with  Real Estate, featuring an AI agent that answers all your questions about a property.
 Want to know about the nearest park, supermarket, or even a dancing school? The AI agent goes beyond basic property details, searching the surrounding area to provide you with accurate, real-time information.
 This app was inspired by my own need for more location insights when searching for a home. By combining property listings with smart location-based queries, it empowers users to make informed decisions about where they’ll live.`,
-    link: "https://www.sopmanuel.com",
+    link: "https://estate.sopmanuel.com",
     logoObjects: [
       { name: "react", displayName: "React" },
       { name: "javascript", displayName: "Javascript" },
@@ -215,9 +215,9 @@ export const ProjectDisplay = () => {
                 />
               </div>
               <div className="flex mt-6 gap-6">
-                <button className="border-2 text-white w-32 p-1 rounded-md font-oxygen ">
+                {/* <button className="border-2 text-white w-32 p-1 rounded-md font-oxygen ">
                   <a target="_blank">GitHub</a>
-                </button>
+                </button> */}
                 <button className="border-2 p-1 w-32 rounded-md text-white font-oxygen">
                   <a href={project.link} target="_blank" >Live Preview</a>
                 </button>
