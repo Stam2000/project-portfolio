@@ -168,14 +168,14 @@ export const ProjectDisplay = () => {
     <>
       {Projects.map((project, index) => {
         return (
-          <div key={project.name} className={`relative flex flex-col lg:flex-row  mt-10 md:mb-10 `}>
+          <div key={project.name} className={`relative flex items-center lg:items-start  flex-col lg:flex-row  mt-10 md:mb-10 `}>
             <div
-              className="md:w-[80%] w-[90%] lg:w-1/2 lg:pt-8   flex flex-col gap-2  px-2 "
+              className=" w-[90%] lg:w-1/2 lg:pt-8 flex flex-col gap-2  px-2 "
             >
               <h3 className="text-4xl font-nunito text-white ">
                 {project.name}
               </h3>
-              <div className="grid grid-cols-4 2xl:grid-cols-5 gap-2   mt-6 ">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-3 desk:grid-cols-4 2xl:grid-cols-5 gap-2   mt-6 ">
                 {project.logoObjects.map((lg, index) => {
                   return (
                     <div
