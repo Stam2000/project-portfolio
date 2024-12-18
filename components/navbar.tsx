@@ -90,7 +90,7 @@ const Navbar = ({
                 Contact Me <Mail size={20} />
               </a>
             </motion.button>
-{/*             <div className=" z-10 flex gap-3 text-white items-center justify-center ">
+            <div className=" z-10 flex gap-3 text-white items-center justify-center ">
               <a href="https://github.com/Stam2000" target="_blank">
                 <GithubIcon
                   width={35}
@@ -107,7 +107,7 @@ const Navbar = ({
                   className="custom-class"
                 />
               </a>
-            </div> */}
+            </div>
           </div>
 
           <div className="relative flex items-center justify-center gap-1">
@@ -184,7 +184,7 @@ const Navbar = ({
                 Contact Me <Mail size={20} />
               </a>
             </motion.button>
-{/*             <div className=" z-10 flex gap-3 text-white items-center justify-center ">
+            <div className=" z-10 flex gap-3 text-white items-center justify-center ">
               <a href="https://github.com/Stam2000">
                 <GithubIcon
                   width={35}
@@ -201,7 +201,7 @@ const Navbar = ({
                   className="custom-class"
                 />
               </a>
-            </div> */}
+            </div>
           </div>
 
           <div className="relative flex items-center justify-center gap-1">
@@ -278,7 +278,7 @@ const Navbar = ({
             Contact Me <Mail size={20} />
           </a>
         </motion.button>
-{/*         <div className=" z-10 flex gap-3 text-white items-center justify-center " >
+        <div className=" z-10 flex gap-3 text-white items-center justify-center " >
           <a href="https://github.com/Stam2000" target="_blank">
             <GithubIcon
               width={35}
@@ -295,7 +295,7 @@ const Navbar = ({
               className="custom-class"
             />
           </a>
-        </div> */}
+        </div>
       </div>
 
       <div className="relative flex items-center justify-center gap-1">
